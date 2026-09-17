@@ -1,0 +1,49 @@
+# Ejemplo con datos FICTICIOS.
+
+id: informe-coyuntura-trimestral
+
+nombre: Informe de Coyuntura Trimestral
+
+organizacion: Instituto Ficticio de Economía Aplicada
+
+tipo_organizacion: academia
+
+datos_utilizados:
+  - nombre: Series de Tiempo Ficticias
+    tipo: api
+    url: https://ejemplo.invalid/api/series
+
+  - nombre: Precios de Referencia de Energía
+    tipo: dataset
+
+enlaces:
+  - url: https://ejemplo.invalid/instituto/informes
+    tipo: publicacion
+
+  - url: https://ejemplo.invalid/instituto/docs
+    tipo: documentacion
+
+tipo_desarrollo:
+  - investigacion
+  - informe
+  - pipeline_datos
+
+tecnologias:
+  - python
+  - pandas
+  - r
+
+descripcion: >
+  Informe trimestral de coyuntura construido sobre series de tiempo públicas,
+  con el pipeline de actualización documentado y reproducible.
+
+contactos:
+  - tipo: email
+    valor: economia@ejemplo.invalid
+
+  - tipo: linkedin
+    valor: https://www.linkedin.com/company/ejemplo
+
+etiquetas:
+  - economia
+  - series-de-tiempo

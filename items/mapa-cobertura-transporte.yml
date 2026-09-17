@@ -1,0 +1,46 @@
+# Ejemplo con datos FICTICIOS.
+
+id: mapa-cobertura-transporte
+
+nombre: Mapa de Cobertura de Transporte
+
+organizacion: Red Abierta de Transporte
+
+tipo_organizacion: ong
+
+datos_utilizados:
+  - nombre: Catálogo Nacional de Datos Ficticios
+    tipo: catalogo
+    url: https://ejemplo.invalid/catalogo
+
+  - nombre: API de Normalización Geográfica
+    tipo: api
+    url: https://ejemplo.invalid/api/georef
+
+enlaces:
+  - url: https://ejemplo.invalid/red-transporte/mapa
+    tipo: proyecto
+
+  - url: https://github.com/ejemplo/mapa-cobertura
+    tipo: repositorio
+
+tipo_desarrollo:
+  - aplicacion
+  - mapa
+
+tecnologias:
+  - javascript
+  - leaflet
+  - postgis
+
+descripcion: >
+  Aplicación web que combina recorridos de transporte público con datos
+  geográficos normalizados para mostrar cobertura y frecuencias por barrio.
+
+contactos:
+  - tipo: email
+    valor: hola@ejemplo.invalid
+
+etiquetas:
+  - transporte
+  - geoespacial

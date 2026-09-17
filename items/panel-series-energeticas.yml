@@ -1,0 +1,43 @@
+# Ejemplo con datos FICTICIOS.
+# Segunda herramienta de la misma organización: una organización puede tener
+# varias fichas en el catálogo.
+
+id: panel-series-energeticas
+
+nombre: Panel de Series Energéticas
+
+organizacion: Observatorio Ficticio del Sur
+
+tipo_organizacion: independiente
+
+datos_utilizados:
+  - nombre: Series de Tiempo Ficticias
+    tipo: api
+    url: https://ejemplo.invalid/api/series
+
+enlaces:
+  - url: https://ejemplo.invalid/observatorio/panel-series
+    tipo: proyecto
+
+tipo_desarrollo:
+  - visualizacion_datos
+  - web
+
+tecnologias:
+  - javascript
+  - d3
+
+descripcion: >
+  Panel que grafica series de tiempo de generación y demanda eléctrica, con
+  descarga de cada serie en CSV y enlaces a la fuente original.
+
+contactos:
+  - tipo: email
+    valor: patagonia@ejemplo.invalid
+
+verificacion:
+  estado: pendiente
+
+etiquetas:
+  - energia
+  - series-de-tiempo

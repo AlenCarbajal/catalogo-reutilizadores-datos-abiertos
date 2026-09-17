@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catálogo de usos y desarrollos</title>
+<meta name="description" content="Catálogo abierto de herramientas y desarrollos que usan datos, APIs y catálogos públicos.">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+  <h1>Catálogo de usos y desarrollos</h1>
+  <p>Herramientas que usan datos, APIs y catálogos públicos. <a href="agregar.html">Agregá la tuya</a>.</p>
+  <label>Buscar <input id="q" type="search" placeholder="Herramienta, organización, tecnología, fuente…"></label>
+  <p id="estado" role="status" aria-live="polite"></p>
+</header>
+
+<main>
+  <aside id="filtros" aria-label="Filtros"></aside>
+  <ol id="lista"></ol>
+</main>
+
+<footer>
+  <p>Cada ficha es un archivo YAML en el repositorio. Contenidos bajo CC BY 4.0.</p>
+</footer>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

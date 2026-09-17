@@ -1,0 +1,38 @@
+# Copiar como items/<id>.yml y completar. Más fácil: usar el formulario agregar.html del sitio.
+# Una ficha = una herramienta. Valores permitidos y explicación en docs/modelo-de-datos.md.
+# Borrar los bloques opcionales que no se usen.
+
+id:                 # minúsculas, números y guiones. Igual al nombre del archivo.
+nombre:             # nombre de la HERRAMIENTA, no de la organización.
+organizacion:       # quién la desarrolla.
+tipo_organizacion:  # independiente | academia | empresa | gobierno | ong | otro
+
+descripcion: >
+  Qué hace la herramienta y cómo usa los datos, en 2 o 3 oraciones.
+
+tipo_desarrollo:    # al menos 1: tablero | visualizacion_datos | web | aplicacion | api | mapa | pipeline_datos | etl | investigacion | informe | documentacion | saas | otro
+  -
+
+datos_utilizados:   # al menos 1
+  - nombre:
+    tipo:           # dataset | catalogo | api | servicio | multiple | otro
+    url:            # opcional
+
+enlaces:            # al menos 1
+  - url:
+    tipo:           # sitio_web | repositorio | documentacion | tablero | publicacion | proyecto | api | otro
+
+contactos:          # al menos 1
+  - tipo:           # email | sitio_web | github | linkedin | otro
+    valor:          # correo si tipo es email; si no, una URL
+
+# tecnologias:      # opcional, libre, minúsculas sin acentos
+#   - python
+
+# etiquetas:        # opcional, libre, minúsculas y guiones
+#   - energia
+
+# verificacion:     # lo completa el equipo del catálogo
+#   estado: pendiente   # verificado | pendiente | no_verificado
+#   fecha: AAAA-MM-DD
+#   evidencia:

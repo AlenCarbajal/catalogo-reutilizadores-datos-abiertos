@@ -1,0 +1,46 @@
+/* Estilos mínimos y neutros. La estética definitiva se define aparte. */
+:root { --borde: #ccc; --acento: #1a5fb4; --fondo: #f6f6f6; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px/1.5 system-ui, sans-serif; color: #222; background: #fff; }
+header, main, footer { max-width: 72rem; margin: 0 auto; padding: 1rem; }
+header h1 { margin: 0 0 .5rem; }
+h3, h4 { margin: .25rem 0; }
+p { margin: .25rem 0; }
+a { color: var(--acento); }
+small { color: #555; }
+input, select, textarea { font: inherit; width: 100%; padding: .4rem; border: 1px solid var(--borde); border-radius: 4px; }
+label { display: block; margin: .5rem 0; }
+button, .boton { font: inherit; padding: .5rem 1rem; border: 1px solid var(--borde); border-radius: 4px; background: var(--fondo); cursor: pointer; color: inherit; text-decoration: none; display: inline-block; }
+button[type=submit], .boton { background: var(--acento); color: #fff; border-color: var(--acento); }
+
+/* catálogo */
+main { display: grid; grid-template-columns: 16rem 1fr; gap: 1.5rem; }
+main.una-columna { grid-template-columns: 1fr; max-width: 48rem; }
+@media (max-width: 720px) { main { grid-template-columns: 1fr; } }
+#filtros details { border-bottom: 1px solid var(--borde); padding: .5rem 0; }
+#filtros summary { cursor: pointer; font-weight: 600; }
+#filtros label { margin: .2rem 0; }
+#filtros input { width: auto; }
+#lista { list-style: none; padding: 0; margin: 0; }
+#lista > li { border: 1px solid var(--borde); border-radius: 6px; margin-bottom: .75rem; }
+#lista button { display: block; width: 100%; text-align: left; background: none; border: 0; padding: .75rem 1rem; }
+#lista button[aria-expanded=true] { background: var(--fondo); }
+.detalle { padding: .5rem 1rem 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: .5rem; }
+.detalle ul { margin: 0; padding-left: 1.2rem; }
+.verificado { background: #d8f0dc; border-radius: 4px; padding: 0 .4rem; font-size: .85em; }
+.vacio { padding: 1rem; color: #555; }
+
+/* formulario */
+fieldset { border: 1px solid var(--borde); border-radius: 6px; margin: 1rem 0; padding: .5rem 1rem 1rem; }
+legend { font-weight: 600; padding: 0 .3rem; }
+.opciones { display: block; }
+.opciones label { display: inline-block; margin-right: 1rem; }
+.opciones input { width: auto; }
+.fila { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: .5rem; align-items: end; border-bottom: 1px dashed var(--borde); padding-bottom: .5rem; }
+#enlaces .fila, #contactos .fila { grid-template-columns: 2fr 1fr auto; }
+@media (max-width: 720px) { .fila { grid-template-columns: 1fr; } }
+.quitar { padding: .4rem .7rem; margin-bottom: .5rem; }
+.validado :invalid { border-color: #c00; }
+.error { color: #c00; }
+#yaml { background: var(--fondo); border: 1px solid var(--borde); padding: 1rem; overflow-x: auto; }
+.acciones { display: flex; flex-wrap: wrap; gap: .5rem; }

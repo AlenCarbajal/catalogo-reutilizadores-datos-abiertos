@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ficha de una herramienta del catálogo",
+  "description": "Un archivo YAML por herramienta en items/<id>.yml. Los valores permitidos de cada campo cerrado están en $defs: para agregar un valor nuevo, editar solo este archivo (y su etiqueta en web/config.js).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "nombre", "organizacion", "tipo_organizacion", "descripcion", "tipo_desarrollo", "datos_utilizados", "enlaces", "contactos"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "minLength": 3, "maxLength": 80 },
+    "nombre": { "type": "string", "minLength": 2, "maxLength": 120 },
+    "organizacion": { "type": "string", "minLength": 2, "maxLength": 120 },
+    "tipo_organizacion": { "$ref": "#/$defs/tipo_organizacion" },
+    "descripcion": { "type": "string", "minLength": 20, "maxLength": 1200 },
+    "tipo_desarrollo": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/tipo_desarrollo" } },
+    "datos_utilizados": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["nombre", "tipo"],
+        "properties": {
+          "nombre": { "type": "string", "minLength": 2, "maxLength": 120 },
+          "tipo": { "$ref": "#/$defs/tipo_dato" },
+          "url": { "$ref": "#/$defs/url" }
+        }
+      }
+    },
+    "enlaces": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["url", "tipo"],
+        "properties": {
+          "url": { "$ref": "#/$defs/url" },
+          "tipo": { "$ref": "#/$defs/tipo_enlace" }
+        }
+      }
+    },
+    "contactos": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["tipo", "valor"],
+        "properties": {
+          "tipo": { "$ref": "#/$defs/tipo_contacto" },
+          "valor": { "type": "string", "minLength": 3, "maxLength": 200 }
+        },
+        "if": { "properties": { "tipo": { "const": "email" } } },
+        "then": { "properties": { "valor": { "format": "email", "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" } } },
+        "else": { "properties": { "valor": { "$ref": "#/$defs/url" } } }
+      }
+    },
+    "tecnologias": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9]+([-.][a-z0-9]+)*$" } },
+    "etiquetas": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" } },
+    "verificacion": {
+      "type": "object", "additionalProperties": false, "required": ["estado"],
+      "properties": {
+        "estado": { "$ref": "#/$defs/estado_verificacion" },
+        "fecha": { "type": "string", "format": "date" },
+        "evidencia": { "type": "string", "minLength": 3, "maxLength": 500 }
+      },
+      "if": { "properties": { "estado": { "const": "verificado" } } },
+      "then": { "required": ["estado", "fecha", "evidencia"] }
+    }
+  },
+  "$defs": {
+    "url": { "type": "string", "format": "uri", "pattern": "^https?://", "maxLength": 500 },
+    "tipo_organizacion": { "enum": ["independiente", "academia", "empresa", "gobierno", "ong", "otro"] },
+    "tipo_desarrollo": { "enum": ["tablero", "visualizacion_datos", "web", "aplicacion", "api", "mapa", "pipeline_datos", "etl", "investigacion", "informe", "documentacion", "saas", "otro"] },
+    "tipo_dato": { "enum": ["dataset", "catalogo", "api", "servicio", "multiple", "otro"] },
+    "tipo_enlace": { "enum": ["sitio_web", "repositorio", "documentacion", "tablero", "publicacion", "proyecto", "api", "otro"] },
+    "tipo_contacto": { "enum": ["email", "sitio_web", "github", "linkedin", "otro"] },
+    "estado_verificacion": { "enum": ["verificado", "pendiente", "no_verificado"] }
+  }
+}
