@@ -44,39 +44,43 @@ function renderFiltros(visibles) {
     for (const v of activos) if (!conteo.has(v)) conteo.set(v, 0);
     if (!conteo.size) return "";
     const opciones = [...conteo].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "es"));
-    return `<details ${activos.size ? "open" : ""}><summary>${TITULOS[campo]}</summary>
-      ${opciones.map(([v, n]) => `<label><input type="checkbox" data-campo="${campo}" value="${esc(v)}" ${activos.has(v) ? "checked" : ""}> ${esc(etiqueta(campo, v))} <small>${n}</small></label>`).join("")}
-    </details>`;
+    return `<details ${activos.size ? "open" : ""}><summary>${TITULOS[campo]}</summary><div>
+      ${opciones.map(([v, n]) => `<label><input type="checkbox" data-campo="${campo}" value="${esc(v)}" ${activos.has(v) ? "checked" : ""}> <span>${esc(etiqueta(campo, v))}</span> <small>${n}</small></label>`).join("")}
+    </div></details>`;
   }).join("");
 }
 
 function renderDetalle(item) {
-  const seccion = (titulo, lis) => (lis.length ? `<h4>${titulo}</h4><ul>${lis.join("")}</ul>` : "");
+  const bloque = (titulo, cuerpo) => (cuerpo ? `<div><h4>${titulo}</h4>${cuerpo}</div>` : "");
+  const enlace = (href, texto) => `<a href="${esc(href)}" rel="noopener">${esc(texto)}</a>`;
   return `<div class="detalle">
-    ${seccion("Datos utilizados", item.datos_utilizados.map((d) => `<li>${d.url ? `<a href="${esc(d.url)}" rel="noopener">${esc(d.nombre)}</a>` : esc(d.nombre)} <small>${esc(etiqueta("tipo_dato", d.tipo))}</small></li>`))}
-    ${seccion("Enlaces", item.enlaces.map((e) => `<li><a href="${esc(e.url)}" rel="noopener">${esc(etiqueta("tipo_enlace", e.tipo))}</a></li>`))}
-    ${seccion("Contacto", item.contactos.map((c) => `<li><a href="${esc(c.tipo === "email" ? "mailto:" + c.valor : c.valor)}" rel="noopener">${esc(etiqueta("tipo_contacto", c.tipo))}</a></li>`))}
-    ${seccion("Tecnologías", (item.tecnologias ?? []).map((t) => `<li>${esc(t)}</li>`))}
+    ${bloque("Datos", item.datos_utilizados.map((d) => `<p>${d.url ? enlace(d.url, d.nombre) : `<strong>${esc(d.nombre)}</strong>`} <small>${esc(etiqueta("tipo_dato", d.tipo))}</small></p>`).join(""))}
+    ${bloque("Enlaces", `<p>${item.enlaces.map((e) => enlace(e.url, etiqueta("tipo_enlace", e.tipo))).join(" · ")}</p>`)}
+    ${bloque("Contacto", `<p>${item.contactos.map((c) => enlace(c.tipo === "email" ? "mailto:" + c.valor : c.valor, etiqueta("tipo_contacto", c.tipo))).join(" · ")}</p>`)}
+    ${bloque("Tecnologías", item.tecnologias?.length ? `<div class="tags">${item.tecnologias.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : "")}
   </div>`;
 }
 
 function render() {
   const visibles = items.filter(coincide);
-  $("estado").textContent = `${visibles.length} de ${items.length} herramientas`;
+  $("estado").innerHTML = `<strong>${visibles.length} de ${items.length}</strong> resultados`;
   renderFiltros(visibles);
   $("lista").innerHTML = visibles.length
     ? visibles.map((item) => `
-      <li id="${esc(item.id)}">
+      <li id="${esc(item.id)}" class="ficha">
         <button type="button" data-id="${esc(item.id)}" aria-expanded="${estado.abierto === item.id}">
-          <h3>${esc(item.nombre)}</h3>
-          <p><strong>${esc(item.organizacion)}</strong> · ${esc(etiqueta("tipo_organizacion", item.tipo_organizacion))}
-             · ${item.tipo_desarrollo.map((t) => esc(etiqueta("tipo_desarrollo", t))).join(", ")}
-             ${item.verificacion?.estado === "verificado" ? '<span class="verificado">Verificado</span>' : ""}</p>
-          <p>${esc(item.descripcion)}</p>
+          <div>
+            <h3>${esc(item.nombre)}</h3>
+            <p class="ficha__meta"><strong>${esc(item.organizacion)}</strong> · ${esc(etiqueta("tipo_organizacion", item.tipo_organizacion))}
+               · ${item.tipo_desarrollo.map((t) => esc(etiqueta("tipo_desarrollo", t))).join(", ")}
+               ${item.verificacion?.estado === "verificado" ? '<span class="verificado">Verificado</span>' : ""}</p>
+            <p class="ficha__descripcion">${esc(item.descripcion)}</p>
+          </div>
+          <span class="ficha__flecha" aria-hidden="true">▾</span>
         </button>
         ${estado.abierto === item.id ? renderDetalle(item) : ""}
       </li>`).join("")
-    : `<li class="vacio">Ninguna herramienta coincide. <a href="agregar.html">Agregá la que falta</a>.</li>`;
+    : `<li class="vacio"><strong>Ningún proyecto coincide</strong> Sacá algún filtro o <a href="agregar.html">sumá el que falta</a>.</li>`;
   escribirURL();
 }
 
@@ -85,7 +89,7 @@ async function iniciar() {
   try {
     items = await (await fetch("data/items.json")).json();
   } catch {
-    $("lista").innerHTML = "<li class='vacio'>No se pudo cargar <code>data/items.json</code>. Generalo con <code>python scripts/catalogo.py</code> y serví la carpeta <code>web/</code> por HTTP.</li>";
+    $("lista").innerHTML = "<li class='vacio'><strong>No se pudo cargar el catálogo</strong> Falta <code>data/items.json</code>: generalo con <code>python scripts/catalogo.py</code> y serví la carpeta <code>web/</code> por HTTP.</li>";
     return;
   }
   for (const item of items) {

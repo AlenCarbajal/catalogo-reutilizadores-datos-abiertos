@@ -42,7 +42,7 @@ function llenarVocabularios(raiz, defs) {
     const campo = el.dataset.vocab;
     const valores = defs[campo].enum;
     if (el.dataset.como === "checkbox") {
-      el.innerHTML = valores.map((v) => `<label><input type="checkbox" name="tipo_desarrollo" value="${v}"> ${esc(etiqueta(campo, v))}</label>`).join("");
+      el.innerHTML = valores.map((v) => `<label><input type="checkbox" name="tipo_desarrollo" value="${v}">${esc(etiqueta(campo, v))}</label>`).join("");
     } else {
       el.innerHTML = `<option value="">Elegir…</option>` + valores.map((v) => `<option value="${v}">${esc(etiqueta(campo, v))}</option>`).join("");
     }
@@ -112,7 +112,7 @@ async function iniciar() {
     const errores = validar(f);
     form.classList.add("validado");
     $("errores").hidden = !errores.length;
-    $("errores").innerHTML = errores.map(esc).join("<br>");
+    $("errores").innerHTML = `<strong>${errores.length === 1 ? "Falta un dato" : `Faltan ${errores.length} datos`} para generar la ficha</strong><ul>${errores.map((e) => `<li>${esc(e)}</li>`).join("")}</ul>`;
     $("resultado").hidden = !!errores.length;
     if (errores.length) return;
 

@@ -3,89 +3,109 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agregar una herramienta · Catálogo de usos y desarrollos</title>
+<title>Sumá tu proyecto · Catálogo de usos y desarrollos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
-<header>
-  <p><a href="./">← Volver al catálogo</a></p>
-  <h1>Agregar una herramienta</h1>
-  <p>Completá el formulario y al final elegí cómo enviarla: como Pull Request en GitHub o por correo. No hace falta saber YAML.</p>
+<header class="cabecera cabecera--form">
+  <div class="contenedor">
+    <p><a class="volver" href="./">← Volver al catálogo</a></p>
+    <h1>Sumá tu proyecto al catálogo</h1>
+    <p class="bajada">Completá los datos de tu proyecto y envialo como Pull Request o por correo para que el equipo de Datos Abiertos lo evalúe.</p>
+  </div>
 </header>
 
-<main class="una-columna">
+<main class="contenedor formulario">
 <form id="form" novalidate>
 
-  <fieldset>
-    <legend>La herramienta</legend>
-    <label>Nombre de la herramienta <input name="nombre" required minlength="2" maxlength="120" placeholder="Tablero de Energía Patagónica"></label>
-    <label>Identificador <small>(se arma solo a partir del nombre; será el nombre del archivo y la URL de la ficha)</small>
-      <input name="id" required pattern="[a-z0-9]+(-[a-z0-9]+)*" minlength="3" maxlength="80"></label>
-    <label>Organización, equipo o persona que la desarrolla <input name="organizacion" required minlength="2" maxlength="120"></label>
-    <label>Tipo de organización <select name="tipo_organizacion" required data-vocab="tipo_organizacion"></select></label>
-    <label>Descripción <small>(qué hace y cómo usa los datos, 2 o 3 oraciones)</small>
-      <textarea name="descripcion" required minlength="20" maxlength="1200" rows="4"></textarea></label>
-    <fieldset class="opciones"><legend>Tipo de desarrollo <small>(al menos uno)</small></legend><div data-vocab="tipo_desarrollo" data-como="checkbox"></div></fieldset>
+  <fieldset class="tarjeta">
+    <legend><span class="num">01</span>Sobre tu proyecto</legend>
+    <div class="campos">
+      <label class="campo"><span>Nombre del proyecto</span>
+        <input name="nombre" required minlength="2" maxlength="120" placeholder="Tablero de Energía Patagónica"></label>
+      <label class="campo"><span>Identificador</span>
+        <small>Se genera automáticamente a partir del nombre. Será el nombre del archivo y la URL de la ficha.</small>
+        <input name="id" required pattern="[a-z0-9]+(-[a-z0-9]+)*" minlength="3" maxlength="80"></label>
+      <label class="campo"><span>Organización, equipo o persona que lo desarrolla</span>
+        <input name="organizacion" required minlength="2" maxlength="120"></label>
+      <label class="campo"><span>Tipo de organización</span>
+        <select name="tipo_organizacion" required data-vocab="tipo_organizacion"></select></label>
+      <label class="campo"><span>Descripción</span>
+        <small>Párrafo breve contando qué hace y cómo usa los datos.</small>
+        <textarea name="descripcion" required minlength="20" maxlength="1200" rows="3"></textarea></label>
+      <div class="campo"><span>Tipo de desarrollo</span>
+        <small>Elegí al menos uno.</small>
+        <div class="opciones" data-vocab="tipo_desarrollo" data-como="checkbox"></div></div>
+    </div>
   </fieldset>
 
-  <fieldset id="datos_utilizados">
-    <legend>Datos utilizados <small>(al menos uno)</small></legend>
+  <fieldset class="tarjeta" id="datos_utilizados">
+    <legend><span class="num">02</span>Datos utilizados <small>Al menos una fuente.</small></legend>
     <template>
-      <div class="fila">
-        <label>Nombre de la fuente <input name="nombre" required minlength="2" maxlength="120" placeholder="Georef, CAMMESA…"></label>
-        <label>Tipo <select name="tipo" required data-vocab="tipo_dato"></select></label>
-        <label>URL <small>(opcional)</small> <input name="url" type="url" pattern="https?://.*" maxlength="500"></label>
-        <button type="button" class="quitar" aria-label="Quitar">×</button>
+      <div class="fila" data-rotulo="Fuente">
+        <button type="button" class="quitar">× Eliminar</button>
+        <label class="campo"><span>Nombre de la fuente</span><input name="nombre" required minlength="2" maxlength="120" placeholder="Georef, CAMMESA…"></label>
+        <label class="campo"><span>Tipo</span><select name="tipo" required data-vocab="tipo_dato"></select></label>
+        <label class="campo ancho"><span>URL <small>(opcional)</small></span><input name="url" type="url" pattern="https?://.*" maxlength="500"></label>
       </div>
     </template>
     <button type="button" class="agregar">+ Agregar fuente</button>
   </fieldset>
 
-  <fieldset id="enlaces">
-    <legend>Enlaces <small>(al menos uno; debe poder comprobarse que la herramienta existe)</small></legend>
+  <fieldset class="tarjeta" id="enlaces">
+    <legend><span class="num">03</span>Enlaces <small>Al menos uno, para poder comprobar que el proyecto existe.</small></legend>
     <template>
-      <div class="fila">
-        <label>URL <input name="url" type="url" required pattern="https?://.*" maxlength="500"></label>
-        <label>Tipo <select name="tipo" required data-vocab="tipo_enlace"></select></label>
-        <button type="button" class="quitar" aria-label="Quitar">×</button>
+      <div class="fila" data-rotulo="Enlace">
+        <button type="button" class="quitar">× Eliminar</button>
+        <label class="campo"><span>URL</span><input name="url" type="url" required pattern="https?://.*" maxlength="500"></label>
+        <label class="campo"><span>Tipo</span><select name="tipo" required data-vocab="tipo_enlace"></select></label>
       </div>
     </template>
     <button type="button" class="agregar">+ Agregar enlace</button>
   </fieldset>
 
-  <fieldset id="contactos">
-    <legend>Contacto <small>(al menos uno)</small></legend>
+  <fieldset class="tarjeta" id="contactos">
+    <legend><span class="num">04</span>Contacto <small>Al menos uno.</small></legend>
     <template>
-      <div class="fila">
-        <label>Tipo <select name="tipo" required data-vocab="tipo_contacto"></select></label>
-        <label>Correo o URL <input name="valor" required minlength="3" maxlength="200"></label>
-        <button type="button" class="quitar" aria-label="Quitar">×</button>
+      <div class="fila" data-rotulo="Contacto">
+        <button type="button" class="quitar">× Eliminar</button>
+        <label class="campo"><span>Correo o URL</span><input name="valor" required minlength="3" maxlength="200"></label>
+        <label class="campo"><span>Tipo</span><select name="tipo" required data-vocab="tipo_contacto"></select></label>
       </div>
     </template>
     <button type="button" class="agregar">+ Agregar contacto</button>
   </fieldset>
 
-  <fieldset>
-    <legend>Opcional</legend>
-    <label>Tecnologías <small>(separadas por coma, en minúsculas y sin acentos: python, postgis, power-bi)</small> <input name="tecnologias"></label>
-    <label>Etiquetas <small>(separadas por coma, minúsculas y guiones: energia, geoespacial)</small> <input name="etiquetas"></label>
+  <fieldset class="tarjeta">
+    <legend><span class="num">05</span>Opcional</legend>
+    <div class="campos">
+      <label class="campo"><span>Tecnologías</span>
+        <small>Separadas por coma, en minúsculas y sin acentos: python, postgis, power-bi.</small>
+        <input name="tecnologias"></label>
+      <label class="campo"><span>Etiquetas</span>
+        <small>Separadas por coma, minúsculas y guiones: energia, geoespacial.</small>
+        <input name="etiquetas"></label>
+    </div>
   </fieldset>
 
-  <p id="errores" class="error" role="alert" hidden></p>
-  <button type="submit">Generar ficha</button>
+  <div id="errores" class="error" role="alert" hidden></div>
+  <div><button type="submit" class="boton">Generar ficha</button></div>
 </form>
 
 <section id="resultado" hidden>
   <h2>Tu ficha</h2>
   <p>Revisala y elegí cómo enviarla. El archivo se llamará <code id="archivo"></code>.</p>
   <pre id="yaml"></pre>
-  <p class="acciones">
-    <a id="pr" class="boton" target="_blank" rel="noopener">Abrir Pull Request en GitHub</a>
-    <a id="mail" class="boton" hidden>Enviar por correo</a>
-    <button type="button" id="copiar">Copiar YAML</button>
-  </p>
-  <p><small>En GitHub: se abre el editor con el archivo ya cargado; hacé clic en <em>Propose new file</em> y luego en <em>Create pull request</em>. Si no tenés cuenta, usá el correo.</small></p>
+  <div class="acciones">
+    <a id="pr" class="boton boton--violeta" target="_blank" rel="noopener">Abrir Pull Request en GitHub</a>
+    <a id="mail" class="boton boton--borde" hidden>Enviar por correo</a>
+    <button type="button" id="copiar" class="boton boton--borde">Copiar YAML</button>
+  </div>
+  <p>Se abre el editor de GitHub con el archivo ya cargado y sólo tenés que confirmar los dos pasos que indica la pantalla (<em>Propose new file</em> y <em>Create pull request</em>). Si no tenés cuenta, usá el correo.</p>
 </section>
 </main>
 

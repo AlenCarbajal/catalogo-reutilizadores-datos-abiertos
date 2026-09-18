@@ -4,25 +4,65 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Catálogo de usos y desarrollos</title>
-<meta name="description" content="Catálogo abierto de herramientas y desarrollos que usan datos, APIs y catálogos públicos.">
+<meta name="description" content="Catálogo abierto de proyectos que usan datos, APIs y catálogos públicos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
-<header>
-  <h1>Catálogo de usos y desarrollos</h1>
-  <p>Herramientas que usan datos, APIs y catálogos públicos. <a href="agregar.html">Agregá la tuya</a>.</p>
-  <label>Buscar <input id="q" type="search" placeholder="Herramienta, organización, tecnología, fuente…"></label>
-  <p id="estado" role="status" aria-live="polite"></p>
+<header class="cabecera">
+  <div class="contenedor">
+    <div class="cabecera__arriba">
+      <div>
+        <p class="kicker">Datos Abiertos · Argentina</p>
+        <h1>Catálogo de usos y desarrollos</h1>
+        <p class="bajada">Proyectos que usan datos, APIs y catálogos públicos, publicados por organismos, equipos y personas.</p>
+      </div>
+      <div class="mosaico" aria-hidden="true">
+        <span class="indigo">↻</span><span>⇄</span><span class="violeta">{ }</span>
+        <span class="violeta">@</span><span class="indigo">∞</span><span>•••</span>
+      </div>
+    </div>
+    <div class="cabecera__abajo">
+      <label class="buscador">
+        <span>Buscar</span>
+        <span class="buscador__campo">
+          <span class="buscador__icono" aria-hidden="true">⌕</span>
+          <input id="q" type="search" placeholder="Proyecto, organización, tecnología, fuente…">
+        </span>
+      </label>
+      <a class="boton boton--violeta" href="agregar.html"><span aria-hidden="true">+</span> ¡Quiero sumar mi proyecto!</a>
+    </div>
+  </div>
 </header>
 
-<main>
-  <aside id="filtros" aria-label="Filtros"></aside>
-  <ol id="lista"></ol>
+<main class="contenedor disposicion">
+  <aside aria-label="Filtros">
+    <p class="rotulo">Filtrar</p>
+    <div id="filtros"></div>
+  </aside>
+  <section>
+    <div class="barra"><p id="estado" role="status" aria-live="polite"></p></div>
+    <ol id="lista"></ol>
+    <div class="llamado">
+      <div class="mosaico mosaico--chico" aria-hidden="true">
+        <span class="navy">+</span><span>↻</span><span class="violeta">•••</span><span class="indigo">{ }</span>
+      </div>
+      <div>
+        <p>¿Desarrollaste un proyecto con datos públicos?</p>
+        <p>Sumalo al catálogo. Son cinco minutos de formulario y no hace falta saber YAML ni usar GitHub.</p>
+      </div>
+      <a class="boton" href="agregar.html">¡Quiero sumar mi proyecto! <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
 </main>
 
-<footer>
-  <p>Cada ficha es un archivo YAML en el repositorio. Contenidos bajo CC BY 4.0.</p>
+<footer class="pie">
+  <div class="contenedor">
+    <p>Cada ficha es un archivo YAML en el repositorio. Contenidos bajo CC BY 4.0.</p>
+  </div>
 </footer>
 
 <script src="config.js"></script>
