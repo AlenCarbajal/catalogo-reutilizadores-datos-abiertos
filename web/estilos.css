@@ -163,10 +163,6 @@ input[name="id"] { background: #F2F2F2; color: var(--texto-2); }
 .visor-red { padding-block: 24px 40px; display: grid; gap: 14px; }
 .visor-red__controles { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 24px; }
 .visor-red__controles .campo { min-width: 200px; }
-.visor-red__vistas { display: flex; }
-.visor-red__vistas button { padding: 11px 18px; font: inherit; font-size: 14px; font-weight: 600; border: 1.5px solid var(--borde-input); background: #fff; color: var(--navy); cursor: pointer; }
-.visor-red__vistas button + button { border-left: 0; }
-.visor-red__vistas button[aria-pressed="true"] { background: var(--indigo); border-color: var(--indigo); color: #fff; }
 .visor-red__interruptor { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: var(--navy); cursor: pointer; }
 .visor-red__interruptor input { width: 16px; height: 16px; margin: 0; accent-color: var(--indigo); }
 #variable-color:disabled { opacity: .5; }
@@ -189,9 +185,9 @@ input[name="id"] { background: #F2F2F2; color: var(--texto-2); }
 #red.denso .nodo:not(.nodo--grupo):not(.foco) text { display: none; }
 #red .nodo--grupo circle { fill: var(--tile); stroke: var(--navy); stroke-width: 1.5; stroke-dasharray: 3 3; }
 #red .nodo--grupo text { font-size: 12px; font-weight: 700; }
+#red .nodo--grupo.chico:not(.foco) text { display: none; }
 #red .nodo:focus-visible circle { stroke: var(--violeta); stroke-width: 3; }
 #red .nodo.tenue, #red .nodo.descartado, #red .tenue { opacity: .15; }
-#red .rotulos text { font: 700 12px Montserrat, system-ui, sans-serif; fill: var(--navy); paint-order: stroke; stroke: #fff; stroke-width: 3px; transition: opacity .25s; }
 .detalle-red { position: absolute; top: 12px; right: 12px; width: min(320px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: #fff; border: 1px solid var(--borde); border-left: 4px solid var(--indigo); padding: 18px 20px; display: grid; gap: 8px; font-size: 14px; box-shadow: 0 8px 24px rgba(35, 45, 79, .12); }
 .detalle-red h2 { font-size: 18px; color: var(--navy); }
 .detalle-red ul { margin: 0; padding-left: 18px; }
