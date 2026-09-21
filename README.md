@@ -17,7 +17,8 @@ items/*.yml  ──►  scripts/catalogo.py  ──►  web/data/items.json  ─
 | `schemas/item.schema.json` | Campos, reglas y vocabularios (valores permitidos). Única fuente de verdad. |
 | `scripts/catalogo.py` | Valida las fichas y genera `web/data/`. Lo corre CI en cada PR. |
 | `web/` | El sitio: `index.html` (catálogo) y `agregar.html` (formulario que arma el YAML). |
-| `web/config.js` | URL del repo, correo institucional y etiquetas legibles de los vocabularios. |
+| `web/config.js` | URL del repo y correo institucional. |
+| `web/textos.js` | Textos visibles del sitio y etiquetas de los vocabularios. |
 | `docs/modelo-de-datos.md` | Descripción de cada campo y de cada valor de vocabulario. |
 | `.github/workflows/catalogo.yml` | Valida en cada PR; en `main` publica en GitHub Pages. |
 
@@ -53,7 +54,7 @@ abrir `index.html` como archivo no funciona.
 ## Mantenimiento
 
 - **Agregar un valor de vocabulario**: sumarlo al `enum` correspondiente en
-  `schemas/item.schema.json`, su etiqueta en `web/config.js` y su descripción
+  `schemas/item.schema.json`, su etiqueta en `web/textos.js` y su descripción
   en `docs/modelo-de-datos.md`.
 - **Agregar un campo**: definirlo en el schema, mostrarlo en `web/app.js`
   (`renderDetalle`) y, si lo carga el público, sumarlo a `agregar.html` y a

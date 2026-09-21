@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Catálogo de usos y desarrollos</title>
-<meta name="description" content="Catálogo abierto de proyectos que usan datos, APIs y catálogos públicos.">
+<title data-t="catalogo.titulo_pestana"></title>
+<meta name="description" data-t-content="catalogo.descripcion_buscadores">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,9 +16,9 @@
   <div class="contenedor">
     <div class="cabecera__arriba">
       <div>
-        <p class="kicker">Datos Abiertos · Argentina</p>
-        <h1>Catálogo de usos y desarrollos</h1>
-        <p class="bajada">Proyectos que usan datos, APIs y catálogos públicos, publicados por organismos, equipos y personas.</p>
+        <p class="kicker" data-t="catalogo.sobretitulo"></p>
+        <h1 data-t="catalogo.titulo"></h1>
+        <p class="bajada" data-t="catalogo.bajada"></p>
       </div>
       <div class="mosaico" aria-hidden="true">
         <span class="indigo">↻</span><span>⇄</span><span class="violeta">{ }</span>
@@ -27,20 +27,20 @@
     </div>
     <div class="cabecera__abajo">
       <label class="buscador">
-        <span>Buscar</span>
+        <span data-t="catalogo.buscar"></span>
         <span class="buscador__campo">
           <span class="buscador__icono" aria-hidden="true">⌕</span>
-          <input id="q" type="search" placeholder="Proyecto, organización, tecnología, fuente…">
+          <input id="q" type="search" data-t-placeholder="catalogo.buscar_placeholder">
         </span>
       </label>
-      <a class="boton boton--violeta" href="agregar.html"><span aria-hidden="true">+</span> ¡Quiero sumar mi proyecto!</a>
+      <a class="boton boton--violeta" href="agregar.html"><span aria-hidden="true">+</span> <span data-t="catalogo.boton_sumar"></span></a>
     </div>
   </div>
 </header>
 
 <main class="contenedor disposicion">
   <aside aria-label="Filtros">
-    <p class="rotulo">Filtrar</p>
+    <p class="rotulo" data-t="catalogo.filtrar"></p>
     <div id="filtros"></div>
   </aside>
   <section>
@@ -51,21 +51,22 @@
         <span class="navy">+</span><span>↻</span><span class="violeta">•••</span><span class="indigo">{ }</span>
       </div>
       <div>
-        <p>¿Desarrollaste un proyecto con datos públicos?</p>
-        <p>Sumalo al catálogo. Son cinco minutos de formulario y no hace falta saber YAML ni usar GitHub.</p>
+        <p data-t="catalogo.llamado_titulo"></p>
+        <p data-t="catalogo.llamado_texto"></p>
       </div>
-      <a class="boton" href="agregar.html">¡Quiero sumar mi proyecto! <span aria-hidden="true">→</span></a>
+      <a class="boton" href="agregar.html"><span data-t="catalogo.boton_sumar"></span> <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </main>
 
 <footer class="pie">
   <div class="contenedor">
-    <p>Cada ficha es un archivo YAML en el repositorio. Contenidos bajo CC BY 4.0.</p>
+    <p data-t="catalogo.pie"></p>
   </div>
 </footer>
 
 <script src="config.js"></script>
+<script src="textos.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

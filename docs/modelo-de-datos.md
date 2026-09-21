@@ -28,7 +28,7 @@ qué es la herramienta con cómo está hecha.
 
 Cualquier valor fuera de estas listas hace fallar la validación. Para agregar
 uno: sumarlo al `enum` en `schemas/item.schema.json`, su etiqueta en
-`web/config.js` y su descripción acá.
+`web/textos.js` y su descripción acá.
 
 ### `tipo_organizacion`
 

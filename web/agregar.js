@@ -3,9 +3,11 @@
 
 const $ = (id) => document.getElementById(id);
 const form = $("form");
+// Campos sueltos (no los de las filas repetibles, que reusan nombres como "nombre").
+const campo = (n) => form.querySelector(`.campos [name="${n}"]`);
 
 // --- YAML ------------------------------------------------------------------
-// ponytail: serializador a mano para esta estructura fija; sin js-yaml.
+// Serializador a mano para esta estructura fija, sin depender de una librería YAML.
 const simple = (s) => /^[a-z0-9]+([-._][a-z0-9]+)*$/.test(s); // ids, enums, tecnologías
 const escalar = (s) => (simple(s) ? s : JSON.stringify(s)); // JSON string == YAML double-quoted
 const bloque = (s) => ">\n" + s.replace(/\s+/g, " ").trim().match(/.{1,78}(\s|$)/g).map((l) => "  " + l.trim()).join("\n");
@@ -44,13 +46,14 @@ function llenarVocabularios(raiz, defs) {
     if (el.dataset.como === "checkbox") {
       el.innerHTML = valores.map((v) => `<label><input type="checkbox" name="tipo_desarrollo" value="${v}">${esc(etiqueta(campo, v))}</label>`).join("");
     } else {
-      el.innerHTML = `<option value="">Elegir…</option>` + valores.map((v) => `<option value="${v}">${esc(etiqueta(campo, v))}</option>`).join("");
+      el.innerHTML = `<option value="">${esc(t("form.elegir"))}</option>` + valores.map((v) => `<option value="${v}">${esc(etiqueta(campo, v))}</option>`).join("");
     }
   }
 }
 
 function agregarFila(fieldset, defs) {
   const fila = fieldset.querySelector("template").content.cloneNode(true);
+  aplicarTextos(fila);
   llenarVocabularios(fila, defs);
   fieldset.querySelector(".agregar").before(fila);
 }
@@ -62,7 +65,7 @@ function leerFilas(fieldset) {
 }
 
 function leerFormulario() {
-  const v = (n) => form.elements[n].value.trim();
+  const v = (n) => campo(n).value.trim();
   return {
     id: v("id"), nombre: v("nombre"), organizacion: v("organizacion"), tipo_organizacion: v("tipo_organizacion"),
     descripcion: v("descripcion"),
@@ -78,20 +81,21 @@ function leerFormulario() {
 // Validación propia de lo que HTML5 no cubre. La validación definitiva la hace el schema en CI.
 function validar(f) {
   const errores = [];
-  if (!form.checkValidity()) errores.push("Hay campos obligatorios sin completar o con formato inválido (marcados en rojo).");
-  if (!f.tipo_desarrollo.length) errores.push("Elegí al menos un tipo de desarrollo.");
-  if (!f.datos_utilizados.length) errores.push("Agregá al menos una fuente de datos.");
-  if (!f.enlaces.length) errores.push("Agregá al menos un enlace.");
-  if (!f.contactos.length) errores.push("Agregá al menos un contacto.");
+  if (!form.checkValidity()) errores.push(t("error.campos"));
+  if (!f.tipo_desarrollo.length) errores.push(t("error.tipo_desarrollo"));
+  if (!f.datos_utilizados.length) errores.push(t("error.fuente"));
+  if (!f.enlaces.length) errores.push(t("error.enlace"));
+  if (!f.contactos.length) errores.push(t("error.contacto"));
   for (const c of f.contactos) {
-    if (c.tipo === "email" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c.valor)) errores.push(`El contacto "${c.valor}" no es un correo válido.`);
-    if (c.tipo && c.tipo !== "email" && !/^https?:\/\//.test(c.valor)) errores.push(`El contacto "${c.valor}" debe ser una URL que empiece con http:// o https://.`);
+    if (c.tipo === "email" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(c.valor)) errores.push(t("error.correo", { valor: c.valor }));
+    if (c.tipo && c.tipo !== "email" && !/^https?:\/\//.test(c.valor)) errores.push(t("error.url", { valor: c.valor }));
   }
-  for (const t of [...f.tecnologias, ...f.etiquetas]) if (!simple(t)) errores.push(`"${t}": usar solo minúsculas, números y guiones.`);
+  for (const v of [...f.tecnologias, ...f.etiquetas]) if (!simple(v)) errores.push(t("error.formato", { valor: v }));
   return errores;
 }
 
 async function iniciar() {
+  aplicarTextos();
   const defs = (await (await fetch("data/schema.json")).json()).$defs;
   llenarVocabularios(form, defs);
   for (const id of ["datos_utilizados", "enlaces", "contactos"]) {
@@ -101,10 +105,10 @@ async function iniciar() {
   form.addEventListener("click", (ev) => {
     if (ev.target.classList.contains("quitar")) ev.target.closest(".fila").remove();
   });
-  form.elements.nombre.addEventListener("input", () => {
-    if (!form.elements.id.dataset.manual) form.elements.id.value = slug(form.elements.nombre.value);
+  campo("nombre").addEventListener("input", () => {
+    if (!campo("id").dataset.manual) campo("id").value = slug(campo("nombre").value);
   });
-  form.elements.id.addEventListener("input", () => (form.elements.id.dataset.manual = "1"));
+  campo("id").addEventListener("input", () => (campo("id").dataset.manual = "1"));
 
   form.addEventListener("submit", (ev) => {
     ev.preventDefault();
@@ -112,25 +116,25 @@ async function iniciar() {
     const errores = validar(f);
     form.classList.add("validado");
     $("errores").hidden = !errores.length;
-    $("errores").innerHTML = `<strong>${errores.length === 1 ? "Falta un dato" : `Faltan ${errores.length} datos`} para generar la ficha</strong><ul>${errores.map((e) => `<li>${esc(e)}</li>`).join("")}</ul>`;
+    $("errores").innerHTML = `<strong>${esc(errores.length === 1 ? t("error.titulo_uno") : t("error.titulo_varios", { n: errores.length }))}</strong><ul>${errores.map((e) => `<li>${esc(e)}</li>`).join("")}</ul>`;
     $("resultado").hidden = !!errores.length;
     if (errores.length) return;
 
     const yaml = aYaml(f);
     const archivo = `items/${f.id}.yml`;
-    $("archivo").textContent = archivo;
+    $("resultado-texto").innerHTML = th("resultado.texto", { archivo }).replace(esc(archivo), `<code>${esc(archivo)}</code>`);
     $("yaml").textContent = yaml;
     $("pr").href = `${CONFIG.repo}/new/${CONFIG.rama}?filename=${encodeURIComponent(archivo)}&value=${encodeURIComponent(yaml)}`;
     if (CONFIG.correo) {
       $("mail").hidden = false;
-      $("mail").href = `mailto:${CONFIG.correo}?subject=${encodeURIComponent(`[Catálogo] Alta: ${f.nombre}`)}&body=${encodeURIComponent(`Solicito agregar esta herramienta al catálogo.\n\nArchivo: ${archivo}\n\n${yaml}`)}`;
+      $("mail").href = `mailto:${CONFIG.correo}?subject=${encodeURIComponent(t("correo.asunto", { nombre: f.nombre }))}&body=${encodeURIComponent(`${t("correo.cuerpo")}\n\n${t("correo.archivo")}: ${archivo}\n\n${yaml}`)}`;
     }
     $("resultado").scrollIntoView({ behavior: "smooth" });
   });
 
   $("copiar").addEventListener("click", async () => {
     await navigator.clipboard.writeText($("yaml").textContent);
-    $("copiar").textContent = "Copiado ✓";
+    $("copiar").textContent = t("resultado.copiado");
   });
 }
 

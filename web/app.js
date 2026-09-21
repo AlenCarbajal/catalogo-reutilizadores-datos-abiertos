@@ -1,9 +1,8 @@
 // Catálogo: carga data/items.json y busca/filtra en el navegador. Sin build ni dependencias.
 // El estado (búsqueda, filtros, ficha abierta) vive en la URL, así se puede compartir.
-// ponytail: render completo en cada cambio; alcanza hasta varios miles de fichas.
+// Se vuelve a dibujar todo en cada cambio; alcanza hasta varios miles de fichas.
 
 const FACETAS = ["tipo_organizacion", "organizacion", "tipo_desarrollo", "tecnologias", "etiquetas"];
-const TITULOS = { tipo_organizacion: "Tipo de organización", organizacion: "Organización", tipo_desarrollo: "Tipo de desarrollo", tecnologias: "Tecnologías", etiquetas: "Etiquetas" };
 
 const $ = (id) => document.getElementById(id);
 const normalizar = (t) => String(t ?? "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -44,26 +43,26 @@ function renderFiltros(visibles) {
     for (const v of activos) if (!conteo.has(v)) conteo.set(v, 0);
     if (!conteo.size) return "";
     const opciones = [...conteo].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "es"));
-    return `<details ${activos.size ? "open" : ""}><summary>${TITULOS[campo]}</summary><div>
+    return `<details ${activos.size ? "open" : ""}><summary>${esc(t("faceta." + campo))}</summary><div>
       ${opciones.map(([v, n]) => `<label><input type="checkbox" data-campo="${campo}" value="${esc(v)}" ${activos.has(v) ? "checked" : ""}> <span>${esc(etiqueta(campo, v))}</span> <small>${n}</small></label>`).join("")}
     </div></details>`;
   }).join("");
 }
 
 function renderDetalle(item) {
-  const bloque = (titulo, cuerpo) => (cuerpo ? `<div><h4>${titulo}</h4>${cuerpo}</div>` : "");
+  const bloque = (clave, cuerpo) => (cuerpo ? `<div><h4>${esc(t(clave))}</h4>${cuerpo}</div>` : "");
   const enlace = (href, texto) => `<a href="${esc(href)}" rel="noopener">${esc(texto)}</a>`;
   return `<div class="detalle">
-    ${bloque("Datos", item.datos_utilizados.map((d) => `<p>${d.url ? enlace(d.url, d.nombre) : `<strong>${esc(d.nombre)}</strong>`} <small>${esc(etiqueta("tipo_dato", d.tipo))}</small></p>`).join(""))}
-    ${bloque("Enlaces", `<p>${item.enlaces.map((e) => enlace(e.url, etiqueta("tipo_enlace", e.tipo))).join(" · ")}</p>`)}
-    ${bloque("Contacto", `<p>${item.contactos.map((c) => enlace(c.tipo === "email" ? "mailto:" + c.valor : c.valor, etiqueta("tipo_contacto", c.tipo))).join(" · ")}</p>`)}
-    ${bloque("Tecnologías", item.tecnologias?.length ? `<div class="tags">${item.tecnologias.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : "")}
+    ${bloque("ficha.datos", item.datos_utilizados.map((d) => `<p>${d.url ? enlace(d.url, d.nombre) : `<strong>${esc(d.nombre)}</strong>`} <small>${esc(etiqueta("tipo_dato", d.tipo))}</small></p>`).join(""))}
+    ${bloque("ficha.enlaces", `<p>${item.enlaces.map((e) => enlace(e.url, etiqueta("tipo_enlace", e.tipo))).join(" · ")}</p>`)}
+    ${bloque("ficha.contacto", `<p>${item.contactos.map((c) => enlace(c.tipo === "email" ? "mailto:" + c.valor : c.valor, etiqueta("tipo_contacto", c.tipo))).join(" · ")}</p>`)}
+    ${bloque("ficha.tecnologias", item.tecnologias?.length ? `<div class="tags">${item.tecnologias.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : "")}
   </div>`;
 }
 
 function render() {
   const visibles = items.filter(coincide);
-  $("estado").innerHTML = `<strong>${visibles.length} de ${items.length}</strong> resultados`;
+  $("estado").innerHTML = `<strong>${esc(t("catalogo.conteo", { n: visibles.length, total: items.length }))}</strong> ${esc(t("catalogo.conteo_sufijo"))}`;
   renderFiltros(visibles);
   $("lista").innerHTML = visibles.length
     ? visibles.map((item) => `
@@ -73,23 +72,24 @@ function render() {
             <h3>${esc(item.nombre)}</h3>
             <p class="ficha__meta"><strong>${esc(item.organizacion)}</strong> · ${esc(etiqueta("tipo_organizacion", item.tipo_organizacion))}
                · ${item.tipo_desarrollo.map((t) => esc(etiqueta("tipo_desarrollo", t))).join(", ")}
-               ${item.verificacion?.estado === "verificado" ? '<span class="verificado">Verificado</span>' : ""}</p>
+               ${item.verificacion?.estado === "verificado" ? `<span class="verificado">${esc(t("catalogo.verificado"))}</span>` : ""}</p>
             <p class="ficha__descripcion">${esc(item.descripcion)}</p>
           </div>
           <span class="ficha__flecha" aria-hidden="true">▾</span>
         </button>
         ${estado.abierto === item.id ? renderDetalle(item) : ""}
       </li>`).join("")
-    : `<li class="vacio"><strong>Ningún proyecto coincide</strong> Sacá algún filtro o <a href="agregar.html">sumá el que falta</a>.</li>`;
+    : `<li class="vacio"><strong>${esc(t("catalogo.vacio_titulo"))}</strong> ${th("catalogo.vacio_texto", {}, "agregar.html")}</li>`;
   escribirURL();
 }
 
 async function iniciar() {
+  aplicarTextos();
   leerURL();
   try {
     items = await (await fetch("data/items.json")).json();
   } catch {
-    $("lista").innerHTML = "<li class='vacio'><strong>No se pudo cargar el catálogo</strong> Falta <code>data/items.json</code>: generalo con <code>python scripts/catalogo.py</code> y serví la carpeta <code>web/</code> por HTTP.</li>";
+    $("lista").innerHTML = `<li class="vacio"><strong>${esc(t("catalogo.error_carga_titulo"))}</strong> ${esc(t("catalogo.error_carga_texto"))}</li>`;
     return;
   }
   for (const item of items) {
@@ -97,8 +97,8 @@ async function iniciar() {
       ...(item.tecnologias ?? []), ...(item.etiquetas ?? []), ...item.datos_utilizados.map((d) => d.nombre)].join(" "));
   }
 
-  let t;
-  $("q").addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => { estado.q = $("q").value.trim(); render(); }, 150); });
+  let espera;
+  $("q").addEventListener("input", () => { clearTimeout(espera); espera = setTimeout(() => { estado.q = $("q").value.trim(); render(); }, 150); });
   $("filtros").addEventListener("change", (ev) => {
     const { campo } = ev.target.dataset, v = ev.target.value;
     const s = (estado.filtros[campo] ??= new Set());

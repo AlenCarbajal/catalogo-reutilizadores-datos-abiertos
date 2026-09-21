@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Ficha de una herramienta del catálogo",
-  "description": "Un archivo YAML por herramienta en items/<id>.yml. Los valores permitidos de cada campo cerrado están en $defs: para agregar un valor nuevo, editar solo este archivo (y su etiqueta en web/config.js).",
+  "description": "Un archivo YAML por herramienta en items/<id>.yml. Los valores permitidos de cada campo cerrado están en $defs: para agregar un valor nuevo, editar solo este archivo (y su etiqueta en web/textos.js).",
   "type": "object",
   "additionalProperties": false,
   "required": ["id", "nombre", "organizacion", "tipo_organizacion", "descripcion", "tipo_desarrollo", "datos_utilizados", "enlaces", "contactos"],

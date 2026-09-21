@@ -1,5 +1,5 @@
-/* Diseño aplicado desde la maqueta "Alternativas UI" (Claude Design), variante Datos Abiertos.
-   Los colores viven en :root; el resto sigue el orden de las páginas. */
+/* Diseño variante Datos Abiertos. Los colores viven en :root; el resto sigue
+   el orden de las páginas. */
 :root {
   --navy: #232D4F; --indigo: #393793; --violeta: #B369ED; --tile: #ECECEC;
   --texto: #434343; --texto-2: #55555F; --tenue: #6B6B78; --claro: #DCDEE8; --kicker: #B8BCD0;
@@ -8,6 +8,7 @@
   --mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 *, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { margin: 0; font-family: Montserrat, system-ui, sans-serif; font-size: 15px; line-height: 1.6; color: var(--texto); background: var(--fondo); }
 h1, h2, h3, h4, p { margin: 0; }
 a { color: var(--indigo); font-weight: 600; }
