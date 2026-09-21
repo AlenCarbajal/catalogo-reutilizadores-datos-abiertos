@@ -9,7 +9,7 @@
 const CRITERIOS = ["tipo_desarrollo", "tipo_organizacion", "tecnologias", "fuentes", "etiquetas"];
 const VISTAS = ["red", "clusters"];
 const PALETA = ["#393793", "#B369ED", "#2E8B8B", "#D9822B", "#232D4F", "#C44F7A", "#6FA83B", "#4A90C8"];
-const SIN_COLOR = "#393793", OTROS = "#A3A5B5";
+const SIN_COLOR = "#393793", OTROS = "#A3A5B5", SIN_DATO = "#DDDEE6";
 const lista = (v) => (Array.isArray(v) ? v : v == null ? [] : [v]);
 const valores = (item, c) => (c === "fuentes" ? item.datos_utilizados.map((d) => d.nombre) : lista(item[c]));
 const nombreValor = (c, v) => (c === "fuentes" ? v : etiqueta(c, v));
@@ -68,23 +68,25 @@ function calcularColores() {
   orden.forEach(([v], i) => colores.set(v, i < PALETA.length - 1 || orden.length === PALETA.length ? PALETA[i] : OTROS));
 }
 const valorColor = (item) => (estado.color ? valores(item, estado.color)[0] : null);
-const colorDe = (item) => (estado.color ? colores.get(valorColor(item)) ?? OTROS : SIN_COLOR);
+const colorDe = (item) => (!estado.color ? SIN_COLOR : valorColor(item) == null ? SIN_DATO : colores.get(valorColor(item)) ?? OTROS);
+// Clave de leyenda de cada proyecto: su valor, "__otros" o "__sin" (no tiene dato).
+const claveLeyenda = (item) => (valorColor(item) == null ? "__sin" : colores.get(valorColor(item)) === OTROS ? "__otros" : valorColor(item));
+const ESPECIALES = { __otros: [OTROS, "red.otros"], __sin: [SIN_DATO, "red.sin_dato"] };
 
 function renderLeyenda() {
   const leyenda = $("leyenda");
   leyenda.hidden = !estado.color;
   if (!estado.color) return;
-  const conteo = d3.rollup(items, (v) => v.length, (item) => (colores.get(valorColor(item)) === OTROS ? "__otros" : valorColor(item) ?? "__otros"));
-  const filas = [...conteo].sort((a, b) => (a[0] === "__otros") - (b[0] === "__otros") || b[1] - a[1]);
+  const conteo = d3.rollup(items, (v) => v.length, claveLeyenda);
+  const filas = [...conteo].sort((a, b) => (a[0] in ESPECIALES) - (b[0] in ESPECIALES) || b[1] - a[1]);
   const multiple = estado.color !== "tipo_organizacion";
   leyenda.innerHTML = `<p class="visor-red__leyenda-titulo">${esc(t("red.leyenda_titulo", { variable: t("red.criterio." + estado.color) }))}</p>
-    <ul>${filas.map(([v, n]) => `<li data-valor="${esc(v)}" tabindex="0"><span style="background:${v === "__otros" ? OTROS : colores.get(v)}"></span>${esc(v === "__otros" ? t("red.otros") : nombreValor(estado.color, v))} <small>${n}</small></li>`).join("")}</ul>
+    <ul>${filas.map(([v, n]) => `<li data-valor="${esc(v)}" tabindex="0"><span style="background:${ESPECIALES[v]?.[0] ?? colores.get(v)}"></span>${esc(ESPECIALES[v] ? t(ESPECIALES[v][1]) : nombreValor(estado.color, v))} <small>${n}</small></li>`).join("")}</ul>
     ${multiple ? `<p class="visor-red__leyenda-nota">${esc(t("red.leyenda_primer_valor"))}</p>` : ""}`;
 }
 
 function resaltarColor(v) {
-  const coincide = (item) => (v === "__otros" ? colores.get(valorColor(item)) === OTROS || valorColor(item) == null : valorColor(item) === v);
-  selNodos.classed("tenue", (d) => v != null && (d.grupo || !coincide(d.item)));
+  selNodos.classed("tenue", (d) => v != null && (d.grupo || claveLeyenda(d.item) !== v));
   selRotulos?.classed("tenue", v != null);
   selLinks.classed("tenue", v != null);
 }

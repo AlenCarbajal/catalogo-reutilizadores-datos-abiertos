@@ -48,6 +48,7 @@ const TEXTOS = {
   "red.leyenda_titulo": "Color: {variable}",
   "red.leyenda_primer_valor": "Si un proyecto tiene varios valores, se colorea por el primero.",
   "red.otros": "Otros",
+  "red.sin_dato": "Sin dato",
   "red.grupo_titulo": "{n} proyecto(s)",
   "red.ver_ficha": "Ver ficha",
   "red.ayuda": "Arrastrá los puntos, acercá con la rueda o con dos dedos, y tocá un punto para ver el detalle. Pasá por la leyenda para resaltar un color. En Clusters, un proyecto con varios valores aparece en cada grupo.",
