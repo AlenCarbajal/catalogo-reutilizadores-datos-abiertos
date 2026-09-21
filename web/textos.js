@@ -28,6 +28,23 @@ const TEXTOS = {
   "catalogo.pie": "Cada ficha es un archivo YAML en el repositorio. Contenidos bajo CC BY 4.0.",
   "catalogo.acerca": "Acerca del catálogo",
 
+  "catalogo.ver_red": "Ver como red",
+
+  // --- Visor en red (red.html) ---
+  "red.titulo_pestana": "Red de proyectos · Catálogo de usos y desarrollos",
+  "red.titulo": "Red de proyectos",
+  "red.bajada": "Cada punto es un proyecto. Elegí un criterio y mirá cómo se agrupan.",
+  "red.agrupar_por": "Agrupar por",
+  "red.criterio.tipo_desarrollo": "Tipo de desarrollo",
+  "red.criterio.tipo_organizacion": "Tipo de organización",
+  "red.criterio.tecnologias": "Tecnologías",
+  "red.criterio.fuentes": "Fuentes de datos",
+  "red.criterio.etiquetas": "Etiquetas",
+  "red.leyenda": "Color según tipo de organización",
+  "red.grupo_titulo": "{n} proyecto(s)",
+  "red.ver_ficha": "Ver ficha",
+  "red.ayuda": "Arrastrá los puntos, acercá con la rueda o con dos dedos, y tocá un punto para ver el detalle.",
+
   // --- Acerca del catálogo (acerca.html). Por definir. ---
   "acerca.titulo_pestana": "Acerca · Catálogo de usos y desarrollos",
   "acerca.titulo": "Acerca del catálogo",
@@ -155,10 +172,11 @@ const t = (clave, datos = {}) => (TEXTOS[clave] ?? clave).replace(/\{(\w+)\}/g, 
 const th = (clave, datos, href = "") =>
   esc(t(clave, datos)).replace(/\*(.+?)\*/g, "<em>$1</em>").replace(/\[(.+?)\]/g, `<a href="${esc(href)}">$1</a>`);
 
-// Completa el HTML: data-t (contenido), data-t-placeholder, data-t-content, data-t-rotulo.
+// Completa el HTML: data-t (contenido), data-t-placeholder, data-t-content, data-t-rotulo, data-t-aria.
 function aplicarTextos(raiz = document) {
   for (const el of raiz.querySelectorAll("[data-t]")) el.innerHTML = th(el.dataset.t, {}, el.dataset.href);
   for (const el of raiz.querySelectorAll("[data-t-placeholder]")) el.placeholder = t(el.dataset.tPlaceholder);
   for (const el of raiz.querySelectorAll("[data-t-content]")) el.content = t(el.dataset.tContent);
   for (const el of raiz.querySelectorAll("[data-t-rotulo]")) el.dataset.rotulo = t(el.dataset.tRotulo);
+  for (const el of raiz.querySelectorAll("[data-t-aria]")) el.setAttribute("aria-label", t(el.dataset.tAria));
 }

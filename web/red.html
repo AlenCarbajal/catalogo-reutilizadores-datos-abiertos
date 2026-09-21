@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-t="red.titulo_pestana"></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header class="cabecera cabecera--form">
+  <div class="contenedor">
+    <p><a class="volver" href="./" data-t="form.volver"></a></p>
+    <h1 data-t="red.titulo"></h1>
+    <p class="bajada" data-t="red.bajada"></p>
+  </div>
+</header>
+
+<main class="contenedor visor-red">
+  <div class="visor-red__controles">
+    <label class="campo"><span data-t="red.agrupar_por"></span><select id="criterio"></select></label>
+    <label class="campo"><span data-t="catalogo.buscar"></span><input id="q" type="search" data-t-placeholder="catalogo.buscar_placeholder"></label>
+    <ul id="leyenda" class="visor-red__leyenda" data-t-aria="red.leyenda"></ul>
+  </div>
+  <div class="visor-red__escena">
+    <svg id="red" role="img" data-t-aria="red.titulo"></svg>
+    <aside id="detalle" class="detalle-red" hidden></aside>
+  </div>
+  <p class="visor-red__ayuda" data-t="red.ayuda"></p>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="config.js"></script>
+<script src="textos.js"></script>
+<script src="red.js"></script>
+</body>
+</html>

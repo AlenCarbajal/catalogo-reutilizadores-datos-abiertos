@@ -157,3 +157,37 @@ input[name="id"] { background: #F2F2F2; color: var(--texto-2); }
 #resultado a:not(.boton) { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 #yaml { margin: 0 0 18px; background: var(--pre); color: #E6E7EE; font-family: var(--mono); font-size: 12.5px; line-height: 1.7; padding: 16px 18px; overflow: auto; border-left: 3px solid var(--violeta); }
 .acciones { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Visor en red */
+.barra__red { color: var(--indigo); font-weight: 600; font-size: 13px; }
+.visor-red { padding-block: 24px 40px; display: grid; gap: 14px; }
+.visor-red__controles { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 24px; }
+.visor-red__controles .campo { min-width: 200px; }
+.visor-red__leyenda { margin: 0 0 0 auto; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--texto-2); }
+.visor-red__leyenda li { display: flex; align-items: center; gap: 6px; }
+.visor-red__leyenda span { width: 10px; height: 10px; border-radius: 50%; }
+.visor-red__escena { position: relative; background: #fff; border: 1px solid var(--borde); }
+#red { display: block; width: 100%; height: min(72vh, 680px); cursor: grab; touch-action: none; }
+#red:active { cursor: grabbing; }
+#red .links line { stroke: var(--borde-input); stroke-width: 1.2; transition: stroke .2s; }
+#red .links line.activo { stroke: var(--indigo); stroke-width: 2; }
+#red .nodo { cursor: pointer; transition: opacity .25s; outline: none; }
+#red .nodo circle { stroke: #fff; stroke-width: 2; }
+#red .nodo text { font: 600 11px Montserrat, system-ui, sans-serif; fill: var(--navy); paint-order: stroke; stroke: #fff; stroke-width: 3px; pointer-events: none; }
+#red.denso .nodo:not(.nodo--grupo):not(.foco) text { display: none; }
+#red .nodo--grupo circle { fill: var(--tile); stroke: var(--navy); stroke-width: 1.5; stroke-dasharray: 3 3; }
+#red .nodo--grupo text { font-size: 12px; font-weight: 700; }
+#red .nodo:focus-visible circle { stroke: var(--violeta); stroke-width: 3; }
+#red .nodo.tenue, #red .nodo.descartado { opacity: .15; }
+.detalle-red { position: absolute; top: 12px; right: 12px; width: min(320px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; background: #fff; border: 1px solid var(--borde); border-left: 4px solid var(--indigo); padding: 18px 20px; display: grid; gap: 8px; font-size: 14px; box-shadow: 0 8px 24px rgba(35, 45, 79, .12); }
+.detalle-red h2 { font-size: 18px; color: var(--navy); }
+.detalle-red ul { margin: 0; padding-left: 18px; }
+.detalle-red a:not(.boton) { color: var(--indigo); }
+.detalle-red__org { font-weight: 600; color: var(--texto-2); }
+.detalle-red .boton { justify-self: start; margin-top: 6px; }
+.visor-red__ayuda { font-size: 13px; color: var(--tenue); }
+@media (max-width: 720px) {
+  .visor-red__leyenda { margin-left: 0; }
+  #red { height: min(70vh, 115vw); }
+  .detalle-red { position: static; width: auto; max-height: none; border-width: 1px 0 0; border-left: 0; border-top: 4px solid var(--indigo); box-shadow: none; }
+}
