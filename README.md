@@ -16,11 +16,11 @@ items/*.yml  ──►  scripts/catalogo.py  ──►  web/data/items.json  ─
 | `items/<id>.yml` | Una ficha por herramienta. `items/_plantilla.yml` es el modelo para copiar. |
 | `schemas/item.schema.json` | Campos, reglas y vocabularios (valores permitidos). Única fuente de verdad. |
 | `scripts/catalogo.py` | Valida las fichas y genera `web/data/`. Lo corre CI en cada PR. |
-| `web/` | El sitio: `index.html` (catálogo) y `agregar.html` (formulario que arma el YAML). |
+| `web/` | El sitio: `index.html` (catálogo), `agregar.html` (formulario que arma el YAML) y `acerca.html` (qué es el catálogo y enlaces a otras secciones de la Dirección). |
 | `web/config.js` | URL del repo y correo institucional. |
 | `web/textos.js` | Textos visibles del sitio y etiquetas de los vocabularios. |
 | `docs/modelo-de-datos.md` | Descripción de cada campo y de cada valor de vocabulario. |
-| `.github/workflows/catalogo.yml` | Valida en cada PR; en `main` publica en GitHub Pages. |
+| `.github/workflows/catalogo.yml` | Valida las fichas en cada PR y en cada push; en `main` además publica en GitHub Pages. |
 
 ## Agregar una herramienta
 

@@ -103,6 +103,15 @@ a:hover { color: var(--navy); }
 .llamado p:first-child { font-size: 19px; font-weight: 700; color: var(--navy); }
 .llamado p + p { margin-top: 7px; color: var(--texto-2); max-width: 60ch; text-wrap: pretty; }
 .pie { background: var(--navy); color: var(--kicker); padding: 22px 0; font-size: 13px; }
+.pie .contenedor { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+.pie a { color: #fff; text-underline-offset: 3px; }
+
+/* Acerca */
+.formulario .tarjeta h2 { margin-bottom: 12px; font-size: 19px; color: var(--navy); }
+.formulario .tarjeta > p { max-width: 65ch; text-wrap: pretty; }
+.enlaces-acerca { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.enlaces-acerca a { color: var(--indigo); font-weight: 600; }
+.enlaces-acerca span { color: var(--tenue); }
 
 /* Formulario */
 .formulario { max-width: 780px; padding-block: 34px 44px; display: flex; flex-direction: column; gap: 34px; }

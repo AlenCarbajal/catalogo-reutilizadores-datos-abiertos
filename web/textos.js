@@ -26,6 +26,15 @@ const TEXTOS = {
   "catalogo.llamado_titulo": "¿Desarrollaste un proyecto con datos públicos?",
   "catalogo.llamado_texto": "Sumalo al catálogo. Son cinco minutos de formulario y no hace falta saber YAML ni usar GitHub.",
   "catalogo.pie": "Cada ficha es un archivo YAML en el repositorio. Contenidos bajo CC BY 4.0.",
+  "catalogo.acerca": "Acerca del catálogo",
+
+  // --- Acerca del catálogo (acerca.html). Por definir. ---
+  "acerca.titulo_pestana": "Acerca · Catálogo de usos y desarrollos",
+  "acerca.titulo": "Acerca del catálogo",
+  "acerca.bajada": "Por definir: una línea sobre quién arma el catálogo y para qué.",
+  "acerca.que_es_titulo": "Qué es",
+  "acerca.que_es_texto": "Por definir: breve explicación del catálogo y de la Dirección.",
+  "acerca.enlaces_titulo": "Otras secciones de la Dirección",
 
   // --- Ficha abierta (rótulos de cada bloque) ---
   "ficha.datos": "Datos",
@@ -117,6 +126,13 @@ const TEXTOS = {
   "correo.cuerpo": "Solicito agregar esta herramienta al catálogo.",
   "correo.archivo": "Archivo",
 };
+
+// Enlaces de la página "Acerca del catálogo" (acerca.html), en este orden.
+// `descripcion` es opcional. Por definir.
+const ENLACES_ACERCA = [
+  { texto: "Por definir: sección 1", url: "#", descripcion: "" },
+  { texto: "Por definir: sección 2", url: "#", descripcion: "" },
+];
 
 // Etiquetas legibles de cada valor de vocabulario. Los valores permitidos viven
 // en schemas/item.schema.json; si agregás uno ahí, agregá su etiqueta acá.

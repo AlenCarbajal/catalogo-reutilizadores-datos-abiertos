@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-t="acerca.titulo_pestana"></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header class="cabecera cabecera--form">
+  <div class="contenedor">
+    <p><a class="volver" href="./" data-t="form.volver"></a></p>
+    <h1 data-t="acerca.titulo"></h1>
+    <p class="bajada" data-t="acerca.bajada"></p>
+  </div>
+</header>
+
+<main class="contenedor formulario">
+  <section class="tarjeta">
+    <h2 data-t="acerca.que_es_titulo"></h2>
+    <p data-t="acerca.que_es_texto"></p>
+  </section>
+  <section class="tarjeta">
+    <h2 data-t="acerca.enlaces_titulo"></h2>
+    <ul id="enlaces-acerca" class="enlaces-acerca"></ul>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p data-t="catalogo.pie"></p>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="textos.js"></script>
+<script>
+  aplicarTextos();
+  document.getElementById("enlaces-acerca").innerHTML = ENLACES_ACERCA.map((e) =>
+    `<li><a href="${esc(e.url)}" rel="noopener">${esc(e.texto)}</a>${e.descripcion ? ` <span>${esc(e.descripcion)}</span>` : ""}</li>`).join("");
+</script>
+</body>
+</html>
