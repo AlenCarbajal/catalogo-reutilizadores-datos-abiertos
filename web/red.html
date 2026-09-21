@@ -31,7 +31,10 @@
   <div id="leyenda" class="visor-red__leyenda" role="group" data-t-aria="red.leyenda"></div>
   <div class="visor-red__escena">
     <svg id="red" role="img" data-t-aria="red.titulo"></svg>
-    <aside id="detalle" class="detalle-red" hidden></aside>
+    <aside id="detalle" class="detalle-red" hidden>
+      <button type="button" id="cerrar-detalle" class="detalle-red__cerrar" data-t-aria="red.cerrar"><span aria-hidden="true">×</span></button>
+      <div id="detalle-contenido" class="detalle-red__contenido"></div>
+    </aside>
   </div>
   <p class="visor-red__ayuda" data-t="red.ayuda"></p>
 </main>

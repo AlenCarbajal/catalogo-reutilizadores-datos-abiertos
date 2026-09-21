@@ -46,8 +46,10 @@ const TEXTOS = {
   "red.leyenda_primer_valor": "Si un proyecto tiene varios valores, se colorea por el primero.",
   "red.otros": "Otros valores",
   "red.sin_dato": "Sin dato",
-  "red.grupo_titulo": "{n} proyecto(s)",
+  "red.grupo_titulo": "{n} proyectos",
+  "red.grupo_titulo_uno": "1 proyecto",
   "red.ver_ficha": "Ver ficha",
+  "red.cerrar": "Cerrar",
   "red.ayuda": "Arrastrá los puntos, acercá con la rueda o con dos dedos, y tocá un punto para ver el detalle. Pasá por la leyenda para resaltar un color.",
 
   // --- Acerca del catálogo (acerca.html). Por definir. ---

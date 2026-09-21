@@ -134,7 +134,7 @@ function armar() {
     );
   selNodos.attr("aria-label", (d) => (d.grupo ? `${nombreValor(criterio, d.valor)} (${d.n})` : d.item.nombre));
   selNodos.select("text").text((d) => (d.grupo ? nombreValor(criterio, d.valor) : d.item.nombre));
-  selNodos.select("title").text((d) => (d.grupo ? t("red.grupo_titulo", { n: d.n }) : `${d.item.nombre} · ${d.item.organizacion}`));
+  selNodos.select("title").text((d) => (d.grupo ? t(d.n === 1 ? "red.grupo_titulo_uno" : "red.grupo_titulo", { n: d.n }) : `${d.item.nombre} · ${d.item.organizacion}`));
   selNodos.on("click", (ev, d) => detalle(d)).on("keydown", (ev, d) => ev.key === "Enter" && detalle(d))
     .on("mouseenter focus", (ev, d) => resaltar(d)).on("mouseleave blur", () => resaltar(null))
     .call(d3.drag()
@@ -186,20 +186,42 @@ function buscar() {
     !terminos.every((q) => normalizar([d.item.nombre, d.item.organizacion, d.item.descripcion, ...valores(d.item, estado.criterio)].join(" ")).includes(q)));
 }
 
+// --- tarjeta de detalle ------------------------------------------------------
+function abrirDetalle(html, d = null) {
+  $("detalle-contenido").innerHTML = html;
+  $("detalle").hidden = false;
+  $("detalle").scrollTop = 0;
+  selNodos?.classed("elegido", (n) => n === d);
+  // En pantallas chicas la tarjeta va debajo de la red: se la lleva a la vista.
+  if (matchMedia("(max-width: 720px)").matches) $("detalle").scrollIntoView({ behavior: sinMovimiento ? "auto" : "smooth", block: "nearest" });
+}
+
+function cerrarDetalle() {
+  $("detalle").hidden = true;
+  selNodos?.classed("elegido", false);
+}
+
 function detalle(d) {
-  const panel = $("detalle");
-  panel.hidden = false;
+  const bloque = (clave, cuerpo) => (cuerpo ? `<div class="detalle-red__bloque"><h3>${esc(t(clave))}</h3>${cuerpo}</div>` : "");
   if (d.grupo) {
-    const deGrupo = items.filter((item) => grupoDe(item, estado.criterio).includes(d.valor));
-    panel.innerHTML = `<p class="rotulo">${esc(t("red.criterio." + estado.criterio))}</p><h2>${esc(nombreValor(estado.criterio, d.valor))}</h2>
-      <p>${esc(t("red.grupo_titulo", { n: d.n }))}</p>
-      <ul>${deGrupo.map((item) => `<li><a href="./#${esc(item.id)}">${esc(item.nombre)}</a></li>`).join("")}</ul>`;
-  } else {
-    const item = d.item;
-    panel.innerHTML = `<p class="rotulo">${esc(etiqueta("tipo_organizacion", item.tipo_organizacion))}</p><h2>${esc(item.nombre)}</h2>
-      <p class="detalle-red__org">${esc(item.organizacion)}</p><p>${esc(item.descripcion)}</p>
-      <a class="boton" href="./#${esc(item.id)}">${esc(t("red.ver_ficha"))} <span aria-hidden="true">→</span></a>`;
+    const deGrupo = items.filter((item) => grupoDe(item, estado.criterio).includes(d.valor))
+      .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+    abrirDetalle(`<p class="rotulo">${esc(t("red.criterio." + estado.criterio))}</p>
+      <h2>${esc(nombreValor(estado.criterio, d.valor))}</h2>
+      <p class="detalle-red__org">${esc(t(d.n === 1 ? "red.grupo_titulo_uno" : "red.grupo_titulo", { n: d.n }))}</p>
+      <ul class="detalle-red__lista">${deGrupo.map((item) =>
+        `<li><a href="./#${esc(item.id)}">${esc(item.nombre)}</a><small>${esc(item.organizacion)}</small></li>`).join("")}</ul>`, d);
+    return;
   }
+  const item = d.item;
+  abrirDetalle(`<p class="rotulo">${esc(etiqueta("tipo_organizacion", item.tipo_organizacion))}</p>
+    <h2>${esc(item.nombre)}</h2>
+    <p class="detalle-red__org">${esc(item.organizacion)}</p>
+    <p class="detalle-red__descripcion">${esc(item.descripcion)}</p>
+    ${bloque("faceta.tipo_desarrollo", `<p>${item.tipo_desarrollo.map((v) => esc(etiqueta("tipo_desarrollo", v))).join(" · ")}</p>`)}
+    ${bloque("ficha.datos", `<p>${item.datos_utilizados.map((f) => esc(f.nombre)).join(" · ")}</p>`)}
+    ${bloque("ficha.tecnologias", item.tecnologias?.length ? `<div class="tags">${item.tecnologias.map((v) => `<span>${esc(v)}</span>`).join("")}</div>` : "")}
+    <a class="boton" href="./#${esc(item.id)}">${esc(t("red.ver_ficha"))} <span aria-hidden="true">→</span></a>`, d);
 }
 
 function escribirURL() {
@@ -218,8 +240,7 @@ async function iniciar() {
   try {
     items = await (await fetch("data/items.json")).json();
   } catch {
-    $("detalle").hidden = false;
-    $("detalle").innerHTML = `<h2>${esc(t("catalogo.error_carga_titulo"))}</h2><p>${esc(t("catalogo.error_carga_texto"))}</p>`;
+    abrirDetalle(`<h2>${esc(t("catalogo.error_carga_titulo"))}</h2><p>${esc(t("catalogo.error_carga_texto"))}</p>`);
     return;
   }
   const ajustar = () => { const { width, height } = svg.node().getBoundingClientRect(); svg.attr("viewBox", [-width / 2, -height / 2, width, height]); };
@@ -228,7 +249,7 @@ async function iniciar() {
 
   $("criterio").addEventListener("change", (ev) => {
     estado.criterio = ev.target.value;
-    $("detalle").hidden = true;
+    cerrarDetalle();
     escribirURL();
     armar();
   });
@@ -245,6 +266,10 @@ async function iniciar() {
   $("leyenda").addEventListener("mouseleave", () => resaltarColor(null));
   $("leyenda").addEventListener("focusout", () => resaltarColor(null));
   $("q").addEventListener("input", buscar);
+  // La tarjeta se cierra con la X, con Escape o tocando el fondo de la red.
+  $("cerrar-detalle").addEventListener("click", cerrarDetalle);
+  addEventListener("keydown", (ev) => ev.key === "Escape" && !$("detalle").hidden && cerrarDetalle());
+  svg.on("click.cerrar", (ev) => ev.target === svg.node() && cerrarDetalle());
 
   calcularColores();
   renderLeyenda();
