@@ -4,6 +4,22 @@ Catálogo abierto de herramientas que usan datos, APIs y catálogos públicos.
 Cada herramienta es un archivo YAML en `items/`. Un script lo valida y arma un
 JSON; un sitio estático lo muestra. No hay backend, base de datos ni build.
 
+## Por dónde empezar
+
+| Si querés… | Entrá a |
+| --- | --- |
+| Sumar una herramienta al catálogo | [CONTRIBUIR.md](CONTRIBUIR.md) |
+| Saber qué campos tiene una ficha y qué valores acepta cada uno | [docs/modelo-de-datos.md](docs/modelo-de-datos.md) |
+| Levantar el sitio en tu computadora | [Correr en local](#correr-en-local) |
+
+## El sitio
+
+| Página | Qué muestra |
+| --- | --- |
+| `index.html` | El catálogo: buscador, filtros por faceta y cada ficha desplegable. La búsqueda y los filtros quedan en la URL, así se pueden compartir. |
+| `agregar.html` | Formulario que arma la ficha YAML y la envía como Pull Request o por correo. No hace falta saber YAML. |
+| `acerca.html` | Qué es el catálogo y enlaces a otras secciones de la Dirección. |
+
 ## Cómo funciona
 
 ```
@@ -45,9 +61,23 @@ python -m http.server -d web 8000        # http://localhost:8000
 El sitio hace `fetch` de `data/items.json`, así que hay que servirlo por HTTP:
 abrir `index.html` como archivo no funciona.
 
+## Validación automática (CI)
+
+En cada Pull Request y en cada push, `.github/workflows/catalogo.yml` corre
+`python scripts/catalogo.py`, que revisa cada `items/*.yml`:
+
+- que sea YAML válido;
+- que cumpla `schemas/item.schema.json`: campos obligatorios, tipos, largos,
+  URLs y valores de vocabulario;
+- que el `id` coincida con el nombre del archivo y no esté repetido.
+
+Si algo falla, el check queda en rojo y el error aparece anotado sobre el
+archivo en el Pull Request. En `main`, si todo pasa, publica el sitio.
+
 ## Puesta en marcha (una sola vez)
 
-1. Completar `repo` y `correo` en `web/config.js`.
+1. Completar `correo` en `web/config.js` (sin correo, el formulario no muestra
+   el botón **Enviar por correo**).
 2. En GitHub: Settings → Pages → Source: **GitHub Actions**.
 3. Hacer push a `main`. El workflow publica el sitio.
 
