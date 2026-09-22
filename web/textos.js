@@ -33,6 +33,7 @@ const TEXTOS = {
   "pag.anterior": "Anterior",
   "pag.siguiente": "Siguiente",
   "pag.pagina": "Página {n}",
+  "pag.de": "página {n} de {total}",
   "pag.rango": "{desde}–{hasta} de {total}",
 
   "catalogo.ver_red": "Ver como red",
@@ -69,7 +70,7 @@ const TEXTOS = {
   "eco.estado.instalable": "Se instala (biblioteca o plugin)",
   "eco.abrir": "Abrir sitio",
   "eco.lista_titulo": "Todos los servicios",
-  "catalogo.ecosistema": "Ecosistema",
+  "catalogo.ecosistema": "Ecosistema datos.gob.ar",
   "catalogo.secciones": "Secciones",
 
   // --- Acerca del catálogo (acerca.html). Por definir. ---

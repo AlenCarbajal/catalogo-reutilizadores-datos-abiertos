@@ -92,7 +92,8 @@ function render() {
   const paginas = Math.max(1, Math.ceil(visibles.length / POR_PAGINA));
   estado.pagina = Math.min(estado.pagina, paginas);
   const pagina = visibles.slice((estado.pagina - 1) * POR_PAGINA, estado.pagina * POR_PAGINA);
-  $("estado").innerHTML = `<strong>${esc(t("catalogo.conteo", { n: visibles.length, total: items.length }))}</strong> ${esc(t("catalogo.conteo_sufijo"))}`;
+  $("estado").innerHTML = `<strong>${esc(t("catalogo.conteo", { n: visibles.length, total: items.length }))}</strong> ${esc(t("catalogo.conteo_sufijo"))}`
+    + (paginas > 1 ? ` · ${esc(t("pag.de", { n: estado.pagina, total: paginas }))}` : "");
   renderFiltros(visibles);
   renderPaginacion(visibles.length, paginas);
   $("lista").innerHTML = visibles.length
