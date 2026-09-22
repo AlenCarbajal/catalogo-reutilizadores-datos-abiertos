@@ -52,6 +52,18 @@ const TEXTOS = {
   "red.cerrar": "Cerrar",
   "red.ayuda": "Arrastrá los puntos, acercá con la rueda o con dos dedos, y tocá un punto para ver el detalle. Pasá por la leyenda para resaltar un color.",
 
+  // --- Ecosistema datos.gob.ar (ecosistema.html) ---
+  "eco.titulo_pestana": "Ecosistema datos.gob.ar",
+  "eco.titulo": "Ecosistema datos.gob.ar",
+  "eco.bajada": "Los portales, APIs y herramientas que mantiene la Dirección, y cómo se conectan alrededor de datos.gob.ar.",
+  "eco.leyenda": "Estado de cada servicio",
+  "eco.estado.online": "En línea",
+  "eco.estado.offline": "Fuera de línea",
+  "eco.estado.instalable": "Se instala (biblioteca o plugin)",
+  "eco.abrir": "Abrir sitio",
+  "eco.lista_titulo": "Todos los servicios",
+  "catalogo.ecosistema": "Ecosistema datos.gob.ar",
+
   // --- Acerca del catálogo (acerca.html). Por definir. ---
   "acerca.titulo_pestana": "Acerca · Catálogo de usos y desarrollos",
   "acerca.titulo": "Acerca del catálogo",
