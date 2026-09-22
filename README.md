@@ -19,7 +19,7 @@ JSON; un sitio estático lo muestra. No hay backend, base de datos ni build.
 | `index.html` | El catálogo: buscador, filtros por faceta, resultados de a 20 por página y cada ficha desplegable. La búsqueda, los filtros y la página quedan en la URL, así se pueden compartir. Debajo de la bajada lleva a Ecosistema y Acerca. |
 | `agregar.html` | Formulario que arma la ficha YAML y la envía como Pull Request o por correo. No hace falta saber YAML. |
 | `red.html` | Visor en red: agrupa los proyectos por tipo de desarrollo, organización, tecnologías, fuentes o etiquetas, y los colorea por una segunda variable. |
-| `ecosistema.html` | Ecosistema datos.gob.ar: el portal en el centro y, en órbita, Portal Andino, la API Georef y la API Series de Tiempo. Al tocar cada una se acerca la vista y aparece lo que la orbita (portales Andino activos, librerías de Georef, explorador de series). Debajo, la lista completa de servicios, que está al principio de `web/ecosistema.js`. |
+| `ecosistema.html` | Ecosistema datos.gob.ar: el portal en el centro y, en órbita, Portal Andino, la API Georef y la API Series de Tiempo. Al tocar cada una se acerca la vista y aparece lo que la orbita (en Andino: Paquete de apertura, DATOB, Vocabularios y un cinturón con los portales activos; en Georef: sus librerías; en Series: el explorador). Debajo, la lista completa de servicios, que está al principio de `web/ecosistema.js`. |
 | `acerca.html` | Qué es el catálogo y enlaces a otras secciones de la Dirección. |
 
 ## Cómo funciona

@@ -7,18 +7,23 @@
 //   y el explorador de series.
 // Debajo, la lista completa de servicios. Solo datos públicos.
 
-// Lo que orbita a cada herramienta. Los portales de Andino se cargan aparte.
+// Lo que orbita a cada herramienta: lunas con nombre y, en Andino, el cinturón
+// de portales activos (se carga aparte, de data/portales.json).
 const SISTEMAS = [
-  { id: "georef", nombre: "API Georef", logo: "georef", angulo: -38, satelites: [
+  { id: "georef", nombre: "API Georef", logo: "georef", angulo: -38, lunas: [
     { nombre: "Librería Python Georef", corto: "Python" },
     { nombre: "Librería R Georef", corto: "R" },
     { nombre: "Plugin QGIS Georef", corto: "Plugin QGIS" },
     { nombre: "georef-ux" },
   ] },
-  { id: "series", nombre: "API Series de Tiempo", logo: "series-de-tiempo", angulo: 42, satelites: [
+  { id: "series", nombre: "API Series de Tiempo", logo: "series-de-tiempo", angulo: 42, lunas: [
     { nombre: "Explorador de series", url: "https://datos.gob.ar/series" },
   ] },
-  { id: "andino", nombre: "Portal Andino", logo: "andino", angulo: 188, satelites: [] },
+  { id: "andino", nombre: "Portal Andino", logo: "andino", angulo: 188, lunas: [
+    { nombre: "Paquete de apertura de datos", corto: "Paquete de apertura" },
+    { nombre: "DATOB" },
+    { nombre: "Vocabularios y codelists", corto: "Vocabularios", url: "https://infra.datos.gob.ar/vocabulario/" },
+  ], cinturon: [] },
 ];
 
 // Lista completa, por familia. estado: "online" | "offline" | "instalable".
@@ -27,7 +32,6 @@ const FAMILIAS = [
   { id: "andino", nombre: "Andino", logo: "andino" },
   { id: "georef", nombre: "Georef", logo: "georef" },
   { id: "series", nombre: "Series de Tiempo", logo: "series-de-tiempo" },
-  { id: "apertura", nombre: "Apertura de datos", logo: "paquete-apertura" },
   { id: "metas", nombre: "Metas", glifo: "✓" },
   { id: "infra", nombre: "Infraestructura de datos", glifo: "Σ" },
 ];
@@ -46,9 +50,9 @@ const SERVICIOS = [
   { familia: "series", nombre: "API Series de Tiempo", estado: "online" },
   { familia: "series", nombre: "API Series de Tiempo V2", estado: "online" },
   { familia: "series", nombre: "Explorador de series", estado: "online", url: "https://datos.gob.ar/series" },
-  { familia: "apertura", nombre: "Paquete de apertura de datos", estado: "online" },
-  { familia: "apertura", nombre: "DATOB", estado: "online" },
-  { familia: "apertura", nombre: "Vocabularios y codelists", estado: "online", url: "https://infra.datos.gob.ar/vocabulario/" },
+  { familia: "andino", nombre: "Paquete de apertura de datos", estado: "online" },
+  { familia: "andino", nombre: "DATOB", estado: "online" },
+  { familia: "andino", nombre: "Vocabularios y codelists", estado: "online", url: "https://infra.datos.gob.ar/vocabulario/" },
   { familia: "metas", nombre: "Metas del 5.º plan", estado: "online" },
   { familia: "metas", nombre: "Metas del 6.º plan", estado: "online" },
   { familia: "metas", nombre: "Metas (desarrollo)", estado: "online" },
@@ -86,11 +90,16 @@ function imagenLogo(padre, nombre, alto, y = -alto / 2) {
 }
 
 // Radio del anillo de satélites de cada herramienta.
-const radioSistema = (sis, angosto) => (sis.satelites.length > 8 ? (angosto ? 150 : 190) : angosto ? 120 : 150);
+// Radios del anillo de lunas y, si hay, del cinturón; `marco` es lo que tiene que entrar al acercarse.
+function radiosSistema(sis, angosto) {
+  const lunas = sis.cinturon ? (angosto ? 110 : 120) : angosto ? 120 : 150;
+  const cinturon = angosto ? 200 : 215;
+  return { lunas, cinturon, marco: sis.cinturon ? cinturon + 40 : lunas };
+}
 const recortar = (texto, max) => (texto.length > max ? texto.slice(0, max - 1).trimEnd() + "…" : texto);
 
 // --- escena ------------------------------------------------------------------
-const escena = { W: 0, H: 0, R: 0, giro: 0, enfocado: null, vista: null, animando: null };
+const escena = { W: 0, H: 0, R: 0, giro: 0, cinturon: 0, enfocado: null, vista: null, animando: null };
 
 function dibujar() {
   const svg = $("constelacion");
@@ -147,31 +156,55 @@ function dibujar() {
   if (escena.enfocado) enfocar(escena.enfocado, true);
 }
 
-// Lo que orbita a una herramienta: un anillo propio y sus satélites, ocultos
-// hasta que se la enfoca.
+// Lo que orbita a una herramienta, oculto hasta que se la enfoca: un anillo de
+// lunas con nombre y, en Andino, un cinturón con los portales activos.
 function dibujarSistema(padre, sis, angosto) {
   const sistema = el("g", { class: "eco-sistema", "data-sistema": sis.id }, padre);
-  const n = sis.satelites.length;
-  const radio = radioSistema(sis, angosto);
-  el("circle", { r: radio, class: "eco-orbita eco-orbita--sistema" }, sistema);
-  if (!n) {
-    el("text", { class: "eco-satelite__etiqueta", "text-anchor": "middle", y: radio + 34 }, sistema).textContent = t("eco.sin_portales");
-    return;
-  }
-  sis.satelites.forEach((s, j) => {
-    const a = rad(-90 + (360 / n) * j + (n === 1 ? 45 : 0));
-    const x = Math.cos(a) * radio, y = Math.sin(a) * radio;
-    const g = el("g", { class: "eco-satelite", transform: `translate(${x},${y})`, style: `--demora:${j * 45}ms`,
+  const { lunas, cinturon } = radiosSistema(sis, angosto);
+  el("circle", { r: lunas, class: "eco-orbita eco-orbita--sistema" }, sistema);
+  const n = sis.lunas.length;
+  sis.lunas.forEach((s, j) => {
+    const a = rad(-90 + (360 / n) * j + (n === 1 ? 45 : n === 3 ? 30 : 0));
+    const x = Math.cos(a) * lunas, y = Math.sin(a) * lunas;
+    const g = el("g", { class: "eco-satelite", transform: `translate(${x},${y})`, style: `--demora:${j * 60}ms`,
       tabindex: -1, role: "button", "aria-label": s.nombre }, sistema);
-    el("circle", { r: 16, class: "eco-blanco-toque" }, g);
-    el("circle", { r: angosto ? 7 : 5.5, class: "eco-satelite__punto" }, g);
+    el("circle", { r: 18, class: "eco-blanco-toque" }, g);
+    el("circle", { r: angosto ? 8 : 6.5, class: "eco-satelite__punto" }, g);
     const derecha = Math.cos(a) > 0.2, izquierda = Math.cos(a) < -0.2;
-    el("text", { class: "eco-satelite__etiqueta", x: derecha ? 12 : izquierda ? -12 : 0, y: derecha || izquierda ? 0 : Math.sin(a) < 0 ? -14 : 22,
-      dy: derecha || izquierda ? "0.35em" : 0, "text-anchor": derecha ? "start" : izquierda ? "end" : "middle" }, g).textContent =
-      angosto ? recortar(s.corto ?? s.nombre, 16) : s.corto ?? s.dominio ?? s.nombre; // en pantallas angostas, el nombre corto
+    el("text", { class: "eco-satelite__etiqueta", x: derecha ? 14 : izquierda ? -14 : 0, y: derecha || izquierda ? 0 : Math.sin(a) < 0 ? -16 : 26,
+      dy: derecha || izquierda ? "0.35em" : 0, "text-anchor": derecha ? "start" : izquierda ? "end" : "middle" }, g).textContent = s.corto ?? s.nombre;
     g.addEventListener("click", () => ficha(s, sis));
     g.addEventListener("keydown", (ev) => (ev.key === "Enter" || ev.key === " ") && (ev.preventDefault(), ficha(s, sis)));
   });
+  if (sis.cinturon) dibujarCinturon(sistema, sis, cinturon, angosto);
+}
+
+// Cinturón de portales: puntos repartidos en una banda que gira despacio. Al
+// tocarlo se abre la lista; la escena no intenta rotular cada portal.
+function dibujarCinturon(padre, sis, radio, angosto) {
+  const portales = sis.cinturon;
+  const banda = el("g", { class: "eco-cinturon", tabindex: -1, role: "button",
+    "aria-label": t("eco.ver_portales", { n: portales.length }) }, padre);
+  el("circle", { r: radio, class: "eco-cinturon__banda" }, banda);
+  const giro = el("g", { class: "eco-cinturon__giro" }, banda);
+  const r = azar(11);
+  // Cada portal es un asteroide; entre ellos, polvo sin significado para dar textura.
+  for (let i = 0; i < 70; i++) {
+    const a = r() * Math.PI * 2, d = radio + (r() - 0.5) * 34;
+    el("circle", { cx: Math.cos(a) * d, cy: Math.sin(a) * d, r: r() * 1.1 + 0.4, class: "eco-cinturon__polvo" }, giro);
+  }
+  portales.forEach((p, j) => {
+    const a = rad((360 / portales.length) * j + (r() - 0.5) * 10), d = radio + (r() - 0.5) * 22;
+    const c = el("circle", { cx: Math.cos(a) * d, cy: Math.sin(a) * d, r: (angosto ? 5 : 4) + r() * 1.5,
+      class: "eco-cinturon__portal", style: `--fase:${(r() * 4).toFixed(2)}s` }, giro);
+    el("title", {}, c).textContent = `${p.nombre} · ${p.dominio}`;
+  });
+  el("text", { class: "eco-cinturon__rotulo", "text-anchor": "middle", y: radio + (angosto ? 58 : 50) }, banda).textContent =
+    portales.length ? t("eco.cinturon", { n: portales.length }) : t("eco.sin_portales");
+  if (!portales.length) return;
+  const abrir = () => listaPortales(sis);
+  banda.addEventListener("click", abrir);
+  banda.addEventListener("keydown", (ev) => (ev.key === "Enter" || ev.key === " ") && (ev.preventDefault(), abrir()));
 }
 
 // Giro lento de la órbita; las herramientas se mantienen derechas.
@@ -184,6 +217,10 @@ function girar(ahora) {
   if (ultimo !== null && !pausado && !escena.enfocado) {
     escena.giro = (escena.giro + (ahora - ultimo) * 0.0012) % 360; // una vuelta cada 5 minutos
     aplicarGiro();
+  }
+  if (ultimo !== null && escena.enfocado) { // el cinturón gira mientras se lo mira: una vuelta cada 2 minutos y medio
+    escena.cinturon = (escena.cinturon + (ahora - ultimo) * 0.0024) % 360;
+    for (const g of document.querySelectorAll(".eco-activo .eco-cinturon__giro")) g.setAttribute("transform", `rotate(${escena.cinturon})`);
   }
   ultimo = ahora;
   requestAnimationFrame(girar);
@@ -209,12 +246,12 @@ function enfocar(id, instantaneo = false) {
   escena.enfocado = id;
   const a = rad(sis.angulo + escena.giro);
   const cx = Math.cos(a) * escena.R, cy = Math.sin(a) * escena.R;
-  const angosto = escena.W < escena.H, radio = radioSistema(sis, angosto);
-  const ancho = (radio + (angosto ? 150 : 200)) * 2, alto = Math.max(ancho * escena.H / escena.W, (radio + 110) * 2);
+  const angosto = escena.W < escena.H, radio = radiosSistema(sis, angosto).marco;
+  const ancho = (radio + (angosto ? 150 : 200)) * 2, alto = Math.max(ancho * escena.H / escena.W, (radio + 70) * 2);
   const svg = $("constelacion");
   svg.classList.add("eco-enfocado");
   for (const g of svg.querySelectorAll("[data-sistema]")) g.classList.toggle("eco-activo", g.dataset.sistema === id);
-  for (const s of svg.querySelectorAll(".eco-satelite")) s.setAttribute("tabindex", s.closest(".eco-activo") ? 0 : -1);
+  for (const s of svg.querySelectorAll(".eco-satelite, .eco-cinturon")) s.setAttribute("tabindex", s.closest(".eco-activo") ? 0 : -1);
   moverVista([cx - ancho / 2, cy - alto / 2, ancho, alto], instantaneo);
   $("eco-volver").hidden = false;
   $("eco-sistema-titulo").textContent = t("eco.orbita_de", { nombre: sis.nombre });
@@ -228,12 +265,20 @@ function alejar() {
   const svg = $("constelacion");
   svg.classList.remove("eco-enfocado");
   for (const g of svg.querySelectorAll(".eco-activo")) g.classList.remove("eco-activo");
-  for (const s of svg.querySelectorAll(".eco-satelite")) s.setAttribute("tabindex", -1);
+  for (const s of svg.querySelectorAll(".eco-satelite, .eco-cinturon")) s.setAttribute("tabindex", -1);
   moverVista([-escena.W / 2, -escena.H / 2, escena.W, escena.H]);
   $("eco-volver").hidden = true;
   $("eco-sistema-titulo").textContent = "";
   $("eco-ficha").hidden = true;
   history.replaceState(null, "", location.pathname + location.search);
+}
+
+function listaPortales(sis) {
+  const portales = sis.cinturon;
+  $("eco-ficha-contenido").innerHTML = `<img src="${logo(sis.logo, "color")}" alt="${esc(sis.nombre)}" class="eco-ficha__logo">
+    <h2>${esc(t("eco.portales_andino"))}</h2>
+    <ul class="eco-ficha__portales">${portales.map((p) => `<li><a href="${esc(p.url)}" rel="noopener">${esc(p.nombre)}</a><small>${esc(p.dominio)}</small></li>`).join("")}</ul>`;
+  $("eco-ficha").hidden = false;
 }
 
 function ficha(s, sis) {
@@ -262,7 +307,7 @@ async function iniciar() {
   aplicarTextos();
   let portales = [];
   try { portales = await (await fetch("data/portales.json")).json(); } catch { /* sin portales: el sistema de Andino lo avisa */ }
-  SISTEMAS.find((s) => s.id === "andino").satelites = portales;
+  SISTEMAS.find((s) => s.id === "andino").cinturon = portales;
   lista(portales);
   escena.enfocado = SISTEMAS.some((s) => "#" + s.id === location.hash) ? location.hash.slice(1) : null;
   dibujar();

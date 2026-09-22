@@ -242,7 +242,10 @@ input[name="id"] { background: #F2F2F2; color: var(--texto-2); }
 /* Sistema de cada herramienta: oculto hasta enfocarla. */
 .eco-sistema { opacity: 0; pointer-events: none; transition: opacity 500ms ease; }
 .eco-enfocado .eco-activo .eco-sistema { opacity: 1; pointer-events: auto; transition-delay: 450ms; }
-.eco-enfocado .eco-centro, .eco-enfocado > .eco-orbita, .eco-enfocado .eco-planeta:not(.eco-activo) { opacity: .1; transition: opacity 500ms ease; }
+/* Al acercarse, lo de atrás desaparece y del cuerpo enfocado queda solo el logo. */
+.eco-enfocado .eco-centro, .eco-enfocado > .eco-orbita, .eco-enfocado .eco-planeta:not(.eco-activo) { opacity: 0; transition: opacity 400ms ease; }
+.eco-planeta__punto, .eco-planeta__nombre { transition: opacity 400ms ease; }
+.eco-enfocado .eco-activo .eco-planeta__punto, .eco-enfocado .eco-activo .eco-planeta__nombre { opacity: 0; }
 .eco-enfocado .eco-planeta:not(.eco-activo) .eco-cuerpo { pointer-events: none; }
 .eco-satelite { cursor: pointer; outline: none; opacity: 0; transform-box: fill-box; }
 .eco-enfocado .eco-activo .eco-satelite { opacity: 1; transition: opacity 400ms ease calc(550ms + var(--demora)); }
@@ -305,3 +308,19 @@ input[name="id"] { background: #F2F2F2; color: var(--texto-2); }
   .paginacion__botones { flex-wrap: nowrap; width: 100%; justify-content: space-between; }
   .paginacion button[data-pagina]:not([aria-current]):not(:first-child):not(:last-child), .paginacion__salto { display: none; }
 }
+
+/* Cinturón de portales de Andino */
+.eco-cinturon { cursor: pointer; outline: none; }
+.eco-cinturon__banda { fill: none; stroke: #8C8AF0; stroke-width: 44; opacity: .07; transition: opacity .25s; }
+.eco-cinturon:hover .eco-cinturon__banda, .eco-cinturon:focus-visible .eco-cinturon__banda { opacity: .16; }
+.eco-cinturon:focus-visible .eco-cinturon__banda { stroke: var(--violeta); }
+.eco-cinturon__polvo { fill: #C9CBF5; opacity: .45; }
+.eco-cinturon__portal { fill: var(--oro); animation: titilar 4.5s ease-in-out infinite var(--fase); }
+@keyframes titilar { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+.eco-cinturon__rotulo { font: 600 13px Montserrat, system-ui, sans-serif; fill: var(--claro); }
+#constelacion.angosto .eco-cinturon__rotulo { font-size: 17px; }
+.eco-ficha__portales { max-height: min(46vh, 380px); overflow: auto; overscroll-behavior: contain; margin: 0; padding: 0; list-style: none; display: grid; }
+.eco-ficha__portales li { display: grid; padding: 8px 0; border-top: 1px solid var(--borde); }
+.eco-ficha__portales a { color: var(--indigo); font-weight: 600; text-underline-offset: 3px; }
+.eco-ficha__portales small { font-size: 13px; color: var(--tenue); }
+@media (prefers-reduced-motion: reduce) { .eco-cinturon__portal { animation: none; } }

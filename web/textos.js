@@ -70,6 +70,8 @@ const TEXTOS = {
   "eco.volver": "Volver a datos.gob.ar",
   "eco.sin_portales": "No se pudo cargar la lista de portales.",
   "eco.portales_andino": "Portales Andino activos",
+  "eco.cinturon": "{n} portales activos · tocá el cinturón para verlos",
+  "eco.ver_portales": "Ver los {n} portales Andino activos",
   "eco.leyenda": "Estado de cada servicio",
   "eco.estado.online": "En línea",
   "eco.estado.offline": "Fuera de línea",
