@@ -14,6 +14,10 @@
 
 <header class="cabecera">
   <div class="contenedor">
+    <nav class="cabecera__nav" data-t-aria="catalogo.secciones">
+      <a class="boton boton--borde boton--chico" href="ecosistema.html" data-t="catalogo.ecosistema"></a>
+      <a class="boton boton--borde boton--chico" href="acerca.html" data-t="catalogo.acerca"></a>
+    </nav>
     <div class="cabecera__arriba">
       <div>
         <p class="kicker" data-t="catalogo.sobretitulo"></p>
@@ -46,6 +50,7 @@
   <section>
     <div class="barra"><p id="estado" role="status" aria-live="polite"></p><a class="barra__red" href="red.html" data-t="catalogo.ver_red"></a></div>
     <ol id="lista"></ol>
+    <nav id="paginacion" class="paginacion" data-t-aria="pag.navegacion" hidden></nav>
     <div class="llamado">
       <div class="mosaico mosaico--chico" aria-hidden="true">
         <span class="navy">+</span><span>↻</span><span class="violeta">•••</span><span class="indigo">{ }</span>
@@ -62,7 +67,6 @@
 <footer class="pie">
   <div class="contenedor">
     <p data-t="catalogo.pie"></p>
-    <p><a href="ecosistema.html" data-t="catalogo.ecosistema"></a> · <a href="acerca.html" data-t="catalogo.acerca"></a></p>
   </div>
 </footer>
 

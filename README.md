@@ -16,7 +16,7 @@ JSON; un sitio estático lo muestra. No hay backend, base de datos ni build.
 
 | Página | Qué muestra |
 | --- | --- |
-| `index.html` | El catálogo: buscador, filtros por faceta y cada ficha desplegable. La búsqueda y los filtros quedan en la URL, así se pueden compartir. |
+| `index.html` | El catálogo: buscador, filtros por faceta, resultados de a 20 por página y cada ficha desplegable. La búsqueda, los filtros y la página quedan en la URL, así se pueden compartir. Arriba lleva a Ecosistema y Acerca. |
 | `agregar.html` | Formulario que arma la ficha YAML y la envía como Pull Request o por correo. No hace falta saber YAML. |
 | `red.html` | Visor en red: agrupa los proyectos por tipo de desarrollo, organización, tecnologías, fuentes o etiquetas, y los colorea por una segunda variable. |
 | `ecosistema.html` | Ecosistema datos.gob.ar: los portales, APIs y herramientas que mantiene la Dirección, como una constelación alrededor del portal, con su estado. Los servicios están al principio de `web/ecosistema.js` y los logos en `web/img/logos/`. |

@@ -1,20 +1,22 @@
 // Catálogo: carga data/items.json y busca/filtra en el navegador. Sin build ni dependencias.
-// El estado (búsqueda, filtros, ficha abierta) vive en la URL, así se puede compartir.
+// El estado (búsqueda, filtros, página, ficha abierta) vive en la URL, así se puede compartir.
 // Se vuelve a dibujar todo en cada cambio; alcanza hasta varios miles de fichas.
 
 const FACETAS = ["tipo_organizacion", "organizacion", "tipo_desarrollo", "tecnologias", "etiquetas"];
+const POR_PAGINA = 20;
 
 const $ = (id) => document.getElementById(id);
 const normalizar = (t) => String(t ?? "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 const lista = (v) => (Array.isArray(v) ? v : v == null ? [] : [v]);
 
 let items = [];
-const estado = { q: "", filtros: {}, abierto: null }; // filtros: { campo: Set(valores) }
+const estado = { q: "", filtros: {}, pagina: 1, abierto: null }; // filtros: { campo: Set(valores) }
 
 function leerURL() {
   const p = new URLSearchParams(location.search);
   estado.q = p.get("q") ?? "";
   for (const campo of FACETAS) if (p.get(campo)) estado.filtros[campo] = new Set(p.get(campo).split(","));
+  estado.pagina = Math.max(1, parseInt(p.get("pagina"), 10) || 1);
   estado.abierto = decodeURIComponent(location.hash.slice(1)) || null;
   $("q").value = estado.q;
 }
@@ -23,6 +25,7 @@ function escribirURL() {
   const p = new URLSearchParams();
   if (estado.q) p.set("q", estado.q);
   for (const [campo, valores] of Object.entries(estado.filtros)) if (valores.size) p.set(campo, [...valores].join(","));
+  if (estado.pagina > 1) p.set("pagina", estado.pagina);
   const qs = p.toString();
   history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + (estado.abierto ? "#" + estado.abierto : ""));
 }
@@ -60,12 +63,40 @@ function renderDetalle(item) {
   </div>`;
 }
 
+// Números de página a mostrar: la primera, la última y dos alrededor de la actual;
+// los saltos se marcan con null (se dibujan como "…").
+function paginasVisibles(actual, total) {
+  const numeros = [...new Set([1, total, actual - 2, actual - 1, actual, actual + 1, actual + 2])]
+    .filter((n) => n >= 1 && n <= total).sort((a, b) => a - b);
+  return numeros.flatMap((n, i) => (i && n - numeros[i - 1] > 1 ? [null, n] : [n]));
+}
+
+function renderPaginacion(total, paginas) {
+  const nav = $("paginacion");
+  nav.hidden = paginas <= 1;
+  if (nav.hidden) return;
+  const { pagina } = estado;
+  const desde = (pagina - 1) * POR_PAGINA + 1, hasta = Math.min(pagina * POR_PAGINA, total);
+  const boton = (n, texto, extra = "") => `<button type="button" data-pagina="${n}" ${extra}>${texto}</button>`;
+  nav.innerHTML = `<p class="paginacion__rango">${esc(t("pag.rango", { desde, hasta, total }))}</p>
+    <div class="paginacion__botones">
+      ${boton(pagina - 1, `<span aria-hidden="true">←</span> ${esc(t("pag.anterior"))}`, pagina === 1 ? "disabled" : "")}
+      ${paginasVisibles(pagina, paginas).map((n) => n === null ? `<span class="paginacion__salto" aria-hidden="true">…</span>`
+        : boton(n, n, `aria-label="${esc(t("pag.pagina", { n }))}" ${n === pagina ? 'aria-current="page"' : ""}`)).join("")}
+      ${boton(pagina + 1, `${esc(t("pag.siguiente"))} <span aria-hidden="true">→</span>`, pagina === paginas ? "disabled" : "")}
+    </div>`;
+}
+
 function render() {
   const visibles = items.filter(coincide);
+  const paginas = Math.max(1, Math.ceil(visibles.length / POR_PAGINA));
+  estado.pagina = Math.min(estado.pagina, paginas);
+  const pagina = visibles.slice((estado.pagina - 1) * POR_PAGINA, estado.pagina * POR_PAGINA);
   $("estado").innerHTML = `<strong>${esc(t("catalogo.conteo", { n: visibles.length, total: items.length }))}</strong> ${esc(t("catalogo.conteo_sufijo"))}`;
   renderFiltros(visibles);
+  renderPaginacion(visibles.length, paginas);
   $("lista").innerHTML = visibles.length
-    ? visibles.map((item) => `
+    ? pagina.map((item) => `
       <li id="${esc(item.id)}" class="ficha">
         <button type="button" data-id="${esc(item.id)}" aria-expanded="${estado.abierto === item.id}">
           <div>
@@ -98,11 +129,12 @@ async function iniciar() {
   }
 
   let espera;
-  $("q").addEventListener("input", () => { clearTimeout(espera); espera = setTimeout(() => { estado.q = $("q").value.trim(); render(); }, 150); });
+  $("q").addEventListener("input", () => { clearTimeout(espera); espera = setTimeout(() => { estado.q = $("q").value.trim(); estado.pagina = 1; render(); }, 150); });
   $("filtros").addEventListener("change", (ev) => {
     const { campo } = ev.target.dataset, v = ev.target.value;
     const s = (estado.filtros[campo] ??= new Set());
     s.has(v) ? s.delete(v) : s.add(v);
+    estado.pagina = 1;
     render();
   });
   $("lista").addEventListener("click", (ev) => {
@@ -112,6 +144,19 @@ async function iniciar() {
     render();
   });
 
+  $("paginacion").addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-pagina]");
+    if (!b || b.disabled) return;
+    estado.pagina = Number(b.dataset.pagina);
+    render();
+    $("estado").scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  });
+
+  // Si la URL trae una ficha abierta, se va a la página donde está.
+  if (estado.abierto) {
+    const i = items.filter(coincide).findIndex((item) => item.id === estado.abierto);
+    if (i >= 0) estado.pagina = Math.floor(i / POR_PAGINA) + 1;
+  }
   render();
   if (estado.abierto) document.getElementById(estado.abierto)?.scrollIntoView({ block: "center" });
 }

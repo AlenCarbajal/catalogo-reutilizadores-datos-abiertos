@@ -26,7 +26,14 @@ const TEXTOS = {
   "catalogo.llamado_titulo": "¿Desarrollaste un proyecto con datos públicos?",
   "catalogo.llamado_texto": "Sumalo al catálogo. Son cinco minutos de formulario y no hace falta saber YAML ni usar GitHub.",
   "catalogo.pie": "Cada ficha es un archivo YAML en el repositorio. Contenidos bajo CC BY 4.0.",
-  "catalogo.acerca": "Acerca del catálogo",
+  "catalogo.acerca": "Acerca",
+
+  // --- Paginación de resultados ---
+  "pag.navegacion": "Páginas de resultados",
+  "pag.anterior": "Anterior",
+  "pag.siguiente": "Siguiente",
+  "pag.pagina": "Página {n}",
+  "pag.rango": "{desde}–{hasta} de {total}",
 
   "catalogo.ver_red": "Ver como red",
 
@@ -62,7 +69,8 @@ const TEXTOS = {
   "eco.estado.instalable": "Se instala (biblioteca o plugin)",
   "eco.abrir": "Abrir sitio",
   "eco.lista_titulo": "Todos los servicios",
-  "catalogo.ecosistema": "Ecosistema datos.gob.ar",
+  "catalogo.ecosistema": "Ecosistema",
+  "catalogo.secciones": "Secciones",
 
   // --- Acerca del catálogo (acerca.html). Por definir. ---
   "acerca.titulo_pestana": "Acerca · Catálogo de usos y desarrollos",
