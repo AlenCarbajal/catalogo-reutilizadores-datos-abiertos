@@ -224,34 +224,39 @@ input[name="id"] { background: #F2F2F2; color: var(--texto-2); }
 .eco .volver:hover { text-decoration: underline; text-underline-offset: 3px; }
 .eco-encabezado h1 { margin-top: 16px; font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -.01em; }
 .eco-bajada { margin-top: 8px; max-width: 52ch; color: var(--claro); text-wrap: pretty; }
-#constelacion { display: block; width: 100%; height: min(80vh, 800px); min-height: 540px; }
-#constelacion.angosto { height: auto; aspect-ratio: 720 / 1100; min-height: 0; }
+#constelacion { display: block; width: 100%; height: min(76vh, 760px); min-height: 520px; cursor: default; }
+#constelacion.angosto { height: auto; aspect-ratio: 720 / 1000; min-height: 0; }
 .eco-cielo circle { fill: #fff; }
-.eco-trazo { fill: none; stroke: url(#eco-trazo); stroke-width: 1.2; stroke-linecap: round; opacity: .45; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.eco-trazo--familia { stroke-width: 1.8; opacity: .6; }
-.eco-listo .eco-trazo { stroke-dashoffset: 0; transition: stroke-dashoffset 900ms cubic-bezier(.3, .7, .2, 1) var(--demora), opacity .3s; }
+.eco-anillo-sol { fill: none; stroke: var(--oro); stroke-width: 1.5; opacity: .75; }
+.eco-orbita { fill: none; stroke: var(--estela); stroke-width: 1.2; opacity: .5; }
+.eco-orbita--sistema { stroke-dasharray: 2 6; stroke-linecap: round; opacity: .7; }
 .eco-aparece { opacity: 0; }
-.eco-listo .eco-aparece { opacity: 1; transition: opacity 600ms ease var(--demora); }
-.eco-familia, .eco-servicio { cursor: pointer; outline: none; }
-.eco-glifo { font: 800 30px Montserrat, system-ui, sans-serif; fill: #fff; }
-.eco-nombre-familia { font: 700 14px Montserrat, system-ui, sans-serif; fill: #fff; }
-.eco-punto { fill: var(--oro); }
-.eco-servicio--offline .eco-punto { fill: none; stroke: var(--claro); stroke-width: 1.5; opacity: .7; }
-.eco-servicio--instalable .eco-punto { fill: var(--violeta); }
+.eco-listo .eco-aparece { opacity: 1; transition: opacity 700ms ease var(--demora); }
+.eco-cuerpo { cursor: pointer; outline: none; }
+.eco-cuerpo:hover .eco-planeta__punto, .eco-cuerpo:focus-visible .eco-planeta__punto { fill: var(--violeta); }
+.eco-cuerpo:focus-visible > circle:first-child { stroke: var(--violeta); stroke-width: 2; }
+.eco-planeta__punto { fill: #fff; transition: fill .2s; }
+.eco-planeta__nombre { font: 700 16px Montserrat, system-ui, sans-serif; fill: #fff; paint-order: stroke; stroke: var(--noche-2); stroke-width: 4px; }
+#constelacion.angosto .eco-planeta__nombre { font-size: 20px; }
+#constelacion.angosto .eco-satelite__etiqueta { font-size: 17px; }
+/* Sistema de cada herramienta: oculto hasta enfocarla. */
+.eco-sistema { opacity: 0; pointer-events: none; transition: opacity 500ms ease; }
+.eco-enfocado .eco-activo .eco-sistema { opacity: 1; pointer-events: auto; transition-delay: 450ms; }
+.eco-enfocado .eco-centro, .eco-enfocado > .eco-orbita, .eco-enfocado .eco-planeta:not(.eco-activo) { opacity: .1; transition: opacity 500ms ease; }
+.eco-enfocado .eco-planeta:not(.eco-activo) .eco-cuerpo { pointer-events: none; }
+.eco-satelite { cursor: pointer; outline: none; opacity: 0; transform-box: fill-box; }
+.eco-enfocado .eco-activo .eco-satelite { opacity: 1; transition: opacity 400ms ease calc(550ms + var(--demora)); }
+.eco-satelite__punto { fill: var(--oro); }
+.eco-satelite:hover .eco-satelite__punto, .eco-satelite:focus-visible .eco-satelite__punto { fill: #fff; }
+.eco-satelite:focus-visible .eco-blanco-toque { stroke: var(--violeta); stroke-width: 2; }
 .eco-blanco-toque { fill: transparent; }
-.eco-etiqueta { font: 500 13px Montserrat, system-ui, sans-serif; fill: #E4E6F2; paint-order: stroke; stroke: var(--noche-2); stroke-width: 4px; stroke-linejoin: round; }
-.eco-servicio--offline .eco-etiqueta { fill: var(--kicker); }
-/* En pantallas angostas las etiquetas no entran: se toca el punto para ver la ficha. */
-#constelacion.angosto .eco-etiqueta { display: none; }
-#constelacion.angosto .eco-nombre-familia { font-size: 20px; }
-.eco-titila { animation: titilar 4.5s ease-in-out infinite var(--fase); }
-@keyframes titilar { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
-/* Foco en una familia: el resto se apaga. */
-.eco-foco .eco-nodos > [data-familia]:not(.eco-activo), .eco-foco .eco-trazo:not(.eco-activo) { opacity: .18; }
-.eco-foco .eco-trazo.eco-activo { opacity: 1; }
-.eco-nodos > [data-familia] { transition: opacity .25s; }
-.eco-servicio:focus-visible .eco-blanco-toque, .eco-familia:focus-visible > circle:first-child { stroke: var(--violeta); stroke-width: 2; }
-.eco-leyenda { position: relative; z-index: 1; margin: 0 auto; padding-bottom: 26px; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 13px; color: var(--claro); }
+.eco-satelite__etiqueta { font: 500 12px Montserrat, system-ui, sans-serif; fill: #E4E6F2; paint-order: stroke; stroke: var(--noche-2); stroke-width: 4px; stroke-linejoin: round; }
+.eco-controles { position: relative; z-index: 1; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 18px; min-height: 44px; margin-top: 10px; }
+.eco-volver { display: inline-flex; gap: 8px; align-items: center; padding: 9px 14px; font: 600 13px Montserrat, system-ui, sans-serif; color: #fff; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .35); cursor: pointer; }
+.eco-volver:hover { background: rgba(255, 255, 255, .16); }
+.eco-volver:focus-visible { outline: 2px solid var(--violeta); outline-offset: 2px; }
+.eco-sistema-titulo { font-size: 15px; font-weight: 600; color: var(--claro); }
+.eco-ayuda { position: relative; z-index: 1; padding-bottom: 24px; font-size: 13px; color: var(--kicker); }
 .eco-estado { display: inline-flex; align-items: center; gap: 8px; }
 .eco-estado::before { content: ""; flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--oro); box-shadow: 0 0 0 3px rgba(231, 186, 97, .22); }
 .eco-estado--offline::before { background: transparent; border: 1.5px solid currentColor; box-shadow: none; opacity: .7; }
@@ -263,6 +268,7 @@ input[name="id"] { background: #F2F2F2; color: var(--texto-2); }
 .eco-ficha .eco-estado--offline::before { color: var(--tenue); }
 .eco-ficha__logo { height: 34px; width: auto; justify-self: start; }
 .eco-ficha__familia { font-size: 13px; font-weight: 700; color: var(--indigo); }
+.eco-ficha__dominio { font-size: 14px; color: var(--tenue); }
 .eco-ficha .boton { justify-self: start; }
 .eco-ficha__cerrar { position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; border: 0; background: none; font-size: 24px; color: var(--navy); cursor: pointer; }
 .eco-ficha__cerrar:hover { background: var(--tile); }
@@ -281,8 +287,7 @@ input[name="id"] { background: #F2F2F2; color: var(--texto-2); }
   .eco-ficha { position: fixed; left: 16px; right: 16px; bottom: 16px; width: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .eco-titila { animation: none; }
-  .eco-listo .eco-trazo, .eco-listo .eco-aparece { transition: none; }
+  .eco-listo .eco-aparece, .eco-sistema, .eco-satelite, .eco-enfocado .eco-centro, .eco-enfocado .eco-planeta { transition: none !important; }
 }
 
 /* Paginación */

@@ -19,7 +19,7 @@ JSON; un sitio estático lo muestra. No hay backend, base de datos ni build.
 | `index.html` | El catálogo: buscador, filtros por faceta, resultados de a 20 por página y cada ficha desplegable. La búsqueda, los filtros y la página quedan en la URL, así se pueden compartir. Debajo de la bajada lleva a Ecosistema y Acerca. |
 | `agregar.html` | Formulario que arma la ficha YAML y la envía como Pull Request o por correo. No hace falta saber YAML. |
 | `red.html` | Visor en red: agrupa los proyectos por tipo de desarrollo, organización, tecnologías, fuentes o etiquetas, y los colorea por una segunda variable. |
-| `ecosistema.html` | Ecosistema datos.gob.ar: los portales, APIs y herramientas que mantiene la Dirección, como una constelación alrededor del portal, con su estado. Los servicios están al principio de `web/ecosistema.js` y los logos en `web/img/logos/`. |
+| `ecosistema.html` | Ecosistema datos.gob.ar: el portal en el centro y, en órbita, Portal Andino, la API Georef y la API Series de Tiempo. Al tocar cada una se acerca la vista y aparece lo que la orbita (portales Andino activos, librerías de Georef, explorador de series). Debajo, la lista completa de servicios, que está al principio de `web/ecosistema.js`. |
 | `acerca.html` | Qué es el catálogo y enlaces a otras secciones de la Dirección. |
 
 ## Cómo funciona
@@ -34,6 +34,7 @@ items/*.yml  ──►  scripts/catalogo.py  ──►  web/data/items.json  ─
 | `items/<id>.yml` | Una ficha por herramienta. `items/_plantilla.yml` es el modelo para copiar. |
 | `schemas/item.schema.json` | Campos, reglas y vocabularios (valores permitidos). Única fuente de verdad. |
 | `scripts/catalogo.py` | Valida las fichas y genera `web/data/`. Lo corre CI en cada PR. |
+| `scripts/portales.py` | Genera `web/data/portales.json` con los portales Andino activos, desde la API de datos.gob.ar. Lo corre CI al publicar. |
 | `web/` | El sitio estático (páginas en la tabla de arriba). `red.html` usa d3 desde cdnjs; el resto no tiene dependencias. |
 | `web/config.js` | URL del repo y correo institucional. |
 | `web/textos.js` | Textos visibles del sitio y etiquetas de los vocabularios. |
