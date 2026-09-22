@@ -18,6 +18,7 @@ JSON; un sitio estático lo muestra. No hay backend, base de datos ni build.
 | --- | --- |
 | `index.html` | El catálogo: buscador, filtros por faceta y cada ficha desplegable. La búsqueda y los filtros quedan en la URL, así se pueden compartir. |
 | `agregar.html` | Formulario que arma la ficha YAML y la envía como Pull Request o por correo. No hace falta saber YAML. |
+| `red.html` | Visor en red: agrupa los proyectos por tipo de desarrollo, organización, tecnologías, fuentes o etiquetas, y los colorea por una segunda variable. |
 | `acerca.html` | Qué es el catálogo y enlaces a otras secciones de la Dirección. |
 
 ## Cómo funciona
@@ -32,7 +33,7 @@ items/*.yml  ──►  scripts/catalogo.py  ──►  web/data/items.json  ─
 | `items/<id>.yml` | Una ficha por herramienta. `items/_plantilla.yml` es el modelo para copiar. |
 | `schemas/item.schema.json` | Campos, reglas y vocabularios (valores permitidos). Única fuente de verdad. |
 | `scripts/catalogo.py` | Valida las fichas y genera `web/data/`. Lo corre CI en cada PR. |
-| `web/` | El sitio: `index.html` (catálogo), `agregar.html` (formulario que arma el YAML) y `acerca.html` (qué es el catálogo y enlaces a otras secciones de la Dirección). |
+| `web/` | El sitio estático (páginas en la tabla de arriba). `red.html` usa d3 desde cdnjs; el resto no tiene dependencias. |
 | `web/config.js` | URL del repo y correo institucional. |
 | `web/textos.js` | Textos visibles del sitio y etiquetas de los vocabularios. |
 | `docs/modelo-de-datos.md` | Descripción de cada campo y de cada valor de vocabulario. |
