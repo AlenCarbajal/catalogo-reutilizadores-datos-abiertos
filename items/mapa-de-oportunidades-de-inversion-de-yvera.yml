@@ -1,0 +1,24 @@
+id: mapa-de-oportunidades-de-inversion-de-yvera
+nombre: Mapa de Oportunidades de Inversión de Yverá
+organizacion: Interior - Turismo
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Interior - Turismo. No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+- mapa
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://tableros.yvera.tur.ar/inversiones/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://tableros.yvera.tur.ar/inversiones/
+etiquetas:
+- datos-abiertos
+- geoespacial
+verificacion:
+  estado: no_verificado

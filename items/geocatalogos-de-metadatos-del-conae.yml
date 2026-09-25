@@ -1,0 +1,23 @@
+id: geocatalogos-de-metadatos-del-conae
+nombre: GEOCatalogos de metadatos del CONAE
+organizacion: JGM - Innovación, Ciencia y Tecnología - CONAE
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: JGM - Innovación, Ciencia y Tecnología - CONAE. No se
+  confirmó, con la información disponible en el relevamiento, que esta plataforma reutilice datos o APIs
+  de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://geocatalogos.conae.gov.ar/geonetwork/srv/spa/catalog.search#/search?resultType=conae&sortBy=changeDate&from=1&to=20
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://geocatalogos.conae.gov.ar/geonetwork/srv/spa/catalog.search#/search?resultType=conae&sortBy=changeDate&from=1&to=20
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

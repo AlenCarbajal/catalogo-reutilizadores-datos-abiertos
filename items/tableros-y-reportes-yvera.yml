@@ -1,0 +1,22 @@
+id: tableros-y-reportes-yvera
+nombre: Tableros y Reportes Yverá
+organizacion: Interior - Turismo
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Interior - Turismo. No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- tablero
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://tableros.yvera.tur.ar/
+  tipo: tablero
+contactos:
+- tipo: sitio_web
+  valor: https://tableros.yvera.tur.ar/
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

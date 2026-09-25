@@ -1,0 +1,36 @@
+id: google-llc-google-cloud-platform
+nombre: Google LLC / Google Cloud Platform
+organizacion: Google LLC
+tipo_organizacion: empresa
+descripcion: >-
+  Origen del registro: hoja Empresas (Uso dashboard). Reutilización confirmada. La documentación y las
+  configuraciones de procesamiento identifican a Datos Argentina como fuente para los datos argentinos.
+  Se emplearon los datasets de casos registrados y vacunación publicados en datos.gob.ar. Los datos argentinos
+  fueron integrados y normalizados junto con fuentes de otros países. Es un proyecto histórico vinculado
+  con la pandemia, no un servicio actualmente orientado a información en tiempo real.
+tipo_desarrollo:
+- tablero
+- etl
+- documentacion
+datos_utilizados:
+- nombre: >-
+    Casos registrados de COVID-19; vacunación; hospitalizaciones; información por edad y sexo
+  tipo: dataset
+enlaces:
+- url: https://github.com/GoogleCloudPlatform/covid-19-open-data
+  tipo: repositorio
+contactos:
+- tipo: sitio_web
+  valor: https://github.com/GoogleCloudPlatform/covid-19-open-data/issues
+etiquetas:
+- datos-abiertos
+- salud
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    Origen del registro: hoja Empresas (Uso dashboard). Reutilización confirmada. La documentación y las
+    configuraciones de procesamiento identifican a Datos Argentina como fuente para los datos argentinos.
+    Se emplearon los datasets de casos registrados y vacunación publicados en datos.gob.ar. Los datos
+    argentinos fueron integrados y normalizados junto con fuentes de otros países. Es un proyecto histórico
+    vinculado con la pandemia, no un servicio actualmente orientado a información en tiempo real.

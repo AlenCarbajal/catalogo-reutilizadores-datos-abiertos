@@ -1,0 +1,23 @@
+id: saij-sistema-argentino-de-informacion-juridica-saij
+nombre: SAIJ - Sistema Argentino de Información Jurídica (SAIJ)
+organizacion: Justicia
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Justicia. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: http://www.saij.gob.ar/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: http://www.saij.gob.ar/
+etiquetas:
+- datos-abiertos
+- normativa
+verificacion:
+  estado: no_verificado

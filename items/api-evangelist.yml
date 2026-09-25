@@ -1,0 +1,34 @@
+id: api-evangelist
+nombre: API Evangelist
+organizacion: API Evangelist
+tipo_organizacion: empresa
+descripcion: >-
+  Uso confirmado como documentación e integración de infraestructura. El repositorio identifica, prueba
+  y documenta el endpoint https://datos.gob.ar/api/3/action, incluyendo búsqueda de datasets y recuperación
+  de metadatos. No es una aplicación analítica ni descarga datasets para producir indicadores: es un perfil
+  técnico independiente de la API pública. Creado el 4 de junio de 2026.
+tipo_desarrollo:
+- aplicacion
+- api
+- documentacion
+datos_utilizados:
+- nombre: API CKAN de datos.gob.ar
+  tipo: api
+enlaces:
+- url: https://github.com/api-evangelist/datos-gob-ar
+  tipo: repositorio
+contactos:
+- tipo: email
+  valor: info@apievangelist.com
+- tipo: email
+  valor: kin@apievangelist.com
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    Uso confirmado como documentación e integración de infraestructura. El repositorio identifica, prueba
+    y documenta el endpoint https://datos.gob.ar/api/3/action, incluyendo búsqueda de datasets y recuperación
+    de metadatos. No es una aplicación analítica ni descarga datasets para producir indicadores: es un
+    perfil técnico independiente de la API pública. Creado el 4 de junio de 2026.

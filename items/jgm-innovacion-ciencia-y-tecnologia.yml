@@ -1,0 +1,23 @@
+id: jgm-innovacion-ciencia-y-tecnologia
+nombre: JGM - Innovación, Ciencia y Tecnología
+organizacion: JGM - Innovación, Ciencia y Tecnología
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: JGM - Innovación, Ciencia y Tecnología. Sitio caído No
+  se confirmó, con la información disponible en el relevamiento, que esta plataforma reutilice datos o
+  APIs de datos.gob.ar.
+tipo_desarrollo:
+- web
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://repositoriosdigitales.mincyt.gob.ar/vufind/Record/SEDICI_8d2cc4394b51a8dbbb158aeac2849168
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://repositoriosdigitales.mincyt.gob.ar/vufind/Record/SEDICI_8d2cc4394b51a8dbbb158aeac2849168
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

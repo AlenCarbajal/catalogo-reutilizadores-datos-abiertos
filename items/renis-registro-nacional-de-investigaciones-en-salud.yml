@@ -1,0 +1,23 @@
+id: renis-registro-nacional-de-investigaciones-en-salud
+nombre: 'ReNIS: Registro Nacional de investigaciones en salud'
+organizacion: Salud
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Salud. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://sisa.msal.gov.ar/sisa/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://sisa.msal.gov.ar/sisa/
+etiquetas:
+- datos-abiertos
+- salud
+verificacion:
+  estado: no_verificado

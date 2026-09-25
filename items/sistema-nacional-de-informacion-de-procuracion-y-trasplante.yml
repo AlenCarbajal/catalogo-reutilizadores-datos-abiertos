@@ -1,0 +1,24 @@
+id: sistema-nacional-de-informacion-de-procuracion-y-trasplante
+nombre: >-
+  Sistema Nacional de Información de Procuración y Trasplante de la República Argentina (SINTRA)
+organizacion: Salud
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Salud. Se accede solo con usuario y contraseña No se
+  confirmó, con la información disponible en el relevamiento, que esta plataforma reutilice datos o APIs
+  de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://sintra.incucai.gov.ar/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://sintra.incucai.gov.ar/
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

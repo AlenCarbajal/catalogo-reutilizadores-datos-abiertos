@@ -1,0 +1,30 @@
+id: apidocs-ar-georef-argentina
+nombre: apidocs.ar – Georef Argentina
+organizacion: apidocs.ar – Georef Argentina
+tipo_organizacion: independiente
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de datos.gob.ar. Documenta y reutiliza
+  el endpoint oficial apis.datos.gob.ar/georef/api. Es un caso de reutilización de infraestructura/API,
+  no propiamente de análisis de microdatos.
+tipo_desarrollo:
+- api
+- documentacion
+datos_utilizados:
+- nombre: API Georef
+  tipo: api
+enlaces:
+- url: https://georef.argentina.apidocs.ar/
+  tipo: documentacion
+contactos:
+- tipo: sitio_web
+  valor: https://georef.argentina.apidocs.ar/
+etiquetas:
+- datos-abiertos
+- geoespacial
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de datos.gob.ar. Documenta y reutiliza
+    el endpoint oficial apis.datos.gob.ar/georef/api. Es un caso de reutilización de infraestructura/API,
+    no propiamente de análisis de microdatos.

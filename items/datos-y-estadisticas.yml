@@ -1,0 +1,22 @@
+id: datos-y-estadisticas
+nombre: Datos y estadísticas
+organizacion: INCAA
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: INCAA. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- tablero
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.incaa.gob.ar/datos-y-estadisticas/
+  tipo: tablero
+contactos:
+- tipo: sitio_web
+  valor: https://www.incaa.gob.ar/datos-y-estadisticas/
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

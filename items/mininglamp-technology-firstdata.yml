@@ -1,0 +1,36 @@
+id: mininglamp-technology-firstdata
+nombre: MININGLAMP Technology / FirstData
+organizacion: MININGLAMP Technology
+tipo_organizacion: empresa
+descripcion: >-
+  Origen del registro: hoja Empresas (Uso dashboard). Uso confirmado como integración y catalogación de
+  la API. FirstData incorpora una ficha específica de Argentina/INDEC cuyo campo api_url apunta expresamente
+  a la API Series de Tiempo de datos.gob.ar. Registra como contenidos disponibles censos, IPC, comercio
+  exterior, mercado laboral, cuentas nacionales, pobreza e ingresos. No se verificó todavía una aplicación
+  pública que consulte y visualice los valores: la evidencia corresponde a su incorporación como fuente
+  autorizada para agentes de IA.
+tipo_desarrollo:
+- tablero
+- aplicacion
+- api
+datos_utilizados:
+- nombre: >-
+    API Series de Tiempo: https://apis.datos.gob.ar/series/api/; estadísticas de INDEC
+  tipo: api
+enlaces:
+- url: https://github.com/MLT-OSS/FirstData
+  tipo: repositorio
+contactos:
+- tipo: email
+  valor: mkt@mininglamp.com
+etiquetas:
+- datos-abiertos
+- economia
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    Origen del registro: hoja Empresas (Uso dashboard). Uso confirmado como integración y catalogación
+    de la API. FirstData incorpora una ficha específica de Argentina/INDEC cuyo campo api_url apunta expresamente
+    a la API Series de Tiempo de datos.gob.ar. Registra como contenidos disponibles censos, IPC, comercio
+    exterior, mercado laboral, cuentas nacionales, pobreza e ingresos.

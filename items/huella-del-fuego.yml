@@ -1,0 +1,39 @@
+id: huella-del-fuego
+nombre: Huella del Fuego
+organizacion: Huella del Fuego
+tipo_organizacion: independiente
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de datos.gob.ar. La sección Acerca de enlaza
+  expresamente a datos.gob.ar como fuente de las estadísticas del SNMF y de los datos SInIA. Combina esos
+  registros con VIIRS/MODIS de NASA FIRMS; ofrece mapa histórico, análisis de impacto y causas, estimaciones
+  de riesgo y monitoreo en tiempo real.
+tipo_desarrollo:
+- tablero
+- visualizacion_datos
+- web
+- aplicacion
+- mapa
+datos_utilizados:
+- nombre: Estadísticas históricas del Servicio Nacional de Manejo del Fuego
+  tipo: servicio
+- nombre: datos de vegetación y causas de SInIA
+  tipo: servicio
+- nombre: focos satelitales NASA FIRMS
+  tipo: servicio
+enlaces:
+- url: https://www.huelladelfuego.com/dashboard-mapa
+  tipo: tablero
+contactos:
+- tipo: sitio_web
+  valor: https://www.huelladelfuego.com/acerca-de
+etiquetas:
+- datos-abiertos
+- ambiente
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de datos.gob.ar. La sección Acerca de
+    enlaza expresamente a datos.gob.ar como fuente de las estadísticas del SNMF y de los datos SInIA.
+    Combina esos registros con VIIRS/MODIS de NASA FIRMS; ofrece mapa histórico, análisis de impacto y
+    causas, estimaciones de riesgo y monitoreo en tiempo real.

@@ -1,0 +1,22 @@
+id: publicaciones-de-ciencia-y-tecnologia
+nombre: Publicaciones de Ciencia y Tecnología
+organizacion: JGM - Innovación, Ciencia y Tecnología
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: JGM - Innovación, Ciencia y Tecnología. No se confirmó,
+  con la información disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- informe
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.argentina.gob.ar/ciencia/publicaciones-cyt
+  tipo: publicacion
+contactos:
+- tipo: sitio_web
+  valor: https://www.argentina.gob.ar/ciencia/publicaciones-cyt
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

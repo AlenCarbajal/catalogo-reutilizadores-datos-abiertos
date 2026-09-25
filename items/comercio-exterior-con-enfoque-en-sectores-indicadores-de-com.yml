@@ -1,0 +1,27 @@
+id: comercio-exterior-con-enfoque-en-sectores-indicadores-de-com
+nombre: Comercio exterior con enfoque en sectores
+organizacion: JGM - Innovación, Ciencia y Tecnología
+tipo_organizacion: gobierno
+descripcion: >-
+  Indicadores de comercio exterior de los sectores manufactureros clasificados por nivel de intensidad
+  tecnológica. Origen del registro: hoja APN. Organismo/área: JGM - Innovación, Ciencia y Tecnología.
+  No se confirmó, con la información disponible en el relevamiento, que esta plataforma reutilice datos
+  o APIs de datos.gob.ar.
+tipo_desarrollo:
+- tablero
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://app.powerbi.com/view?r=eyJrIjoiMjUzNDUwMjktNWVhNC00Y2NkLWIwMjUtNjBlOTYxYTA5NWI3IiwidCI6IjcwYTk1NzNhLWI3YTUtNDQxOC1iZGM0LWQ5MGY2ZjM4OTZmZSIsImMiOjR9
+  tipo: tablero
+contactos:
+- tipo: sitio_web
+  valor: https://app.powerbi.com/view?r=eyJrIjoiMjUzNDUwMjktNWVhNC00Y2NkLWIwMjUtNjBlOTYxYTA5NWI3IiwidCI6IjcwYTk1NzNhLWI3YTUtNDQxOC1iZGM0LWQ5MGY2ZjM4OTZmZSIsImMiOjR9
+tecnologias:
+- power-bi
+etiquetas:
+- datos-abiertos
+- economia
+verificacion:
+  estado: no_verificado

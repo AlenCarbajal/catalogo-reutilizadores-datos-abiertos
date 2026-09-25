@@ -1,0 +1,35 @@
+id: gina-galaxia-interactiva-de-normativas-argentinas
+nombre: GINA — Galaxia Interactiva de Normativas Argentinas
+organizacion: BOA
+tipo_organizacion: independiente
+descripcion: >-
+  Aplicación web que reutiliza la Base Infoleg de Normativa Nacional publicada en datos.gob.ar. Representa
+  más de 400.000 normas mediante embeddings y reducción dimensional UMAP, y permite explorar similitudes,
+  realizar búsquedas semánticas y filtrar por fecha y tipo de norma.
+tipo_desarrollo:
+- web
+- visualizacion_datos
+datos_utilizados:
+- nombre: Base Infoleg de Normativa Nacional
+  tipo: dataset
+  url: https://www.datos.gob.ar/dataset/justicia-base-infoleg-normativa-nacional
+enlaces:
+- url: https://gina.boa.com.ar/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://gina.boa.com.ar/
+tecnologias:
+- umap
+- embeddings
+etiquetas:
+- normativa
+- justicia
+- inteligencia-artificial
+- datos-abiertos
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    El sitio de GINA identifica y reutiliza la Base Infoleg de Normativa Nacional de datos.gob.ar. Evidencia:
+    https://gina.boa.com.ar/ y https://www.datos.gob.ar/dataset/justicia-base-infoleg-normativa-nacional

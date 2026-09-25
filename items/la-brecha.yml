@@ -1,0 +1,30 @@
+id: la-brecha
+nombre: La Brecha
+organizacion: La Brecha
+tipo_organizacion: ong
+descripcion: >-
+  Plataforma de indicadores económicos y sociales que integra y publica series provenientes de distintas
+  fuentes. Su API pública identifica expresamente a datos.gob.ar entre sus fuentes.
+tipo_desarrollo:
+- api
+- visualizacion_datos
+datos_utilizados:
+- nombre: Series e indicadores publicados en datos.gob.ar
+  tipo: dataset
+enlaces:
+- url: https://labrecha.matiascaliz.com.ar/api-publica
+  tipo: documentacion
+contactos:
+- tipo: sitio_web
+  valor: https://labrecha.matiascaliz.com.ar/
+etiquetas:
+- datos-abiertos
+- indicadores
+- economia
+- reutilizacion
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    La API pública de La Brecha identifica explícitamente a datos.gob.ar entre sus fuentes y distintos
+    indicadores del sitio señalan datos.gob.ar como fuente de las series utilizadas.

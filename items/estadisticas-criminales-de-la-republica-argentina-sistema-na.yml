@@ -1,0 +1,23 @@
+id: estadisticas-criminales-de-la-republica-argentina-sistema-na
+nombre: >-
+  Estadísticas criminales de la República Argentina. Sistema Nacional de Información Criminal (SNIC)
+organizacion: Seguridad
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Seguridad. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.argentina.gob.ar/seguridad/estadisticascriminales
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.argentina.gob.ar/seguridad/estadisticascriminales
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

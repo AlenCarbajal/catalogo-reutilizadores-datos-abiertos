@@ -1,0 +1,23 @@
+id: patagonia-data-lab
+nombre: PatagonIA Data Lab
+organizacion: PatagonIA Data Lab
+tipo_organizacion: independiente
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. Usan datos de Cammesa más actualizados que los que están
+  en datos.gob.ar No se confirmó, con la información disponible en el relevamiento, que esta plataforma
+  reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- tablero
+datos_utilizados:
+- nombre: CAMMESA
+  tipo: dataset
+enlaces:
+- url: https://public.tableau.com/app/profile/patagoniadatalab/vizzes
+  tipo: tablero
+contactos:
+- tipo: email
+  valor: patagoniadatalab@gmail.com
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

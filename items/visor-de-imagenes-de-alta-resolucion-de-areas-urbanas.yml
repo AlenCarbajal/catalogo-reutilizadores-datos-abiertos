@@ -1,0 +1,23 @@
+id: visor-de-imagenes-de-alta-resolucion-de-areas-urbanas
+nombre: Visor de imágenes de alta resolución de áreas urbanas.
+organizacion: JGM - Innovación, Ciencia y Tecnología - CONAE
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: JGM - Innovación, Ciencia y Tecnología - CONAE. No se
+  confirmó, con la información disponible en el relevamiento, que esta plataforma reutilice datos o APIs
+  de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://geoportal.conae.gov.ar/mapstore/visor-alta.html#/viewer/openlayers/geoservicios_impactar
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://geoportal.conae.gov.ar/mapstore/visor-alta.html#/viewer/openlayers/geoservicios_impactar
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

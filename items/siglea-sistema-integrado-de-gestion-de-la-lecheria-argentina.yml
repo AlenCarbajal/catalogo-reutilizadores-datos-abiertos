@@ -1,0 +1,24 @@
+id: siglea-sistema-integrado-de-gestion-de-la-lecheria-argentina
+nombre: SIGLeA - Sistema Integrado de Gestión de la Lechería Argentina
+organizacion: Economía - Agricultura, Ganadería y Pesca
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Economía - Agricultura, Ganadería y Pesca. Se accede
+  solo con usuario y contraseña No se confirmó, con la información disponible en el relevamiento, que
+  esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://siglea.magyp.gob.ar/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://siglea.magyp.gob.ar/
+etiquetas:
+- datos-abiertos
+- agro
+verificacion:
+  estado: no_verificado

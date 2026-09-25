@@ -1,0 +1,24 @@
+id: mapas-escolares
+nombre: Mapas Escolares
+organizacion: Defensa - IGN
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Defensa - IGN. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- mapa
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: http://mapasescolares.ign.gob.ar/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: http://mapasescolares.ign.gob.ar/
+etiquetas:
+- datos-abiertos
+- geoespacial
+- educacion
+verificacion:
+  estado: no_verificado

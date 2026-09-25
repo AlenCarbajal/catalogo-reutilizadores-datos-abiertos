@@ -1,0 +1,27 @@
+id: cadenas-productivas
+nombre: Cadenas Productivas
+organizacion: Economía - Producción
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Economía - Producción. Se accede con usuario y contraseña
+  "consulta" No se confirmó, con la información disponible en el relevamiento, que esta plataforma reutilice
+  datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- tablero
+- visualizacion_datos
+- mapa
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.economia.gob.ar/datos/cadenas-productivas
+  tipo: tablero
+contactos:
+- tipo: sitio_web
+  valor: https://www.economia.gob.ar/datos/cadenas-productivas
+tecnologias:
+- power-bi
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

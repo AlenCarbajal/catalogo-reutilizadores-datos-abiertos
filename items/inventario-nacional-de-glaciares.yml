@@ -1,0 +1,23 @@
+id: inventario-nacional-de-glaciares
+nombre: Inventario Nacional de Glaciares
+organizacion: Interior - Ambiente
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Interior - Ambiente. No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.glaciaresargentinos.gob.ar/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.glaciaresargentinos.gob.ar/
+etiquetas:
+- datos-abiertos
+- ambiente
+verificacion:
+  estado: no_verificado

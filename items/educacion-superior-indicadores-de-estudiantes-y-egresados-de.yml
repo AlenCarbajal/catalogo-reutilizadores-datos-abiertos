@@ -1,0 +1,26 @@
+id: educacion-superior-indicadores-de-estudiantes-y-egresados-de
+nombre: >-
+  Educación superior. Indicadores de estudiantes y egresados del nivel superior clasificados por áreas
+organizacion: JGM - Innovación, Ciencia y Tecnología
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: JGM - Innovación, Ciencia y Tecnología. No se confirmó,
+  con la información disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- tablero
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://app.powerbi.com/view?r=eyJrIjoiNGFjMTBhZjUtMmRiOS00ZWQxLWFkYTgtYTUwMWM5ZjZiODY4IiwidCI6IjcwYTk1NzNhLWI3YTUtNDQxOC1iZGM0LWQ5MGY2ZjM4OTZmZSIsImMiOjR9
+  tipo: tablero
+contactos:
+- tipo: sitio_web
+  valor: https://app.powerbi.com/view?r=eyJrIjoiNGFjMTBhZjUtMmRiOS00ZWQxLWFkYTgtYTUwMWM5ZjZiODY4IiwidCI6IjcwYTk1NzNhLWI3YTUtNDQxOC1iZGM0LWQ5MGY2ZjM4OTZmZSIsImMiOjR9
+tecnologias:
+- power-bi
+etiquetas:
+- datos-abiertos
+- educacion
+verificacion:
+  estado: no_verificado

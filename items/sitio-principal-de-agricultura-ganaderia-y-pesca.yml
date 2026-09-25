@@ -1,0 +1,22 @@
+id: sitio-principal-de-agricultura-ganaderia-y-pesca
+nombre: Sitio principal de Agricultura, Ganadería y Pesca
+organizacion: Economía - Agricultura, Ganadería y Pesca
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Economía - Agricultura, Ganadería y Pesca. No se confirmó,
+  con la información disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.argentina.gob.ar/agricultura
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.argentina.gob.ar/agricultura
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

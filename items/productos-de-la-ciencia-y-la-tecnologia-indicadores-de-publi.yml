@@ -1,0 +1,25 @@
+id: productos-de-la-ciencia-y-la-tecnologia-indicadores-de-publi
+nombre: Productos de la ciencia y la tecnología
+organizacion: JGM - Innovación, Ciencia y Tecnología
+tipo_organizacion: gobierno
+descripcion: >-
+  Indicadores de publicaciones científicas indexadas en bases de datos internacionales y los indicadores
+  de patentes de invención registradas en el Instituto de Propiedad Industrial y las realizadas mediante
+  el Tratado de Cooperación en materia de Patentes (PCT). Origen del registro: hoja APN. Organismo/área:
+  JGM - Innovación, Ciencia y Tecnología. No se confirmó, con la información disponible en el relevamiento,
+  que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.argentina.gob.ar/ciencia/indicadorescti/productos-de-la-cyt
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.argentina.gob.ar/ciencia/indicadorescti/productos-de-la-cyt
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

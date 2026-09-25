@@ -1,0 +1,23 @@
+id: mapa
+nombre: Mapa
+organizacion: Defensa - IGN
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Defensa - IGN. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://riesgo.ign.gob.ar/mapa/?zoom=4&lat=-40&lng=-59
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://riesgo.ign.gob.ar/mapa/?zoom=4&lat=-40&lng=-59
+etiquetas:
+- datos-abiertos
+- geoespacial
+verificacion:
+  estado: no_verificado

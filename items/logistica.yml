@@ -1,0 +1,22 @@
+id: logistica
+nombre: Logística
+organizacion: Economía - Agricultura, Ganadería y Pesca
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Economía - Agricultura, Ganadería y Pesca. No se confirmó,
+  con la información disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- tablero
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/
+  tipo: tablero
+contactos:
+- tipo: sitio_web
+  valor: https://www.magyp.gob.ar/sitio/areas/ss_mercados_agropecuarios/logistica/
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

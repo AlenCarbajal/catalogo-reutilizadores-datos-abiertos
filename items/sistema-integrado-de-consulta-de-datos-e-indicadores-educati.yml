@@ -1,0 +1,23 @@
+id: sistema-integrado-de-consulta-de-datos-e-indicadores-educati
+nombre: Sistema Integrado de Consulta de Datos e Indicadores Educativos (SICDIE)
+organizacion: Capital Humano - Educación
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Capital Humano - Educación. No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- tablero
+- visualizacion_datos
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://data.educacion.gob.ar/
+  tipo: tablero
+contactos:
+- tipo: sitio_web
+  valor: https://data.educacion.gob.ar/
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

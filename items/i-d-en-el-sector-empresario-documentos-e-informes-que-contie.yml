@@ -1,0 +1,24 @@
+id: i-d-en-el-sector-empresario-documentos-e-informes-que-contie
+nombre: I+D en el sector empresario
+organizacion: JGM - Innovación, Ciencia y Tecnología
+tipo_organizacion: gobierno
+descripcion: >-
+  Documentos e informes que contienen estadísticas de ciencia y tecnología del sector empresario producida
+  por la Dirección Nacional de Información Científica. Origen del registro: hoja APN. Organismo/área:
+  JGM - Innovación, Ciencia y Tecnología. No se confirmó, con la información disponible en el relevamiento,
+  que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- informe
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.argentina.gob.ar/ciencia/indicadorescti/documentos-de-trabajo/empresario
+  tipo: publicacion
+contactos:
+- tipo: sitio_web
+  valor: https://www.argentina.gob.ar/ciencia/indicadorescti/documentos-de-trabajo/empresario
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

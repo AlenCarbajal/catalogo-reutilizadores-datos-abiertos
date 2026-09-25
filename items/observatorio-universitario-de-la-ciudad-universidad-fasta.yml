@@ -1,0 +1,29 @@
+id: observatorio-universitario-de-la-ciudad-universidad-fasta
+nombre: Observatorio Universitario de la Ciudad | Universidad FASTA
+organizacion: Universidad FASTA
+tipo_organizacion: academia
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. Se trabaja con datos abiertos del Sistema Electrónico
+  de Publicidad de Precios Argentinos (SEPA) para analizar la dispersión de precios en la ciudad de Mar
+  del Plata No se confirmó, con la información disponible en el relevamiento, que esta plataforma reutilice
+  datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- investigacion
+- informe
+datos_utilizados:
+- nombre: SEPA
+  tipo: dataset
+enlaces:
+- url: https://observatorio.ufasta.edu.ar/files/2026/05/Dispersion-precios-Mayo-2026-2.pdf
+  tipo: publicacion
+- url: https://observatorio.ufasta.edu.ar/files/2026/06/Canastas-de-cercania-Mayo-2026.pdf
+  tipo: publicacion
+contactos:
+- tipo: email
+  valor: observatorio@ufasta.edu.ar
+etiquetas:
+- datos-abiertos
+- educacion
+- precios
+verificacion:
+  estado: no_verificado

@@ -1,0 +1,23 @@
+id: sistema-electronico-de-publicidad-de-precios-argentinos
+nombre: Sistema Electrónico de Publicidad de Precios Argentinos
+organizacion: Economía
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Economía. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.preciosclaros.gob.ar/#!/buscar-productos
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.preciosclaros.gob.ar/#!/buscar-productos
+etiquetas:
+- datos-abiertos
+- precios
+verificacion:
+  estado: no_verificado

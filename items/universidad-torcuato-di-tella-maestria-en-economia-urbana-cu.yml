@@ -1,0 +1,39 @@
+id: universidad-torcuato-di-tella-maestria-en-economia-urbana-cu
+nombre: >-
+  Universidad Torcuato Di Tella – Maestría en Economía Urbana / curso Instrumentos de Análisis Urbanos
+  II
+organizacion: Universidad Torcuato Di Tella
+tipo_organizacion: academia
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de productos de datos.gob.ar.. El código
+  importa directamente inmuebles-estado-nacional.csv desde infra.datos.gob.ar. El curso enseña descarga,
+  limpieza, transformación y análisis con R. Es una reutilización educativa y técnica, aunque no una aplicación
+  pública independiente.
+tipo_desarrollo:
+- visualizacion_datos
+- web
+- aplicacion
+datos_utilizados:
+- nombre: Inmuebles propios y alquilados del Estado nacional
+  tipo: dataset
+enlaces:
+- url: https://tuqmano.github.io/geo_utdt/
+  tipo: sitio_web
+- url: https://github.com/TuQmano/geo_utdt
+  tipo: repositorio
+contactos:
+- tipo: github
+  valor: https://github.com/TuQmano
+tecnologias:
+- r
+etiquetas:
+- datos-abiertos
+- economia
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de productos de datos.gob.ar.. El código
+    importa directamente inmuebles-estado-nacional.csv desde infra.datos.gob.ar. El curso enseña descarga,
+    limpieza, transformación y análisis con R. Es una reutilización educativa y técnica, aunque no una
+    aplicación pública independiente.

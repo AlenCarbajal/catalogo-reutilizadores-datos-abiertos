@@ -1,0 +1,20 @@
+id: cultura-nacion
+nombre: Cultura Nación
+organizacion: Capital Humano - Cultura
+tipo_organizacion: gobierno
+descripcion: 'Organismo/área: Capital Humano - Cultura.'
+tipo_desarrollo:
+- api
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.cultura.gob.ar/api/v2.0/
+  tipo: api
+contactos:
+- tipo: sitio_web
+  valor: https://www.cultura.gob.ar/api/v2.0/
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: pendiente

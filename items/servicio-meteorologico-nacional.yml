@@ -1,0 +1,23 @@
+id: servicio-meteorologico-nacional
+nombre: Servicio Meteorológico Nacional
+organizacion: Defensa - Servicio Meteorológico Nacional
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Defensa - Servicio Meteorológico Nacional. Hay que aceptar
+  términos y condiciones No se confirmó, con la información disponible en el relevamiento, que esta plataforma
+  reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.smn.gob.ar/descarga-de-datos
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.smn.gob.ar/descarga-de-datos
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

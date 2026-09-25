@@ -1,0 +1,24 @@
+id: pablo-cerchia
+nombre: Pablo Cerchia
+organizacion: Pablo Cerchia
+tipo_organizacion: independiente
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. Data CP. Repositorio de datos electorales. Herramientas
+  de analisis y visualización. No se confirmó, con la información disponible en el relevamiento, que esta
+  plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+- web
+datos_utilizados:
+- nombre: DINE
+  tipo: dataset
+enlaces:
+- url: https://www.datacp.ar/
+  tipo: proyecto
+contactos:
+- tipo: linkedin
+  valor: https://www.linkedin.com/in/pablo-cerchia-0501a7151/?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3BwCzbhTVkQq%2BAQDzKudlNcg%3D%3D
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

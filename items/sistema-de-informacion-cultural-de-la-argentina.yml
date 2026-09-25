@@ -1,0 +1,22 @@
+id: sistema-de-informacion-cultural-de-la-argentina
+nombre: Sistema de Información Cultural de la Argentina
+organizacion: Capital Humano - Cultura
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Capital Humano - Cultura. No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.sinca.gob.ar/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.sinca.gob.ar/
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

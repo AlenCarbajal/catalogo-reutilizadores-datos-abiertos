@@ -1,0 +1,22 @@
+id: sistema-de-informacion-de-salvaguardas
+nombre: Sistema de Información de Salvaguardas
+organizacion: Interior - Ambiente
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Interior - Ambiente. No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.argentina.gob.ar/ambiente/cambio-climatico/sistema-informacion-salvaguardas
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.argentina.gob.ar/ambiente/cambio-climatico/sistema-informacion-salvaguardas
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

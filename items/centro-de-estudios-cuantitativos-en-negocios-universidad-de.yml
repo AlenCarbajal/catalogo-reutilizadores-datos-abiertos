@@ -1,0 +1,35 @@
+id: centro-de-estudios-cuantitativos-en-negocios-universidad-de
+nombre: >-
+  Centro de Estudios Cuantitativos en Negocios – Universidad de San Andrés / Radar de Precios
+organizacion: Universidad de San Andrés
+tipo_organizacion: academia
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de infraestructura de Datos Argentina,
+  específicamente Georef. El proyecto utiliza el servicio de normalización geográfica alojado en datos.gob.ar
+  para obtener identificadores INDEC y nombres geográficos normalizados. No considero confirmado, en cambio,
+  que los datos SEPA utilizados por el proyecto hayan sido obtenidos a través de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+- web
+- aplicacion
+- mapa
+datos_utilizados:
+- nombre: Radar de Precios
+  tipo: dataset
+enlaces:
+- url: https://github.com/nicoespa/radar-de-precios
+  tipo: repositorio
+contactos:
+- tipo: github
+  valor: https://github.com/nicoespa
+etiquetas:
+- datos-abiertos
+- precios
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de infraestructura de Datos Argentina,
+    específicamente Georef. El proyecto utiliza el servicio de normalización geográfica alojado en datos.gob.ar
+    para obtener identificadores INDEC y nombres geográficos normalizados. No considero confirmado, en
+    cambio, que los datos SEPA utilizados por el proyecto hayan sido obtenidos a través de datos.gob.ar.

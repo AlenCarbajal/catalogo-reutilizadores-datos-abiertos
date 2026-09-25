@@ -1,0 +1,23 @@
+id: sistema-de-informacion-geografico
+nombre: Sistema de Información Geográfico
+organizacion: Economía - Minería
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Economía - Minería. No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- mapa
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://mapas.produccion.gob.ar/sig/visor/mineria/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://mapas.produccion.gob.ar/sig/visor/mineria/
+etiquetas:
+- datos-abiertos
+- geoespacial
+verificacion:
+  estado: no_verificado

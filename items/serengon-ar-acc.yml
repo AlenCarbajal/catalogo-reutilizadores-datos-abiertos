@@ -1,0 +1,31 @@
+id: serengon-ar-acc
+nombre: serengon / ar-acc
+organizacion: serengon / ar-acc
+tipo_organizacion: independiente
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de datos.gob.ar. El proyecto define explícitamente
+  un pipeline “datos.gob.ar — Gateway CKAN” utilizando datos.gob.ar/api/3/action/. Prevé consumir recursos
+  CSV/JSON/XLSX, además de Series de Tiempo y Georef.
+tipo_desarrollo:
+- api
+- pipeline_datos
+- etl
+datos_utilizados:
+- nombre: Múltiples datasets del catálogo; Series de Tiempo; Georef
+  tipo: api
+enlaces:
+- url: https://github.com/serengon
+  tipo: repositorio
+contactos:
+- tipo: github
+  valor: https://github.com/serengon
+etiquetas:
+- datos-abiertos
+- geoespacial
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de datos.gob.ar. El proyecto define explícitamente
+    un pipeline “datos.gob.ar — Gateway CKAN” utilizando datos.gob.ar/api/3/action/. Prevé consumir recursos
+    CSV/JSON/XLSX, además de Series de Tiempo y Georef.

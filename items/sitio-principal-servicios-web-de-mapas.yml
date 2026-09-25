@@ -1,0 +1,23 @@
+id: sitio-principal-servicios-web-de-mapas
+nombre: Sitio principal Servicios Web de Mapas
+organizacion: Defensa - IGN
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Defensa - IGN. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.ign.gob.ar/AreaServicios/Introduccion
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.ign.gob.ar/AreaServicios/Introduccion
+etiquetas:
+- datos-abiertos
+- geoespacial
+verificacion:
+  estado: no_verificado

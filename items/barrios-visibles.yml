@@ -1,0 +1,40 @@
+id: barrios-visibles
+nombre: Barrios Visibles
+organizacion: Barrios Visibles
+tipo_organizacion: independiente
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de productos de datos.gob.ar. Reutiliza
+  datos públicos argentinos y fuentes geoespaciales abiertas. La documentación declara que RENABAP fue
+  obtenido mediante el Mapa de Barrios Populares. El dataset RENABAP está catalogado en datos.gob.ar
+tipo_desarrollo:
+- visualizacion_datos
+- web
+- aplicacion
+- mapa
+- documentacion
+datos_utilizados:
+- nombre: 'RENABAP: polígonos, familias y viviendas, copia del 6/12/2023'
+  tipo: dataset
+- nombre: >-
+    huellas edilicias de Google Open Buildings, Microsoft GlobalMLFootprints y OpenStreetMap combinadas
+    por VIDA
+  tipo: dataset
+- nombre: Planta Urbana del IGN
+  tipo: dataset
+- nombre: promedio de personas por hogar del Censo 2022
+  tipo: dataset
+enlaces:
+- url: https://www.barriosvisibles.org/es
+  tipo: sitio_web
+contactos:
+- tipo: email
+  valor: hello@radiant.earth
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    Origen del registro: hoja Sociedad Civil ONG. Uso confirmado de productos de datos.gob.ar. Reutiliza
+    datos públicos argentinos y fuentes geoespaciales abiertas. La documentación declara que RENABAP fue
+    obtenido mediante el Mapa de Barrios Populares. El dataset RENABAP está catalogado en datos.gob.ar

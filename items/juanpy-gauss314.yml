@@ -1,0 +1,23 @@
+id: juanpy-gauss314
+nombre: Juanpy (Gauss314)
+organizacion: Juanpy (Gauss314)
+tipo_organizacion: independiente
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. No se confirmó, con la información disponible en el relevamiento,
+  que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: INDEC
+  tipo: dataset
+enlaces:
+- url: https://www.skills.sh/gauss314/skills/indec
+  tipo: proyecto
+contactos:
+- tipo: github
+  valor: https://github.com/gauss314
+etiquetas:
+- datos-abiertos
+- economia
+verificacion:
+  estado: no_verificado

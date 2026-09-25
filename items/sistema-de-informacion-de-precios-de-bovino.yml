@@ -1,0 +1,24 @@
+id: sistema-de-informacion-de-precios-de-bovino
+nombre: Sistema de Información de Precios de Bovino
+organizacion: Economía - Agricultura, Ganadería y Pesca
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Economía - Agricultura, Ganadería y Pesca. No se confirmó,
+  con la información disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.magyp.gob.ar/sitio/areas/gestion/precios/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.magyp.gob.ar/sitio/areas/gestion/precios/
+etiquetas:
+- datos-abiertos
+- precios
+- agro
+verificacion:
+  estado: no_verificado

@@ -1,0 +1,22 @@
+id: sivila
+nombre: SIVILA
+organizacion: Salud
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Salud. Sitio caído No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- web
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.msal.gob.ar/index.php/home/funciones/area-de-vigilancia/sivila
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.msal.gob.ar/index.php/home/funciones/area-de-vigilancia/sivila
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

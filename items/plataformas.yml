@@ -1,0 +1,23 @@
+id: plataformas
+nombre: Plataformas
+organizacion: Plataformas
+tipo_organizacion: academia
+descripcion: >-
+  Origen del registro: hoja Sociedad Civil ONG. No se confirmó, con la información disponible en el relevamiento,
+  que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: georeferenciados
+  tipo: api
+enlaces:
+- url: https://poblaciones.org/
+  tipo: proyecto
+contactos:
+- tipo: email
+  valor: contacto@poblaciones.org
+etiquetas:
+- datos-abiertos
+- geoespacial
+verificacion:
+  estado: no_verificado

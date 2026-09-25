@@ -1,0 +1,26 @@
+id: sistema-estadistico-de-poblacion-del-renaper
+nombre: Sistema Estadístico de Población del RENAPER
+organizacion: renaper
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: renaper. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- tablero
+- visualizacion_datos
+- mapa
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.argentina.gob.ar/interior/renaper/observatorio-poblacion/mapas-interactivos
+  tipo: tablero
+contactos:
+- tipo: sitio_web
+  valor: https://www.argentina.gob.ar/interior/renaper/observatorio-poblacion/mapas-interactivos
+tecnologias:
+- power-bi
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

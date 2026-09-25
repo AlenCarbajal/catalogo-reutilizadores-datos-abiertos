@@ -1,0 +1,24 @@
+id: sistema-integrado-de-indicadores-informacion-oficial-sobre-c
+nombre: Sistema Integrado de Indicadores
+organizacion: JGM - Innovación, Ciencia y Tecnología
+tipo_organizacion: gobierno
+descripcion: >-
+  Información oficial sobre ciencia, tecnología e innovación del país para la toma de decisiones basadas
+  en evidencia. Origen del registro: hoja APN. Organismo/área: JGM - Innovación, Ciencia y Tecnología.
+  No se confirmó, con la información disponible en el relevamiento, que esta plataforma reutilice datos
+  o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.argentina.gob.ar/ciencia/indicadorescti
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.argentina.gob.ar/ciencia/indicadorescti
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

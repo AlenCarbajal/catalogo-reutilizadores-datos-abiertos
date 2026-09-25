@@ -1,0 +1,25 @@
+id: sistema-de-informacion-abierta-a-la-comunidad-sobre-la-activ
+nombre: >-
+  Sistema de Información Abierta a la Comunidad sobre la Actividad Minera en Argentina (SIACAM)
+organizacion: Economía - Minería
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Economía - Minería. No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.argentina.gob.ar/economia/mineria/siacam
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.argentina.gob.ar/economia/mineria/siacam
+tecnologias:
+- power-bi
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

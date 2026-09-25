@@ -1,0 +1,22 @@
+id: registro-nacional-osc-ong-resolucion-ministerial-n-2045-e-20
+nombre: Registro Nacional OSC (ONG) Resolución Ministerial N° 2045-E/2016
+organizacion: Salud
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Salud. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- otro
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://sisa.msal.gov.ar/sisa/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://sisa.msal.gov.ar/sisa/
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado

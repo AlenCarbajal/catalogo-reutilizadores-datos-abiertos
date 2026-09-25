@@ -1,0 +1,23 @@
+id: presupuesto-abierto
+nombre: Presupuesto Abierto
+organizacion: Economía - Subsecretaría de Presupuesto
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Economía - Subsecretaría de Presupuesto. No se confirmó,
+  con la información disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- mapa
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://www.presupuestoabierto.gob.ar/sici/home
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://www.presupuestoabierto.gob.ar/sici/home
+etiquetas:
+- datos-abiertos
+- economia
+verificacion:
+  estado: no_verificado

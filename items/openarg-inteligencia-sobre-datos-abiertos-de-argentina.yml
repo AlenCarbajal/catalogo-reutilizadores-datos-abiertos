@@ -1,0 +1,58 @@
+id: openarg-inteligencia-sobre-datos-abiertos-de-argentina
+nombre: OpenArg — Inteligencia sobre Datos Abiertos de Argentina
+organizacion: Colossus Lab
+tipo_organizacion: independiente
+descripcion: >-
+  Plataforma web de análisis asistido por inteligencia artificial que responde preguntas sobre datos públicos
+  argentinos. Consulta portales mediante conectores CKAN y APIs oficiales, normaliza y cruza resultados,
+  y produce respuestas, gráficos y citas verificables. Entre sus fuentes se encuentran datos.gob.ar, la
+  API de Series de Tiempo y Georef.
+tipo_desarrollo:
+- web
+- aplicacion
+- visualizacion_datos
+- pipeline_datos
+datos_utilizados:
+- nombre: Catálogo Nacional de Datos Abiertos
+  tipo: catalogo
+  url: https://datos.gob.ar/
+- nombre: API de Series de Tiempo
+  tipo: api
+  url: https://apis.datos.gob.ar/series/api/
+- nombre: API Georef
+  tipo: api
+  url: https://apis.datos.gob.ar/georef/api/
+enlaces:
+- url: https://openarg.org/
+  tipo: sitio_web
+- url: https://openarg.org/como-funciona
+  tipo: documentacion
+- url: https://github.com/colossus-lab/openarg_backend
+  tipo: repositorio
+contactos:
+- tipo: email
+  valor: hola@colossuslab.org
+- tipo: github
+  valor: https://github.com/colossus-lab/openarg_backend
+tecnologias:
+- python
+- fastapi
+- postgresql
+- pgvector
+- redis
+- celery
+- langgraph
+- next-js
+- react
+etiquetas:
+- datos-abiertos
+- inteligencia-artificial
+- catalogos
+- georef
+- series-de-tiempo
+verificacion:
+  estado: verificado
+  fecha: '2026-09-22'
+  evidencia: >-
+    La documentación pública enumera datos.gob.ar entre las fuentes y el repositorio identifica conectores
+    para Series de Tiempo, Georef y CKAN. Evidencia: https://openarg.org/como-funciona y https://github.com/colossus-lab/openarg_backend

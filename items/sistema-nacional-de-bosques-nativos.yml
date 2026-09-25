@@ -1,0 +1,24 @@
+id: sistema-nacional-de-bosques-nativos
+nombre: Sistema Nacional de Bosques Nativos
+organizacion: Interior - Ambiente
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Interior - Ambiente. No se confirmó, con la información
+  disponible en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+- mapa
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: http://snmb.ambiente.gob.ar/develop/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: http://snmb.ambiente.gob.ar/develop/
+etiquetas:
+- datos-abiertos
+- ambiente
+verificacion:
+  estado: no_verificado

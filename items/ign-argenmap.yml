@@ -1,0 +1,24 @@
+id: ign-argenmap
+nombre: IGN-Argenmap
+organizacion: Defensa - IGN
+tipo_organizacion: gobierno
+descripcion: >-
+  Origen del registro: hoja APN. Organismo/área: Defensa - IGN. No se confirmó, con la información disponible
+  en el relevamiento, que esta plataforma reutilice datos o APIs de datos.gob.ar.
+tipo_desarrollo:
+- visualizacion_datos
+- web
+- mapa
+datos_utilizados:
+- nombre: No especificado en el relevamiento original
+  tipo: dataset
+enlaces:
+- url: https://mapa.ign.gob.ar/
+  tipo: proyecto
+contactos:
+- tipo: sitio_web
+  valor: https://mapa.ign.gob.ar/
+etiquetas:
+- datos-abiertos
+verificacion:
+  estado: no_verificado
