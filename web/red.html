@@ -19,7 +19,12 @@
   </div>
 </header>
 
-<main class="contenedor visor-red">
+<main class="contenedor disposicion">
+  <aside data-t-aria="catalogo.filtrar">
+    <p class="rotulo" data-t="catalogo.filtrar"></p>
+    <div id="filtros"></div>
+  </aside>
+  <section class="visor-red">
   <div class="visor-red__controles">
     <label class="campo"><span data-t="red.agrupar_por"></span><select id="criterio"></select></label>
     <div class="campo">
@@ -37,11 +42,13 @@
     </aside>
   </div>
   <p class="visor-red__ayuda" data-t="red.ayuda"></p>
+  </section>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script src="config.js"></script>
 <script src="textos.js"></script>
+<script src="filtros.js"></script>
 <script src="red.js"></script>
 </body>
 </html>

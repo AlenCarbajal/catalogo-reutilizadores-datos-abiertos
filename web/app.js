@@ -2,12 +2,10 @@
 // El estado (búsqueda, filtros, página, ficha abierta) vive en la URL, así se puede compartir.
 // Se vuelve a dibujar todo en cada cambio; alcanza hasta varios miles de fichas.
 
-const FACETAS = ["tipo_organizacion", "organizacion", "tipo_desarrollo", "tecnologias", "etiquetas"];
 const POR_PAGINA = 20;
 
 const $ = (id) => document.getElementById(id);
 const normalizar = (t) => String(t ?? "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
-const lista = (v) => (Array.isArray(v) ? v : v == null ? [] : [v]);
 
 let items = [];
 const estado = { q: "", filtros: {}, pagina: 1, abierto: null }; // filtros: { campo: Set(valores) }
@@ -15,7 +13,7 @@ const estado = { q: "", filtros: {}, pagina: 1, abierto: null }; // filtros: { c
 function leerURL() {
   const p = new URLSearchParams(location.search);
   estado.q = p.get("q") ?? "";
-  for (const campo of FACETAS) if (p.get(campo)) estado.filtros[campo] = new Set(p.get(campo).split(","));
+  estado.filtros = leerFiltros(p);
   estado.pagina = Math.max(1, parseInt(p.get("pagina"), 10) || 1);
   estado.abierto = decodeURIComponent(location.hash.slice(1)) || null;
   $("q").value = estado.q;
@@ -24,32 +22,19 @@ function leerURL() {
 function escribirURL() {
   const p = new URLSearchParams();
   if (estado.q) p.set("q", estado.q);
-  for (const [campo, valores] of Object.entries(estado.filtros)) if (valores.size) p.set(campo, [...valores].join(","));
+  escribirFiltros(p, estado.filtros);
+  // La red abre con los mismos filtros.
+  const filtros = escribirFiltros(new URLSearchParams(), estado.filtros).toString();
+  document.querySelector(".barra__red").href = "red.html" + (filtros ? "?" + filtros : "");
   if (estado.pagina > 1) p.set("pagina", estado.pagina);
   const qs = p.toString();
   history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + (estado.abierto ? "#" + estado.abierto : ""));
 }
 
 function coincide(item) {
-  for (const [campo, valores] of Object.entries(estado.filtros)) {
-    if (valores.size && !lista(item[campo]).some((v) => valores.has(v))) return false;
-  }
+  if (!pasaFiltros(item, estado.filtros)) return false;
   const terminos = normalizar(estado.q).split(/\s+/).filter(Boolean);
   return terminos.every((t) => item._texto.includes(t));
-}
-
-function renderFiltros(visibles) {
-  $("filtros").innerHTML = FACETAS.map((campo) => {
-    const conteo = new Map();
-    for (const item of visibles) for (const v of lista(item[campo])) conteo.set(v, (conteo.get(v) ?? 0) + 1);
-    const activos = estado.filtros[campo] ?? new Set();
-    for (const v of activos) if (!conteo.has(v)) conteo.set(v, 0);
-    if (!conteo.size) return "";
-    const opciones = [...conteo].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "es"));
-    return `<details ${activos.size ? "open" : ""}><summary>${esc(t("faceta." + campo))}</summary><div>
-      ${opciones.map(([v, n]) => `<label><input type="checkbox" data-campo="${campo}" value="${esc(v)}" ${activos.has(v) ? "checked" : ""}> <span>${esc(etiqueta(campo, v))}</span> <small>${n}</small></label>`).join("")}
-    </div></details>`;
-  }).join("");
 }
 
 function renderDetalle(item) {
@@ -92,9 +77,12 @@ function render() {
   const paginas = Math.max(1, Math.ceil(visibles.length / POR_PAGINA));
   estado.pagina = Math.min(estado.pagina, paginas);
   const pagina = visibles.slice((estado.pagina - 1) * POR_PAGINA, estado.pagina * POR_PAGINA);
-  $("estado").innerHTML = `<strong>${esc(t("catalogo.conteo", { n: visibles.length, total: items.length }))}</strong> ${esc(t("catalogo.conteo_sufijo"))}`
+  // Arriba se ve lo mismo que en la lista: el rango de esta página, no el total.
+  const desde = (estado.pagina - 1) * POR_PAGINA + 1, hasta = Math.min(estado.pagina * POR_PAGINA, visibles.length);
+  $("estado").innerHTML = `<strong>${esc(paginas > 1 ? t("pag.rango", { desde, hasta, total: visibles.length }) : String(visibles.length))}</strong> ${esc(t("catalogo.conteo_sufijo"))}`
+    + (visibles.length < items.length ? ` ${esc(t("catalogo.conteo_filtrado", { total: items.length }))}` : "")
     + (paginas > 1 ? ` · ${esc(t("pag.de", { n: estado.pagina, total: paginas }))}` : "");
-  renderFiltros(visibles);
+  renderFiltros($("filtros"), visibles, estado.filtros);
   renderPaginacion(visibles.length, paginas);
   $("lista").innerHTML = visibles.length
     ? pagina.map((item) => `
@@ -132,9 +120,7 @@ async function iniciar() {
   let espera;
   $("q").addEventListener("input", () => { clearTimeout(espera); espera = setTimeout(() => { estado.q = $("q").value.trim(); estado.pagina = 1; render(); }, 150); });
   $("filtros").addEventListener("change", (ev) => {
-    const { campo } = ev.target.dataset, v = ev.target.value;
-    const s = (estado.filtros[campo] ??= new Set());
-    s.has(v) ? s.delete(v) : s.add(v);
+    alternarFiltro(estado.filtros, ev.target);
     estado.pagina = 1;
     render();
   });

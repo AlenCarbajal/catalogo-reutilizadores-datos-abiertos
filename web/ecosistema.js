@@ -9,18 +9,20 @@
 
 // Lo que orbita a cada herramienta: lunas con nombre y, en Andino, el cinturón
 // de portales activos (se carga aparte, de data/portales.json).
+const GEOREF = "https://www.argentina.gob.ar/georef";
+
 const SISTEMAS = [
-  { id: "georef", nombre: "API Georef", logo: "georef", angulo: -38, lunas: [
-    { nombre: "Librería Python Georef", corto: "Python" },
-    { nombre: "Librería R Georef", corto: "R" },
-    { nombre: "Plugin QGIS Georef", corto: "Plugin QGIS" },
-    { nombre: "georef-ux" },
+  { id: "georef", nombre: "API Georef", logo: "georef", url: GEOREF, angulo: -38, lunas: [
+    { nombre: "Librería Python Georef", corto: "Librería Python", url: "https://github.com/datosgobar/pygeorefar" },
+    { nombre: "Paquete R Georef", corto: "Paquete R", url: "https://github.com/datosgobar/georefar" },
+    { nombre: "Plugin QGIS Georef", corto: "Plugin QGIS", url: "https://github.com/datosgobar/georef-ar-qgis-plugin" },
+    { nombre: "georef-ux", url: "https://datosgobar.github.io/georef-ux/" },
   ] },
-  { id: "series", nombre: "API Series de Tiempo", logo: "series-de-tiempo", angulo: 42, lunas: [
+  { id: "series", nombre: "API Series de Tiempo", logo: "series-de-tiempo", url: "https://www.argentina.gob.ar/datos-abiertos/api-series-de-tiempo", angulo: 42, lunas: [
     { nombre: "Explorador de series", url: "https://datos.gob.ar/series" },
   ] },
-  { id: "andino", nombre: "Portal Andino", logo: "andino", angulo: 188, lunas: [
-    { nombre: "Paquete de apertura de datos", corto: "Paquete de apertura" },
+  { id: "andino", nombre: "Portal Andino", logo: "andino", url: "https://www.argentina.gob.ar/portal-andino", angulo: 188, lunas: [
+    { nombre: "Paquete de apertura de datos", corto: "Paquete de apertura", url: "https://www.argentina.gob.ar/paquete-de-apertura" },
     { nombre: "DATOB" },
     { nombre: "Vocabularios y codelists", corto: "Vocabularios", url: "https://infra.datos.gob.ar/vocabulario/" },
   ], cinturon: [] },
@@ -29,37 +31,32 @@ const SISTEMAS = [
 // Lista completa, por familia. estado: "online" | "offline" | "instalable".
 const FAMILIAS = [
   { id: "portales", nombre: "Portales", glifo: "•••" },
-  { id: "andino", nombre: "Andino", logo: "andino" },
-  { id: "georef", nombre: "Georef", logo: "georef" },
-  { id: "series", nombre: "Series de Tiempo", logo: "series-de-tiempo" },
-  { id: "metas", nombre: "Metas", glifo: "✓" },
+  { id: "andino", nombre: "Andino", logo: "andino", url: "https://www.argentina.gob.ar/portal-andino" },
+  { id: "georef", nombre: "Georef", logo: "georef", url: GEOREF },
+  { id: "series", nombre: "Series de Tiempo", logo: "series-de-tiempo", url: "https://www.argentina.gob.ar/datos-abiertos/api-series-de-tiempo" },
   { id: "infra", nombre: "Infraestructura de datos", glifo: "Σ" },
 ];
 const SERVICIOS = [
   { familia: "portales", nombre: "Portal Nacional de Datos Públicos", estado: "online", url: "https://datos.gob.ar" },
   { familia: "portales", nombre: "Portal Nacional de Datos Públicos (versión anterior)", estado: "online", url: "https://old.datos.gob.ar" },
-  { familia: "portales", nombre: "Consulta Pública", estado: "online" },
+  { familia: "andino", nombre: "Portal Andino", estado: "online", url: "https://www.argentina.gob.ar/portal-andino" },
   { familia: "andino", nombre: "Portal Andino (entorno de pruebas)", estado: "online", url: "https://andino-v2.datos.gob.ar" },
-  { familia: "georef", nombre: "API Georef 1.0", estado: "online" },
-  { familia: "georef", nombre: "API Georef 2.0", estado: "online" },
-  { familia: "georef", nombre: "API Georef 2.1", estado: "online" },
-  { familia: "georef", nombre: "georef-ux", estado: "online" },
-  { familia: "georef", nombre: "Librería Python Georef", estado: "instalable" },
-  { familia: "georef", nombre: "Librería R Georef", estado: "instalable" },
-  { familia: "georef", nombre: "Plugin QGIS Georef", estado: "instalable" },
-  { familia: "series", nombre: "API Series de Tiempo", estado: "online" },
+  { familia: "georef", nombre: "API Georef (versiones 1.0, 2.0 y 2.1)", estado: "online", url: GEOREF },
+  { familia: "georef", nombre: "Herramientas y aplicaciones", estado: "online", url: "https://www.argentina.gob.ar/georef/herramientas-y-aplicaciones" },
+  { familia: "georef", nombre: "georef-ux", estado: "online", url: "https://datosgobar.github.io/georef-ux/" },
+  { familia: "georef", nombre: "Librería Python Georef", estado: "instalable", url: "https://github.com/datosgobar/pygeorefar" },
+  { familia: "georef", nombre: "Paquete R Georef", estado: "instalable", url: "https://github.com/datosgobar/georefar" },
+  { familia: "georef", nombre: "Plugin QGIS Georef", estado: "instalable", url: "https://github.com/datosgobar/georef-ar-qgis-plugin" },
+  { familia: "series", nombre: "API Series de Tiempo", estado: "online", url: "https://www.argentina.gob.ar/datos-abiertos/api-series-de-tiempo" },
   { familia: "series", nombre: "API Series de Tiempo V2", estado: "online" },
   { familia: "series", nombre: "Explorador de series", estado: "online", url: "https://datos.gob.ar/series" },
-  { familia: "andino", nombre: "Paquete de apertura de datos", estado: "online" },
+  { familia: "andino", nombre: "Paquete de apertura de datos", estado: "online", url: "https://www.argentina.gob.ar/paquete-de-apertura" },
   { familia: "andino", nombre: "DATOB", estado: "online" },
   { familia: "andino", nombre: "Vocabularios y codelists", estado: "online", url: "https://infra.datos.gob.ar/vocabulario/" },
-  { familia: "metas", nombre: "Metas del 5.º plan", estado: "online" },
-  { familia: "metas", nombre: "Metas del 6.º plan", estado: "online" },
-  { familia: "metas", nombre: "Metas (desarrollo)", estado: "online" },
   { familia: "infra", nombre: "Data Warehouse", estado: "online" },
   { familia: "infra", nombre: "Monitoreo", estado: "online" },
   { familia: "infra", nombre: "Nombres", estado: "offline", url: "https://nombres.datos.gob.ar" },
-  { familia: "infra", nombre: "Catálogo de desarrollos basados en datos", estado: "offline" },
+  { familia: "infra", nombre: "Catálogo de desarrollos basados en datos", estado: "offline", url: "./", rotulo: "Este sitio" }, // ponytail: este mismo sitio, hasta que tenga dominio propio
 ];
 
 const SVGNS = "http://www.w3.org/2000/svg";
@@ -126,7 +123,7 @@ function dibujar() {
   for (let i = 0; i < 170; i++) el("circle", { cx: (r() - 0.5) * escena.W * 1.4, cy: (r() - 0.5) * escena.H * 1.4, r: r() * 1.2 + 0.3, opacity: (r() * 0.35 + 0.1).toFixed(2) }, cielo);
 
   // Centro: datos.gob.ar dentro de su anillo dorado, como en el diagrama del equipo.
-  const centro = el("g", { class: "eco-centro eco-aparece", style: "--demora:0ms" }, svg);
+  const centro = el("a", { class: "eco-centro eco-aparece", style: "--demora:0ms", href: "https://datos.gob.ar", rel: "noopener", "aria-label": "datos.gob.ar" }, svg);
   el("circle", { r: escena.R * 0.62, fill: "url(#eco-sol)" }, centro);
   el("circle", { r: escena.R * 0.5, class: "eco-anillo-sol" }, centro);
   imagenLogo(centro, "datos-gob-ar", angosto ? 44 : 40);
@@ -146,8 +143,9 @@ function dibujar() {
     el("circle", { r: 7, class: "eco-planeta__punto" }, cuerpo);
     imagenLogo(cuerpo, sis.logo, 58, -74);
     el("text", { class: "eco-planeta__nombre", "text-anchor": "middle", y: 30 }, cuerpo).textContent = sis.nombre;
-    cuerpo.addEventListener("click", () => enfocar(sis.id));
-    cuerpo.addEventListener("keydown", (ev) => (ev.key === "Enter" || ev.key === " ") && (ev.preventDefault(), enfocar(sis.id)));
+    const tocar = () => (escena.enfocado === sis.id ? ficha(sis, sis) : enfocar(sis.id));
+    cuerpo.addEventListener("click", tocar);
+    cuerpo.addEventListener("keydown", (ev) => (ev.key === "Enter" || ev.key === " ") && (ev.preventDefault(), tocar()));
   });
 
   svg.classList.toggle("eco-listo", sinMovimiento);
@@ -254,7 +252,7 @@ function enfocar(id, instantaneo = false) {
   for (const s of svg.querySelectorAll(".eco-satelite, .eco-cinturon")) s.setAttribute("tabindex", s.closest(".eco-activo") ? 0 : -1);
   moverVista([cx - ancho / 2, cy - alto / 2, ancho, alto], instantaneo);
   $("eco-volver").hidden = false;
-  $("eco-sistema-titulo").textContent = t("eco.orbita_de", { nombre: sis.nombre });
+  $("eco-sistema-titulo").innerHTML = `${esc(t("eco.orbita_de", { nombre: sis.nombre }))} · <a href="${esc(sis.url)}" rel="noopener">${esc(t("eco.abrir"))} <span aria-hidden="true">↗</span></a>`;
   $("eco-ficha").hidden = true;
   if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
 }
@@ -291,14 +289,14 @@ function ficha(s, sis) {
 
 // --- lista -------------------------------------------------------------------
 function lista(portales) {
-  const item = (nombre, estado, url) => `<li>
+  const item = (nombre, estado, url, rotulo) => `<li>
     <span class="eco-estado eco-estado--${estado}"><span class="visually-hidden">${esc(t("eco.estado." + estado))}: </span>${esc(nombre)}</span>
-    ${url ? `<a href="${esc(url)}" rel="noopener">${esc(url.replace(/^https?:\/\//, "").replace(/\/$/, ""))}</a>` : ""}</li>`;
+    ${url ? `<a href="${esc(url)}" rel="noopener">${esc(rotulo ?? url.replace(/^https?:\/\//, "").replace(/\/$/, ""))}</a>` : ""}</li>`;
   const titulo = (fam) => fam.logo
-    ? `<img src="${logo(fam.logo, "color")}" alt="" class="eco-lista__logo"><span>${esc(fam.nombre)}</span>`
+    ? `<img src="${logo(fam.logo, "color")}" alt="" class="eco-lista__logo">${fam.url ? `<a href="${esc(fam.url)}" rel="noopener">${esc(fam.nombre)}</a>` : `<span>${esc(fam.nombre)}</span>`}`
     : `<span class="eco-lista__glifo" aria-hidden="true">${esc(fam.glifo)}</span><span>${esc(fam.nombre)}</span>`;
   $("eco-lista").innerHTML = FAMILIAS.map((fam) => `<section class="eco-lista__familia"><h3>${titulo(fam)}</h3><ul>
-      ${SERVICIOS.filter((s) => s.familia === fam.id).map((s) => item(s.nombre, s.estado, s.url)).join("")}</ul></section>`).join("")
+      ${SERVICIOS.filter((s) => s.familia === fam.id).map((s) => item(s.nombre, s.estado, s.url, s.rotulo)).join("")}</ul></section>`).join("")
     + (portales.length ? `<section class="eco-lista__familia"><h3><span class="eco-lista__glifo" aria-hidden="true">${portales.length}</span>
       <span class="eco-lista__visible">${esc(t("eco.portales_andino"))}</span></h3><ul>${portales.map((p) => item(p.nombre, "online", p.url)).join("")}</ul></section>` : "");
 }

@@ -21,8 +21,9 @@ const elegir = (v, opciones, def) => (opciones.includes(v) ? v : def);
 const estado = {
   criterio: elegir(url.get("por"), CRITERIOS, "tipo_desarrollo"),
   color: url.get("color") === "no" ? null : elegir(url.get("color"), CRITERIOS, "tipo_organizacion"),
+  filtros: leerFiltros(url),
 };
-let items = [];
+let todos = [], items = []; // items: los que pasan los filtros
 let colores = new Map(); // valor → color, según estado.color
 
 const svg = d3.select("#red");
@@ -225,7 +226,7 @@ function detalle(d) {
 }
 
 function escribirURL() {
-  const p = new URLSearchParams({ por: estado.criterio, color: estado.color ?? "no" });
+  const p = escribirFiltros(new URLSearchParams({ por: estado.criterio, color: estado.color ?? "no" }), estado.filtros);
   history.replaceState(null, "", "?" + p);
 }
 
@@ -238,7 +239,7 @@ async function iniciar() {
   $("variable-color").disabled = !estado.color;
 
   try {
-    items = await (await fetch("data/items.json")).json();
+    todos = await (await fetch("data/items.json")).json();
   } catch {
     abrirDetalle(`<h2>${esc(t("catalogo.error_carga_titulo"))}</h2><p>${esc(t("catalogo.error_carga_texto"))}</p>`);
     return;
@@ -271,6 +272,19 @@ async function iniciar() {
   addEventListener("keydown", (ev) => ev.key === "Escape" && !$("detalle").hidden && cerrarDetalle());
   svg.on("click.cerrar", (ev) => ev.target === svg.node() && cerrarDetalle());
 
+  $("filtros").addEventListener("change", (ev) => {
+    alternarFiltro(estado.filtros, ev.target);
+    cerrarDetalle();
+    escribirURL();
+    filtrar();
+  });
+  filtrar();
+}
+
+// Rearma la red solo con los proyectos que pasan los filtros.
+function filtrar() {
+  items = todos.filter((item) => pasaFiltros(item, estado.filtros));
+  renderFiltros($("filtros"), items, estado.filtros);
   calcularColores();
   renderLeyenda();
   armar();
