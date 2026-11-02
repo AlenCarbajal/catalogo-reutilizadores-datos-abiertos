@@ -7,10 +7,10 @@
 //   *texto*   se muestra en cursiva.
 const TEXTOS = {
   // --- Catálogo (index.html) ---
-  "catalogo.titulo_pestana": "Catálogo de usos y desarrollos",
+  "catalogo.titulo_pestana": "Catálogo de Reutilizadores de Datos Abiertos",
   "catalogo.descripcion_buscadores": "Catálogo abierto de proyectos que usan datos, APIs y catálogos públicos.",
   "catalogo.sobretitulo": "Datos Abiertos · Argentina",
-  "catalogo.titulo": "Catálogo de usos y desarrollos",
+  "catalogo.titulo": "Catálogo de Reutilizadores de Datos Abiertos",
   "catalogo.bajada": "Proyectos que usan datos, APIs y catálogos públicos, publicados por organismos, equipos y personas.",
   "catalogo.buscar": "Buscar",
   "catalogo.buscar_placeholder": "Proyecto, organización, tecnología, fuente…",
@@ -39,7 +39,7 @@ const TEXTOS = {
   "catalogo.ver_red": "Ver como red",
 
   // --- Visor en red (red.html) ---
-  "red.titulo_pestana": "Red de proyectos · Catálogo de usos y desarrollos",
+  "red.titulo_pestana": "Red de proyectos · Catálogo de Reutilizadores de Datos Abiertos",
   "red.titulo": "Red de proyectos",
   "red.bajada": "Cada punto es un proyecto. Elegí cómo agruparlos y por qué colorearlos, y mirá qué se junta con qué.",
   "red.agrupar_por": "Agrupar por",
@@ -82,7 +82,7 @@ const TEXTOS = {
   "catalogo.secciones": "Secciones",
 
   // --- Acerca del catálogo (acerca.html). Por definir. ---
-  "acerca.titulo_pestana": "Acerca · Catálogo de usos y desarrollos",
+  "acerca.titulo_pestana": "Acerca · Catálogo de Reutilizadores de Datos Abiertos",
   "acerca.titulo": "Acerca del catálogo",
   "acerca.bajada": "Por definir: una línea sobre quién arma el catálogo y para qué.",
   "acerca.que_es_titulo": "Qué es",
@@ -103,7 +103,7 @@ const TEXTOS = {
   "faceta.etiquetas": "Etiquetas",
 
   // --- Formulario (agregar.html) ---
-  "form.titulo_pestana": "Sumá tu proyecto · Catálogo de usos y desarrollos",
+  "form.titulo_pestana": "Sumá tu proyecto · Catálogo de Reutilizadores de Datos Abiertos",
   "form.volver": "← Volver al catálogo",
   "form.titulo": "Sumá tu proyecto al catálogo",
   "form.bajada": "Completá los datos de tu proyecto y envialo como Pull Request o por correo para que el equipo de Datos Abiertos lo evalúe.",
@@ -176,7 +176,7 @@ const TEXTOS = {
   "resultado.copiado": "Copiado ✓",
   "resultado.nota": "Se abre el editor de GitHub con el archivo ya cargado y sólo tenés que confirmar los dos pasos que indica la pantalla (*Propose new file* y *Create pull request*). Si no tenés cuenta, usá el correo.",
   "correo.asunto": "[Catálogo] Alta: {nombre}",
-  "correo.cuerpo": "Solicito agregar esta herramienta al catálogo.",
+  "correo.cuerpo": "Solicito agregar este proyecto al catálogo.",
   "correo.archivo": "Archivo",
 };
 
