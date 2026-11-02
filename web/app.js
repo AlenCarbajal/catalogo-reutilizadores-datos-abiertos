@@ -41,7 +41,9 @@ function renderDetalle(item) {
   return `<div class="detalle">
     ${bloque("ficha.datos", item.datos_utilizados.map((d) => `<p>${d.url ? enlace(d.url, d.nombre) : `<strong>${esc(d.nombre)}</strong>`} <small>${esc(etiqueta("tipo_dato", d.tipo))}</small></p>`).join(""))}
     ${bloque("ficha.enlaces", `<p>${item.enlaces.map((e) => enlace(e.url, etiqueta("tipo_enlace", e.tipo))).join(" · ")}</p>`)}
-    ${bloque("ficha.contacto", `<p>${item.contactos.map((c) => enlace(c.tipo === "email" ? "mailto:" + c.valor : c.valor, etiqueta("tipo_contacto", c.tipo))).join(" · ")}</p>`)}
+    ${bloque("ficha.contacto", item.contactos.map((c) => (c.tipo === "email"
+      ? `<p class="contacto"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="2" y="4" width="16" height="12" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 4.5 10 11l7.5-6.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>${enlace("mailto:" + c.valor, c.valor)}</p>`
+      : `<p class="contacto">${enlace(c.valor, etiqueta("tipo_contacto", c.tipo))}</p>`)).join(""))}
     ${bloque("ficha.tecnologias", item.tecnologias?.length ? `<div class="tags">${item.tecnologias.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : "")}
   </div>`;
 }
