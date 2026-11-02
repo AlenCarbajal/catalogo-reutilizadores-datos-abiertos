@@ -20,12 +20,10 @@ function leerURL() {
 }
 
 function escribirURL() {
-  const p = new URLSearchParams();
-  if (estado.q) p.set("q", estado.q);
-  escribirFiltros(p, estado.filtros);
+  const p = escribirFiltros(new URLSearchParams(), estado.filtros);
   // La red abre con los mismos filtros.
-  const filtros = escribirFiltros(new URLSearchParams(), estado.filtros).toString();
-  document.querySelector(".barra__red").href = "red.html" + (filtros ? "?" + filtros : "");
+  document.querySelector(".barra__red").href = "red.html" + (p.size ? "?" + p : "");
+  if (estado.q) p.set("q", estado.q);
   if (estado.pagina > 1) p.set("pagina", estado.pagina);
   const qs = p.toString();
   history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + (estado.abierto ? "#" + estado.abierto : ""));

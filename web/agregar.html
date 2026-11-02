@@ -12,14 +12,14 @@
 <body>
 
 <header class="cabecera cabecera--form">
-  <div class="contenedor">
+  <div class="contenedor contenedor--angosto">
     <p><a class="volver" href="./" data-t="form.volver"></a></p>
     <h1 data-t="form.titulo"></h1>
     <p class="bajada" data-t="form.bajada"></p>
   </div>
 </header>
 
-<main class="contenedor formulario">
+<main class="contenedor contenedor--angosto formulario">
 <form id="form" novalidate>
 
   <fieldset class="tarjeta">
@@ -93,7 +93,7 @@
   </fieldset>
 
   <div id="errores" class="error" role="alert" hidden></div>
-  <div><button type="submit" class="boton" data-t="form.generar"></button></div>
+  <div class="enviar"><button type="submit" class="boton" data-t="form.generar"></button></div>
 </form>
 
 <section id="resultado" hidden>

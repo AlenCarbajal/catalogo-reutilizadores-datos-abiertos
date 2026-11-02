@@ -1,4 +1,4 @@
-# Catálogo de usos y desarrollos
+# Catálogo de Reutilizadores de Datos Abiertos
 
 Catálogo abierto de herramientas que usan datos, APIs y catálogos públicos.
 Cada herramienta es un archivo YAML en `items/`. Un script lo valida y arma un
