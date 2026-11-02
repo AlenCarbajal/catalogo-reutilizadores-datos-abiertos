@@ -107,6 +107,8 @@ a:hover { color: var(--navy); }
 @media (max-width: 600px) { .detalle { grid-template-columns: 1fr; } }
 .detalle h4 { margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--tenue); }
 .detalle p { font-size: 16px; line-height: 1.7; }
+.contacto { display: flex; align-items: center; gap: 8px; overflow-wrap: anywhere; }
+.contacto svg { flex: none; color: var(--indigo); }
 .detalle small { font-size: 12px; font-weight: 500; color: var(--tenue); }
 .tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .tags span { font-family: var(--mono); font-size: 12px; color: var(--navy); background: var(--tile); padding: 4px 8px; }
