@@ -38,6 +38,7 @@ a:hover { color: var(--navy); }
 .mosaico .indigo { background: var(--indigo); color: #fff; }
 .mosaico .violeta { background: var(--violeta); color: #fff; }
 .mosaico .navy { background: var(--navy); color: #fff; }
+.mosaico .alto { grid-row: span 2; height: auto; }
 
 /* Cabecera navy */
 .cabecera { background: var(--navy); color: #fff; padding: 28px 0; }
