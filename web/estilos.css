@@ -190,7 +190,10 @@ input[name="id"] { background: #F2F2F2; color: var(--tenue); }
 .visor-red__controles { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 24px; }
 .visor-red__controles .campo { flex: 1 1 200px; }
 .visor-red__interruptor { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: var(--navy); cursor: pointer; }
-.visor-red__interruptor input { width: 16px; height: 16px; margin: 0; accent-color: var(--indigo); }
+/* El rótulo con casilla mide lo mismo que los demás, y select y búsqueda la misma altura. */
+.visor-red__controles .campo > :first-child { display: flex; align-items: center; min-height: 22px; }
+.visor-red__controles :is(select, input[type="search"]) { height: 44px; }
+.visor-red__interruptor input { width: 16px; height: 16px; min-height: 0; padding: 0; margin: 0; accent-color: var(--indigo); }
 #variable-color:disabled { opacity: .5; }
 .visor-red__leyenda { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; font-size: 13px; color: var(--tenue); }
 .visor-red__leyenda ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 4px 6px; }
