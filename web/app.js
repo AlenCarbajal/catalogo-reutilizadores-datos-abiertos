@@ -95,7 +95,7 @@ function render() {
                ${item.verificacion?.estado === "verificado" ? `<span class="verificado">${esc(t("catalogo.verificado"))}</span>` : ""}</p>
             <p class="ficha__descripcion">${esc(item.descripcion)}</p>
           </div>
-          <span class="ficha__flecha" aria-hidden="true">▾</span>
+          <span class="ficha__flecha" aria-hidden="true"></span>
         </button>
         ${estado.abierto === item.id ? renderDetalle(item) : ""}
       </li>`).join("")

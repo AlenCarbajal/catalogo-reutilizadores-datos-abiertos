@@ -79,9 +79,10 @@ a:hover { color: var(--navy); }
 #filtros details + details { border-top: 1px solid var(--borde); }
 #filtros summary { display: flex; justify-content: space-between; align-items: center; min-height: 48px; padding: 0 14px; font-size: 14px; font-weight: 600; color: var(--navy); cursor: pointer; list-style: none; }
 #filtros summary::-webkit-details-marker { display: none; }
-#filtros summary::after { content: "▾"; color: var(--indigo); font-size: 12px; transition: transform .2s; transform: rotate(-90deg); }
+/* Chevron dibujado con bordes: queda centrado en la fila, a diferencia de un glifo rotado. */
+#filtros summary::after { content: ""; flex: none; width: 7px; height: 7px; margin-right: 4px; border-right: 2px solid var(--indigo); border-bottom: 2px solid var(--indigo); transition: transform .2s; transform: rotate(-45deg); }
 #filtros details[open] summary { border-bottom: 1px solid var(--borde); }
-#filtros details[open] summary::after { transform: none; }
+#filtros details[open] summary::after { transform: translateY(-2px) rotate(45deg); }
 #filtros details > div { padding: 10px 14px 14px; display: flex; flex-direction: column; gap: 9px; }
 #filtros label { display: flex; align-items: center; gap: 9px; font-size: 14px; cursor: pointer; }
 #filtros label span { flex: 1; }
@@ -99,7 +100,8 @@ a:hover { color: var(--navy); }
 .ficha__meta { margin-top: 8px; font-size: 14px; color: var(--tenue); }
 .ficha__meta strong { color: var(--navy); }
 .ficha__descripcion { margin-top: 12px; line-height: 1.65; max-width: 78ch; text-wrap: pretty; }
-.ficha__flecha { flex: none; width: 40px; height: 40px; margin-top: -6px; display: grid; place-items: center; border: 1px solid var(--borde); color: var(--indigo); font-size: 13px; font-weight: 700; transition: transform .22s ease; }
+.ficha__flecha { flex: none; width: 40px; height: 40px; margin-top: -6px; display: grid; place-items: center; border: 1px solid var(--borde); transition: transform .22s ease; }
+.ficha__flecha::before { content: ""; width: 8px; height: 8px; margin-top: -4px; border-right: 2px solid var(--indigo); border-bottom: 2px solid var(--indigo); transform: rotate(45deg); }
 .ficha > button:hover .ficha__flecha { border-color: var(--indigo); }
 .ficha > button[aria-expanded="true"] .ficha__flecha { transform: rotate(180deg); }
 .verificado { display: inline-block; margin-left: 6px; padding: 1px 8px; font-size: 12px; font-weight: 600; color: var(--indigo); background: var(--indigo-suave); }
