@@ -79,9 +79,10 @@ a:hover { color: var(--navy); }
 #filtros details + details { border-top: 1px solid var(--borde); }
 #filtros summary { display: flex; justify-content: space-between; align-items: center; min-height: 48px; padding: 0 14px; font-size: 14px; font-weight: 600; color: var(--navy); cursor: pointer; list-style: none; }
 #filtros summary::-webkit-details-marker { display: none; }
-#filtros summary::after { content: "▾"; color: var(--indigo); font-size: 12px; transition: transform .2s; transform: rotate(-90deg); }
+/* Chevron dibujado con bordes: queda centrado en la fila, a diferencia de un glifo rotado. */
+#filtros summary::after { content: ""; flex: none; width: 7px; height: 7px; margin-right: 4px; border-right: 2px solid var(--indigo); border-bottom: 2px solid var(--indigo); transition: transform .2s; transform: rotate(-45deg); }
 #filtros details[open] summary { border-bottom: 1px solid var(--borde); }
-#filtros details[open] summary::after { transform: none; }
+#filtros details[open] summary::after { transform: translateY(-2px) rotate(45deg); }
 #filtros details > div { padding: 10px 14px 14px; display: flex; flex-direction: column; gap: 9px; }
 #filtros label { display: flex; align-items: center; gap: 9px; font-size: 14px; cursor: pointer; }
 #filtros label span { flex: 1; }
@@ -99,7 +100,8 @@ a:hover { color: var(--navy); }
 .ficha__meta { margin-top: 8px; font-size: 14px; color: var(--tenue); }
 .ficha__meta strong { color: var(--navy); }
 .ficha__descripcion { margin-top: 12px; line-height: 1.65; max-width: 78ch; text-wrap: pretty; }
-.ficha__flecha { flex: none; width: 40px; height: 40px; margin-top: -6px; display: grid; place-items: center; border: 1px solid var(--borde); color: var(--indigo); font-size: 13px; font-weight: 700; transition: transform .22s ease; }
+.ficha__flecha { flex: none; width: 40px; height: 40px; margin-top: -6px; display: grid; place-items: center; border: 1px solid var(--borde); transition: transform .22s ease; }
+.ficha__flecha::before { content: ""; width: 8px; height: 8px; margin-top: -4px; border-right: 2px solid var(--indigo); border-bottom: 2px solid var(--indigo); transform: rotate(45deg); }
 .ficha > button:hover .ficha__flecha { border-color: var(--indigo); }
 .ficha > button[aria-expanded="true"] .ficha__flecha { transform: rotate(180deg); }
 .verificado { display: inline-block; margin-left: 6px; padding: 1px 8px; font-size: 12px; font-weight: 600; color: var(--indigo); background: var(--indigo-suave); }
@@ -145,6 +147,8 @@ a:hover { color: var(--navy); }
 .campo small { display: block; font-size: 13px; font-weight: 400; color: var(--tenue); margin: -4px 0 6px; }
 .campo span small { display: inline; margin: 0; }
 input, select, textarea { width: 100%; min-height: 44px; font: inherit; font-size: 15px; padding: 10px 12px; border: 1.5px solid var(--borde-input); background: #fff; color: var(--texto); border-radius: 0; }
+/* Flecha propia: la nativa queda pegada al borde derecho. Mismo chevron que los filtros. */
+select { appearance: none; padding-right: 40px; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23393793' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 14px center; }
 textarea { line-height: 1.6; resize: vertical; }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(57, 55, 147, .15); }
 input[name="id"], input[type="url"] { font-family: var(--mono); font-size: 14px; }
@@ -190,7 +194,10 @@ input[name="id"] { background: #F2F2F2; color: var(--tenue); }
 .visor-red__controles { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 24px; }
 .visor-red__controles .campo { flex: 1 1 200px; }
 .visor-red__interruptor { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: var(--navy); cursor: pointer; }
-.visor-red__interruptor input { width: 16px; height: 16px; margin: 0; accent-color: var(--indigo); }
+/* El rótulo con casilla mide lo mismo que los demás, y select y búsqueda la misma altura. */
+.visor-red__controles .campo > :first-child { display: flex; align-items: center; min-height: 22px; }
+.visor-red__controles :is(select, input[type="search"]) { height: 44px; }
+.visor-red__interruptor input { width: 16px; height: 16px; min-height: 0; padding: 0; margin: 0; accent-color: var(--indigo); }
 #variable-color:disabled { opacity: .5; }
 .visor-red__leyenda { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; font-size: 13px; color: var(--tenue); }
 .visor-red__leyenda ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 4px 6px; }
