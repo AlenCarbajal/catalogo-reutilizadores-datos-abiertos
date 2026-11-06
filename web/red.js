@@ -168,7 +168,7 @@ function armar() {
   const grupos = [...conteo].map(([v, n]) => {
     const previo = antes.get(`g:${criterio}:${v}`);
     return Object.assign(previo ?? { x: (Math.random() - 0.5) * 300, y: (Math.random() - 0.5) * 300 },
-      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 20 + Math.sqrt(n) * 6 });
+      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 14 + Math.sqrt(n) * 4.5 });
   });
   nodos = [...proyectos, ...grupos];
   links = items.flatMap((item) => grupoDe(item, criterio).map((v) => ({ source: "p:" + item.id, target: `g:${criterio}:${v}` })));
