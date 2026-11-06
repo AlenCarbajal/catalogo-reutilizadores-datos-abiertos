@@ -37,20 +37,27 @@ const zoom = d3.zoom().scaleExtent([0.2, 4]).on("zoom", (ev) => {
   lienzo.attr("transform", ev.transform);
   if (ev.transform.k !== escala) { escala = ev.transform.k; escalarRotulos(); }
 });
-const escalarRotulos = () => selNodos?.filter((d) => d.grupo).classed("chico", (d) => d.r * escala < 14)
-  .select("text").attr("transform", `scale(${1 / escala})`);
+// El nombre va debajo del círculo; la cantidad, adentro. Los dos con tamaño fijo en pantalla.
+const escalarRotulos = () => {
+  selNodos?.select("text.nombre").attr("transform", (d) => `translate(0,${d.r + 4 / escala}) scale(${1 / escala})`);
+  selNodos?.filter((d) => d.grupo).classed("chico", (d) => d.r * escala < 10)
+    .select("text.cuenta").attr("transform", `scale(${1 / escala})`);
+};
 // Si dos rótulos de grupo se pisan en pantalla queda el del grupo más grande; el otro
 // aparece al pasar por encima (como la grilla de rótulos de Sigma.js o Gephi).
 function despejarRotulos() {
   if (!selNodos) return;
   const grupos = selNodos.filter((d) => d.grupo).classed("pisado", false);
+  // También cuentan como ocupados los círculos de los grupos: un rótulo no va debajo de otro círculo.
+  const circulos = grupos.nodes().map((n) => [n, n.querySelector("circle").getBoundingClientRect()]);
   const puestos = [];
   grupos.filter(function () { return !this.classList.contains("chico"); }).nodes()
     .sort((a, b) => d3.select(b).datum().n - d3.select(a).datum().n)
     .forEach((nodo) => {
-      const r = nodo.querySelector("text").getBoundingClientRect();
+      const r = nodo.querySelector("text.nombre").getBoundingClientRect();
       if (!r.width) return;
-      const choca = puestos.some((p) => r.left < p.right + 4 && r.right > p.left - 4 && r.top < p.bottom + 2 && r.bottom > p.top - 2);
+      const pisa = (p) => r.left < p.right + 4 && r.right > p.left - 4 && r.top < p.bottom + 2 && r.bottom > p.top - 2;
+      const choca = puestos.some(pisa) || circulos.some(([otro, c]) => otro !== nodo && pisa(c));
       if (choca) nodo.classList.add("pisado"); else puestos.push(r);
     });
   // Los grupos con rótulo visible van al frente, así ningún círculo los tapa.
@@ -127,11 +134,11 @@ function armar() {
   const conteo = new Map();
   for (const item of items) for (const v of grupoDe(item, criterio)) conteo.set(v, (conteo.get(v) ?? 0) + 1);
 
-  const proyectos = items.map((item) => Object.assign(antes.get("p:" + item.id) ?? {}, { id: "p:" + item.id, item, r: 9 }));
+  const proyectos = items.map((item) => Object.assign(antes.get("p:" + item.id) ?? {}, { id: "p:" + item.id, item, r: 6 }));
   const grupos = [...conteo].map(([v, n]) => {
     const previo = antes.get(`g:${criterio}:${v}`);
     return Object.assign(previo ?? { x: (Math.random() - 0.5) * 300, y: (Math.random() - 0.5) * 300 },
-      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 14 + Math.sqrt(n) * 6 });
+      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 12 + Math.sqrt(n) * 4 });
   });
   nodos = [...proyectos, ...grupos];
   links = items.flatMap((item) => grupoDe(item, criterio).map((v) => ({ source: "p:" + item.id, target: `g:${criterio}:${v}` })));
@@ -149,7 +156,9 @@ function armar() {
         const g = enter.append("g").attr("class", (d) => "nodo" + (d.grupo ? " nodo--grupo" : "")).attr("tabindex", 0).attr("role", "button");
         g.append("circle").attr("r", 0).attr("fill", (d) => (d.grupo ? null : colorDe(d.item)))
           .transition().duration(600).attr("r", (d) => d.r);
-        g.append("text").attr("dy", (d) => (d.grupo ? "0.35em" : d.r + 14)).attr("text-anchor", "middle");
+        // Grupo: la cantidad adentro del círculo y el nombre debajo. Proyecto: su nombre debajo.
+        g.filter((d) => d.grupo).append("text").attr("class", "cuenta").attr("dy", "0.35em").attr("text-anchor", "middle");
+        g.append("text").attr("class", "nombre").attr("dy", "1em").attr("text-anchor", "middle");
         g.append("title");
         return g;
       },
@@ -157,7 +166,8 @@ function armar() {
       (exit) => exit.call((s) => s.select("circle").transition().duration(300).attr("r", 0)).transition().duration(300).remove(),
     );
   selNodos.attr("aria-label", (d) => (d.grupo ? `${nombreValor(criterio, d.valor)} (${d.n})` : d.item.nombre));
-  selNodos.select("text").text((d) => (d.grupo ? nombreValor(criterio, d.valor) : d.item.nombre));
+  selNodos.select("text.nombre").text((d) => (d.grupo ? nombreValor(criterio, d.valor) : d.item.nombre));
+  selNodos.select("text.cuenta").text((d) => d.n);
   selNodos.select("title").text((d) => (d.grupo ? t(d.n === 1 ? "red.grupo_titulo_uno" : "red.grupo_titulo", { n: d.n }) : `${d.item.nombre} · ${d.item.organizacion}`));
   selNodos.on("click", (ev, d) => detalle(d)).on("keydown", (ev, d) => ev.key === "Enter" && detalle(d))
     .on("mouseenter focus", (ev, d) => { resaltar(d); mostrarTooltip(ev, d); })
@@ -186,14 +196,8 @@ function recolorear() {
   selNodos?.filter((d) => !d.grupo).select("circle").transition().duration(sinMovimiento ? 0 : 500).attr("fill", (d) => colorDe(d.item));
 }
 
-// Enlaces apenas curvos: con muchos rayos hacia un mismo grupo se distinguen mejor que las rectas.
-const curva = (d) => {
-  const { x: x1, y: y1 } = d.source, { x: x2, y: y2 } = d.target;
-  const cx = (x1 + x2) / 2 - (y2 - y1) * 0.15, cy = (y1 + y2) / 2 + (x2 - x1) * 0.15;
-  return `M${x1},${y1}Q${cx},${cy} ${x2},${y2}`;
-};
 function dibujar() {
-  selLinks?.attr("d", curva);
+  selLinks?.attr("d", (d) => `M${d.source.x},${d.source.y}L${d.target.x},${d.target.y}`);
   selNodos?.attr("transform", (d) => `translate(${d.x},${d.y})`);
 }
 
