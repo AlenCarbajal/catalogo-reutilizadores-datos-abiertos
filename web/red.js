@@ -37,11 +37,16 @@ const zoom = d3.zoom().scaleExtent([0.2, 4]).on("zoom", (ev) => {
   lienzo.attr("transform", ev.transform);
   if (ev.transform.k !== escala) { escala = ev.transform.k; escalarRotulos(); }
 });
-// El nombre va debajo del círculo; la cantidad, adentro. Los dos con tamaño fijo en pantalla.
+// Rótulos con tamaño fijo en pantalla. En los grupos el nombre va centrado en el círculo y,
+// si el círculo es grande, la cantidad abajo; en los proyectos, el nombre debajo del punto.
 const escalarRotulos = () => {
-  selNodos?.select("text.nombre").attr("transform", (d) => `translate(0,${d.r + 4 / escala}) scale(${1 / escala})`);
-  selNodos?.filter((d) => d.grupo).classed("chico", (d) => d.r * escala < 10)
-    .select("text.cuenta").attr("transform", `scale(${1 / escala})`);
+  const grupos = selNodos?.filter((d) => d.grupo).classed("chico", (d) => d.r * escala < 12)
+    .classed("con-cuenta", (d) => d.r * escala >= 24);
+  grupos?.select("text.nombre").attr("dy", (d) => (d.r * escala >= 24 ? "-0.2em" : "0.35em"))
+    .attr("transform", `scale(${1 / escala})`);
+  grupos?.select("text.cuenta").attr("transform", `scale(${1 / escala})`);
+  selNodos?.filter((d) => !d.grupo).select("text.nombre").attr("dy", "1em")
+    .attr("transform", (d) => `translate(0,${d.r + 4 / escala}) scale(${1 / escala})`);
 };
 // Si dos rótulos de grupo se pisan en pantalla queda el del grupo más grande; el otro
 // aparece al pasar por encima (como la grilla de rótulos de Sigma.js o Gephi).
@@ -138,7 +143,7 @@ function armar() {
   const grupos = [...conteo].map(([v, n]) => {
     const previo = antes.get(`g:${criterio}:${v}`);
     return Object.assign(previo ?? { x: (Math.random() - 0.5) * 300, y: (Math.random() - 0.5) * 300 },
-      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 12 + Math.sqrt(n) * 4 });
+      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 22 + Math.sqrt(n) * 6 });
   });
   nodos = [...proyectos, ...grupos];
   links = items.flatMap((item) => grupoDe(item, criterio).map((v) => ({ source: "p:" + item.id, target: `g:${criterio}:${v}` })));
@@ -156,9 +161,9 @@ function armar() {
         const g = enter.append("g").attr("class", (d) => "nodo" + (d.grupo ? " nodo--grupo" : "")).attr("tabindex", 0).attr("role", "button");
         g.append("circle").attr("r", 0).attr("fill", (d) => (d.grupo ? null : colorDe(d.item)))
           .transition().duration(600).attr("r", (d) => d.r);
-        // Grupo: la cantidad adentro del círculo y el nombre debajo. Proyecto: su nombre debajo.
-        g.filter((d) => d.grupo).append("text").attr("class", "cuenta").attr("dy", "0.35em").attr("text-anchor", "middle");
-        g.append("text").attr("class", "nombre").attr("dy", "1em").attr("text-anchor", "middle");
+        // Grupo: el nombre adentro del círculo y, si hay lugar, la cantidad debajo de él. Proyecto: su nombre debajo.
+        g.append("text").attr("class", "nombre").attr("text-anchor", "middle");
+        g.filter((d) => d.grupo).append("text").attr("class", "cuenta").attr("dy", "1.3em").attr("text-anchor", "middle");
         g.append("title");
         return g;
       },
