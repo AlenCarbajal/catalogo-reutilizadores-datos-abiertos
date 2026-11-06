@@ -57,8 +57,10 @@ const TEXTOS = {
   "red.grupo_titulo": "{n} proyectos",
   "red.grupo_titulo_uno": "1 proyecto",
   "red.ver_ficha": "Ver ficha",
+  "red.ver_todo": "Ver todo",
+  "red.tooltip_mas": "y {n} más",
   "red.cerrar": "Cerrar",
-  "red.ayuda": "Arrastrá los puntos, acercá con la rueda o con dos dedos, y tocá un punto para ver el detalle. Pasá por la leyenda para resaltar un color.",
+  "red.ayuda": "Pasá por un grupo para ver qué proyectos tiene y tocalo para acercarte. Arrastrá los puntos, acercá con la rueda o con dos dedos, y tocá un proyecto para ver el detalle.",
 
   // --- Ecosistema datos.gob.ar (ecosistema.html) ---
   "eco.titulo_pestana": "Ecosistema datos.gob.ar",
