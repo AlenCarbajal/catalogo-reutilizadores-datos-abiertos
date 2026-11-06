@@ -41,7 +41,7 @@ const TEXTOS = {
   // --- Visor en red (red.html) ---
   "red.titulo_pestana": "Red de proyectos · Catálogo de Reutilizadores de Datos Abiertos",
   "red.titulo": "Red de proyectos",
-  "red.bajada": "Cada punto es un proyecto. Elegí cómo agruparlos y por qué colorearlos, y mirá qué se junta con qué.",
+  "red.bajada": "Agrupa los proyectos del catálogo por tipo de desarrollo, organización, tecnología, fuente de datos o etiqueta.",
   "red.agrupar_por": "Agrupar por",
   "red.criterio.tipo_desarrollo": "Tipo de desarrollo",
   "red.criterio.tipo_organizacion": "Tipo de organización",
