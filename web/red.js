@@ -37,14 +37,38 @@ const zoom = d3.zoom().scaleExtent([0.2, 4]).on("zoom", (ev) => {
   lienzo.attr("transform", ev.transform);
   if (ev.transform.k !== escala) { escala = ev.transform.k; escalarRotulos(); }
 });
-// Rótulos con tamaño fijo en pantalla. En los grupos el nombre va centrado en el círculo y,
-// si el círculo es grande, la cantidad abajo; en los proyectos, el nombre debajo del punto.
+// Rótulos con tamaño fijo en pantalla. En los grupos el nombre se parte en líneas dentro del
+// círculo y, si sobra lugar, va la cantidad debajo; si alguna palabra no entra en el ancho del
+// círculo, el nombre queda oculto hasta pasar por encima. En los proyectos, debajo del punto.
+const medidor = document.createElement("canvas").getContext("2d");
+const anchoTexto = (s) => { medidor.font = "700 11px Montserrat, system-ui, sans-serif"; return medidor.measureText(s).width; };
+const LINEA = 13; // alto de línea en px de pantalla
+function partirEnLineas(nombre, ancho) {
+  const lineas = [];
+  for (const palabra of nombre.split(/\s+/)) {
+    if (anchoTexto(palabra) > ancho) return null;
+    const ultima = lineas.at(-1);
+    if (ultima && anchoTexto(ultima + " " + palabra) <= ancho) lineas[lineas.length - 1] = ultima + " " + palabra;
+    else lineas.push(palabra);
+  }
+  return lineas;
+}
 const escalarRotulos = () => {
-  const grupos = selNodos?.filter((d) => d.grupo).classed("chico", (d) => d.r * escala < 12)
-    .classed("con-cuenta", (d) => d.r * escala >= 24);
-  grupos?.select("text.nombre").attr("dy", (d) => (d.r * escala >= 24 ? "-0.2em" : "0.35em"))
-    .attr("transform", `scale(${1 / escala})`);
-  grupos?.select("text.cuenta").attr("transform", `scale(${1 / escala})`);
+  selNodos?.filter((d) => d.grupo).each(function (d) {
+    const diametro = d.r * escala * 2, nombre = nombreValor(estado.criterio, d.valor);
+    const lineas = partirEnLineas(nombre, diametro);
+    const entra = !!lineas && lineas.length * LINEA <= diametro * 0.85;
+    const conCuenta = entra && (lineas.length + 1) * LINEA <= diametro * 0.7;
+    const filas = entra ? lineas : [nombre];
+    const total = filas.length + (conCuenta ? 1 : 0);
+    const arriba = -((total - 1) * LINEA) / 2;
+    const g = d3.select(this).classed("no-entra", !entra).classed("con-cuenta", conCuenta);
+    g.select("text.nombre").attr("transform", `scale(${1 / escala})`)
+      .selectAll("tspan").data(filas).join("tspan")
+      .attr("x", 0).attr("y", (_, i) => arriba + i * LINEA).attr("dy", "0.35em").text((s) => s);
+    g.select("text.cuenta").attr("transform", `scale(${1 / escala})`)
+      .attr("y", arriba + filas.length * LINEA).attr("dy", "0.35em");
+  });
   selNodos?.filter((d) => !d.grupo).select("text.nombre").attr("dy", "1em")
     .attr("transform", (d) => `translate(0,${d.r + 4 / escala}) scale(${1 / escala})`);
 };
@@ -56,7 +80,7 @@ function despejarRotulos() {
   // También cuentan como ocupados los círculos de los grupos: un rótulo no va debajo de otro círculo.
   const circulos = grupos.nodes().map((n) => [n, n.querySelector("circle").getBoundingClientRect()]);
   const puestos = [];
-  grupos.filter(function () { return !this.classList.contains("chico"); }).nodes()
+  grupos.filter(function () { return !this.classList.contains("no-entra"); }).nodes()
     .sort((a, b) => d3.select(b).datum().n - d3.select(a).datum().n)
     .forEach((nodo) => {
       const r = nodo.querySelector("text.nombre").getBoundingClientRect();
@@ -89,10 +113,11 @@ function encuadrar() {
 const enGrupos = (l) => grupoDe(l.source.item ?? l.target.item, estado.criterio).length;
 const sim = d3.forceSimulation()
   .force("link", d3.forceLink().id((d) => d.id).distance((l) => (enGrupos(l) > 1 ? 90 : 45)).strength((l) => (enGrupos(l) > 1 ? 0.25 : 0.8)))
-  .force("charge", d3.forceManyBody().strength((d) => (d.grupo ? -260 : -140)))
+  .force("charge", d3.forceManyBody().strength((d) => (d.grupo ? -200 : -80)))
   .force("collide", d3.forceCollide((d) => d.r + 6))
-  .force("x", d3.forceX(0).strength(0.08))
-  .force("y", d3.forceY(0).strength(0.08))
+  // Centrado firme: acerca los racimos sueltos para que el encuadre no achique la red.
+  .force("x", d3.forceX(0).strength(0.14))
+  .force("y", d3.forceY(0).strength(0.14))
   .on("tick", dibujar)
   .on("end", () => { if (encuadrarAlTerminar) encuadrar(); else despejarRotulos(); });
 
@@ -143,7 +168,7 @@ function armar() {
   const grupos = [...conteo].map(([v, n]) => {
     const previo = antes.get(`g:${criterio}:${v}`);
     return Object.assign(previo ?? { x: (Math.random() - 0.5) * 300, y: (Math.random() - 0.5) * 300 },
-      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 22 + Math.sqrt(n) * 6 });
+      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 20 + Math.sqrt(n) * 6 });
   });
   nodos = [...proyectos, ...grupos];
   links = items.flatMap((item) => grupoDe(item, criterio).map((v) => ({ source: "p:" + item.id, target: `g:${criterio}:${v}` })));
@@ -163,7 +188,7 @@ function armar() {
           .transition().duration(600).attr("r", (d) => d.r);
         // Grupo: el nombre adentro del círculo y, si hay lugar, la cantidad debajo de él. Proyecto: su nombre debajo.
         g.append("text").attr("class", "nombre").attr("text-anchor", "middle");
-        g.filter((d) => d.grupo).append("text").attr("class", "cuenta").attr("dy", "1.3em").attr("text-anchor", "middle");
+        g.filter((d) => d.grupo).append("text").attr("class", "cuenta").attr("text-anchor", "middle");
         g.append("title");
         return g;
       },
@@ -171,7 +196,8 @@ function armar() {
       (exit) => exit.call((s) => s.select("circle").transition().duration(300).attr("r", 0)).transition().duration(300).remove(),
     );
   selNodos.attr("aria-label", (d) => (d.grupo ? `${nombreValor(criterio, d.valor)} (${d.n})` : d.item.nombre));
-  selNodos.select("text.nombre").text((d) => (d.grupo ? nombreValor(criterio, d.valor) : d.item.nombre));
+  // Los nombres de grupo se escriben en escalarRotulos, partidos en líneas.
+  selNodos.filter((d) => !d.grupo).select("text.nombre").text((d) => d.item.nombre);
   selNodos.select("text.cuenta").text((d) => d.n);
   selNodos.select("title").text((d) => (d.grupo ? t(d.n === 1 ? "red.grupo_titulo_uno" : "red.grupo_titulo", { n: d.n }) : `${d.item.nombre} · ${d.item.organizacion}`));
   selNodos.on("click", (ev, d) => detalle(d)).on("keydown", (ev, d) => ev.key === "Enter" && detalle(d))
