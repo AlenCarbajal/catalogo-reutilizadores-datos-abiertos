@@ -192,7 +192,7 @@ input[name="id"] { background: #F2F2F2; color: var(--tenue); }
 .barra__red:hover { background: var(--indigo); color: #fff; }
 .visor-red { display: grid; gap: 14px; align-content: start; }
 .visor-red__controles { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 24px; }
-.visor-red__controles .campo { flex: 1 1 200px; }
+.visor-red__controles .campo { flex: 1 1 180px; }
 .visor-red__interruptor { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: var(--navy); cursor: pointer; }
 /* El rótulo con casilla mide lo mismo que los demás, y select y búsqueda la misma altura. */
 .visor-red__controles .campo > :first-child { display: flex; align-items: center; min-height: 22px; }
@@ -208,7 +208,7 @@ input[name="id"] { background: #F2F2F2; color: var(--tenue); }
 .visor-red__leyenda-titulo { font-weight: 700; color: var(--navy); }
 .visor-red__leyenda-nota { width: 100%; font-size: 12px; color: var(--tenue); }
 .visor-red__escena { position: relative; background: #fff; border: 1px solid var(--borde); overflow: hidden; }
-#red { display: block; width: 100%; height: min(72vh, 680px); cursor: grab; touch-action: none; }
+#red { display: block; width: 100%; height: min(78vh, 760px); cursor: grab; touch-action: none; }
 #red:active { cursor: grabbing; }
 /* Enlaces finos y tenues: forman una trama de fondo; al resaltar un nodo, los suyos toman el índigo. */
 #red .links path { fill: none; stroke: var(--navy); stroke-opacity: .2; stroke-width: 1; transition: stroke .2s, stroke-opacity .2s, opacity .2s; }
@@ -244,12 +244,22 @@ input[name="id"] { background: #F2F2F2; color: var(--tenue); }
 .detalle-red__cerrar:hover { background: var(--tile); }
 .detalle-red__cerrar:focus-visible { outline: 2px solid var(--violeta); outline-offset: -2px; }
 #red .nodo.elegido circle { stroke: var(--violeta); stroke-width: 3; }
-.visor-red__ayuda { font-size: 13px; color: var(--tenue); }
+/* Ocultar los filtros le deja todo el ancho a la red. */
+.visor-red__alternar { align-self: flex-end; min-height: 44px; padding: 0 16px; font: inherit; font-size: 14px; font-weight: 700; color: var(--indigo); background: #fff; border: 1.5px solid var(--indigo); cursor: pointer; }
+.visor-red__alternar:hover { background: var(--indigo); color: #fff; }
+.disposicion--sin-filtros { grid-template-columns: minmax(0, 1fr); }
+.disposicion--sin-filtros > aside { display: none; }
 .visor-red__tooltip { position: absolute; z-index: 2; max-width: 260px; padding: 10px 12px; background: var(--navy); color: #fff; font-size: 13px; line-height: 1.45; pointer-events: none; box-shadow: 0 6px 18px rgba(35, 45, 79, .2); }
 .visor-red__tooltip strong { display: block; font-size: 14px; }
-.visor-red__tooltip ul { margin: 6px 0 0; padding: 0; list-style: none; }
-.visor-red__tooltip li { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .visor-red__tooltip small { color: var(--claro); }
+.visor-red__tooltip p { margin: 8px 0 4px; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--kicker); }
+/* Reparto de otra variable: nombre, barra y porcentaje en tres columnas alineadas. */
+.visor-red__tooltip ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: minmax(0, 1fr) 64px 3.5em; gap: 4px 8px; align-items: center; }
+.visor-red__tooltip li { display: contents; }
+.visor-red__tooltip li span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.visor-red__tooltip li i { height: 6px; background: rgba(255, 255, 255, .18); }
+.visor-red__tooltip li i b { display: block; height: 100%; background: var(--violeta); }
+.visor-red__tooltip li span:last-child { text-align: right; font-variant-numeric: tabular-nums; }
 .visor-red__ver-todo { position: absolute; top: 12px; left: 12px; z-index: 1; min-height: 40px; padding: 0 14px; font: inherit; font-size: 14px; font-weight: 700; color: var(--indigo); background: #fff; border: 1.5px solid var(--indigo); cursor: pointer; }
 .visor-red__ver-todo:hover { background: var(--indigo); color: #fff; }
 @media (max-width: 720px) {

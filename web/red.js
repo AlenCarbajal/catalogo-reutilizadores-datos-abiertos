@@ -223,18 +223,24 @@ function buscar() {
     !terminos.every((q) => normalizar([d.item.nombre, d.item.organizacion, d.item.descripcion, ...valores(d.item, estado.criterio)].join(" ")).includes(q)));
 }
 
-// Al pasar por un grupo: su nombre, la cantidad y hasta 5 proyectos, nunca todos los rótulos.
-const MAX_TOOLTIP = 5;
+// Al pasar por un grupo: su nombre, la cantidad y cómo se reparte una variable que no está
+// en el gráfico (ni agrupa ni colorea), con sus tres valores más frecuentes.
+const PREFERIDAS = ["tecnologias", "tipo_organizacion", "tipo_desarrollo", "etiquetas", "fuentes"];
+const conDato = (item, c) => valores(item, c).filter((v) => !(c === "fuentes" && v.startsWith("No especificado")));
 function mostrarTooltip(ev, d) {
   if (!d.grupo) return;
-  const deGrupo = items.filter((item) => grupoDe(item, estado.criterio).includes(d.valor))
-    .map((item) => item.nombre).sort((a, b) => a.localeCompare(b, "es"));
-  const resto = deGrupo.length - MAX_TOOLTIP;
+  const deGrupo = items.filter((item) => grupoDe(item, estado.criterio).includes(d.valor));
+  const otra = PREFERIDAS.find((c) => c !== estado.criterio && c !== estado.color);
+  const conteo = d3.rollups(deGrupo.flatMap((item) => [...new Set(conDato(item, otra))]), (v) => v.length, (v) => v)
+    .sort((a, b) => b[1] - a[1]).slice(0, 3);
+  const pct = (n) => Math.round((n / deGrupo.length) * 100);
+  const variable = t("red.criterio." + otra);
   const tip = $("tooltip");
   tip.innerHTML = `<strong>${esc(nombreValor(estado.criterio, d.valor))}</strong>
     <small>${esc(t(d.n === 1 ? "red.grupo_titulo_uno" : "red.grupo_titulo", { n: d.n }))}</small>
-    <ul>${deGrupo.slice(0, MAX_TOOLTIP).map((n) => `<li>${esc(n)}</li>`).join("")}</ul>
-    ${resto > 0 ? `<small>${esc(t("red.tooltip_mas", { n: resto }))}</small>` : ""}`;
+    <p>${esc(variable)}</p>
+    ${conteo.length ? `<ul>${conteo.map(([v, n]) => `<li><span>${esc(nombreValor(otra, v))}</span><i><b style="width:${pct(n)}%"></b></i><span>${pct(n)} %</span></li>`).join("")}</ul>`
+      : `<small>${esc(t("red.tooltip_sin_valores", { variable: variable.toLowerCase() }))}</small>`}`;
   tip.hidden = false;
   // Junto al grupo, del lado donde haya lugar dentro de la escena.
   const escena = tip.parentElement.getBoundingClientRect(), nodo = ev.currentTarget.getBoundingClientRect();
@@ -318,8 +324,23 @@ async function iniciar() {
   ajustar();
   addEventListener("resize", ajustar);
 
+  // Agrupar y colorear nunca usan la misma variable: cada select deshabilita la del otro.
+  const sincronizarOpciones = () => {
+    for (const op of $("variable-color").options) op.disabled = op.value === estado.criterio;
+    for (const op of $("criterio").options) op.disabled = !!estado.color && op.value === estado.color;
+  };
+  if (estado.color === estado.criterio) estado.color = CRITERIOS.find((c) => c !== estado.criterio);
+  $("variable-color").value = estado.color ?? CRITERIOS.find((c) => c !== estado.criterio);
+  sincronizarOpciones();
+
   $("criterio").addEventListener("change", (ev) => {
     estado.criterio = ev.target.value;
+    // Si se elige para agrupar la variable con la que se colorea, el color pasa a otra.
+    if ($("variable-color").value === estado.criterio) {
+      $("variable-color").value = CRITERIOS.find((c) => c !== estado.criterio);
+      if (estado.color) { estado.color = $("variable-color").value; recolorear(); }
+    }
+    sincronizarOpciones();
     cerrarDetalle();
     escribirURL();
     armar();
@@ -327,6 +348,7 @@ async function iniciar() {
   const cambiarColor = () => {
     estado.color = $("colorear").checked ? $("variable-color").value : null;
     $("variable-color").disabled = !estado.color;
+    sincronizarOpciones();
     escribirURL();
     recolorear();
   };
@@ -338,6 +360,13 @@ async function iniciar() {
   $("leyenda").addEventListener("focusout", () => resaltarColor(null));
   $("q").addEventListener("input", buscar);
   $("ver-todo").addEventListener("click", encuadrar);
+  $("alternar-filtros").addEventListener("click", (ev) => {
+    const ocultos = $("disposicion").classList.toggle("disposicion--sin-filtros");
+    ev.currentTarget.setAttribute("aria-pressed", ocultos);
+    ev.currentTarget.textContent = t(ocultos ? "red.mostrar_filtros" : "red.ocultar_filtros");
+    ajustar();
+    encuadrar();
+  });
   // La tarjeta se cierra con la X, con Escape o tocando el fondo de la red.
   $("cerrar-detalle").addEventListener("click", cerrarDetalle);
   addEventListener("keydown", (ev) => ev.key === "Escape" && !$("detalle").hidden && cerrarDetalle());
