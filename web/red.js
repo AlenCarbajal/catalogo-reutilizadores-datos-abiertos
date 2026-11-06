@@ -189,7 +189,6 @@ function armar() {
         // Grupo: el nombre adentro del círculo y, si hay lugar, la cantidad debajo de él. Proyecto: su nombre debajo.
         g.append("text").attr("class", "nombre").attr("text-anchor", "middle");
         g.filter((d) => d.grupo).append("text").attr("class", "cuenta").attr("text-anchor", "middle");
-        g.append("title");
         return g;
       },
       (update) => update,
@@ -199,9 +198,8 @@ function armar() {
   // Los nombres de grupo se escriben en escalarRotulos, partidos en líneas.
   selNodos.filter((d) => !d.grupo).select("text.nombre").text((d) => d.item.nombre);
   selNodos.select("text.cuenta").text((d) => d.n);
-  selNodos.select("title").text((d) => (d.grupo ? t(d.n === 1 ? "red.grupo_titulo_uno" : "red.grupo_titulo", { n: d.n }) : `${d.item.nombre} · ${d.item.organizacion}`));
   selNodos.on("click", (ev, d) => detalle(d)).on("keydown", (ev, d) => ev.key === "Enter" && detalle(d))
-    .on("mouseenter focus", (ev, d) => { resaltar(d); mostrarTooltip(ev, d); })
+    .on("mouseenter focus", (ev, d) => { d3.select(ev.currentTarget).raise(); resaltar(d); mostrarTooltip(ev, d); })
     .on("mouseleave blur", () => { resaltar(null); ocultarTooltip(); })
     .call(d3.drag()
       .on("start", (ev, d) => { if (!ev.active) sim.alphaTarget(0.2).restart(); d.fx = d.x; d.fy = d.y; })
@@ -255,23 +253,31 @@ function buscar() {
 }
 
 // Al pasar por un grupo: su nombre, la cantidad y cómo se reparte una variable que no está
-// en el gráfico (ni agrupa ni colorea), con sus tres valores más frecuentes.
+// en el gráfico (ni agrupa ni colorea), con sus tres valores más frecuentes; los proyectos sin
+// ese dato cuentan como un valor más ("Sin dato"). Al pasar por un proyecto: su nombre y organización.
 const PREFERIDAS = ["tecnologias", "tipo_organizacion", "tipo_desarrollo", "etiquetas", "fuentes"];
 const conDato = (item, c) => valores(item, c).filter((v) => !(c === "fuentes" && v.startsWith("No especificado")));
 function mostrarTooltip(ev, d) {
-  if (!d.grupo) return;
+  const tip = $("tooltip");
+  if (!d.grupo) {
+    tip.innerHTML = `<strong>${esc(d.item.nombre)}</strong><small>${esc(d.item.organizacion)}</small>`;
+    ubicarTooltip(ev);
+    return;
+  }
   const deGrupo = items.filter((item) => grupoDe(item, estado.criterio).includes(d.valor));
   const otra = PREFERIDAS.find((c) => c !== estado.criterio && c !== estado.color);
-  const conteo = d3.rollups(deGrupo.flatMap((item) => [...new Set(conDato(item, otra))]), (v) => v.length, (v) => v)
-    .sort((a, b) => b[1] - a[1]).slice(0, 3);
+  const conteo = d3.rollups(deGrupo.flatMap((item) => { const v = [...new Set(conDato(item, otra))]; return v.length ? v : ["__sin"]; }),
+    (v) => v.length, (v) => v).sort((a, b) => b[1] - a[1]).slice(0, 3);
   const pct = (n) => Math.round((n / deGrupo.length) * 100);
   const variable = t("red.criterio." + otra);
-  const tip = $("tooltip");
   tip.innerHTML = `<strong>${esc(nombreValor(estado.criterio, d.valor))}</strong>
     <small>${esc(t(d.n === 1 ? "red.grupo_titulo_uno" : "red.grupo_titulo", { n: d.n }))}</small>
     <p>${esc(variable)}</p>
-    ${conteo.length ? `<ul>${conteo.map(([v, n]) => `<li><span>${esc(nombreValor(otra, v))}</span><i><b style="width:${pct(n)}%"></b></i><span>${pct(n)} %</span></li>`).join("")}</ul>`
-      : `<small>${esc(t("red.tooltip_sin_valores", { variable: variable.toLowerCase() }))}</small>`}`;
+    <ul>${conteo.map(([v, n]) => `<li><span>${esc(nombreValor(otra, v))}</span><i><b style="width:${pct(n)}%"></b></i><span>${pct(n)} %</span></li>`).join("")}</ul>`;
+  ubicarTooltip(ev);
+}
+function ubicarTooltip(ev) {
+  const tip = $("tooltip");
   tip.hidden = false;
   // Junto al grupo, del lado donde haya lugar dentro de la escena.
   const escena = tip.parentElement.getBoundingClientRect(), nodo = ev.currentTarget.getBoundingClientRect();

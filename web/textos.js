@@ -60,7 +60,6 @@ const TEXTOS = {
   "red.ver_todo": "Ver todo",
   "red.ocultar_filtros": "Ocultar filtros",
   "red.mostrar_filtros": "Mostrar filtros",
-  "red.tooltip_sin_valores": "Ninguno tiene {variable} cargadas.",
   "red.cerrar": "Cerrar",
 
   // --- Ecosistema datos.gob.ar (ecosistema.html) ---
