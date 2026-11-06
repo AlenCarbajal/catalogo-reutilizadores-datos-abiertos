@@ -41,7 +41,7 @@ const TEXTOS = {
   // --- Visor en red (red.html) ---
   "red.titulo_pestana": "Red de proyectos · Catálogo de Reutilizadores de Datos Abiertos",
   "red.titulo": "Red de proyectos",
-  "red.bajada": "Cada punto es un proyecto. Elegí cómo agruparlos y por qué colorearlos, y mirá qué se junta con qué.",
+  "red.bajada": "Agrupa los proyectos del catálogo por tipo de desarrollo, organización, tecnología, fuente de datos o etiqueta.",
   "red.agrupar_por": "Agrupar por",
   "red.criterio.tipo_desarrollo": "Tipo de desarrollo",
   "red.criterio.tipo_organizacion": "Tipo de organización",
@@ -51,14 +51,16 @@ const TEXTOS = {
   "red.colorear_por": "Colorear por",
   "red.leyenda": "Leyenda de colores",
   "red.leyenda_titulo": "Color: {variable}",
-  "red.leyenda_primer_valor": "Si un proyecto tiene varios valores, se colorea por el primero.",
+  "red.leyenda_primer_valor": "Si un proyecto tiene varios valores se colorea por el primero.",
   "red.otros": "Otros valores",
   "red.sin_dato": "Sin dato",
   "red.grupo_titulo": "{n} proyectos",
   "red.grupo_titulo_uno": "1 proyecto",
   "red.ver_ficha": "Ver ficha",
+  "red.ver_todo": "Ver todo",
+  "red.ocultar_filtros": "Ocultar filtros",
+  "red.mostrar_filtros": "Mostrar filtros",
   "red.cerrar": "Cerrar",
-  "red.ayuda": "Arrastrá los puntos, acercá con la rueda o con dos dedos, y tocá un punto para ver el detalle. Pasá por la leyenda para resaltar un color.",
 
   // --- Ecosistema datos.gob.ar (ecosistema.html) ---
   "eco.titulo_pestana": "Ecosistema datos.gob.ar",

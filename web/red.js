@@ -37,14 +37,70 @@ const zoom = d3.zoom().scaleExtent([0.2, 4]).on("zoom", (ev) => {
   lienzo.attr("transform", ev.transform);
   if (ev.transform.k !== escala) { escala = ev.transform.k; escalarRotulos(); }
 });
-const escalarRotulos = () => selNodos?.filter((d) => d.grupo).classed("chico", (d) => d.r * escala < 14)
-  .select("text").attr("transform", `scale(${1 / escala})`);
+// Rótulos con tamaño fijo en pantalla. En los grupos el nombre se parte en líneas dentro del
+// círculo y, si sobra lugar, va la cantidad debajo; si alguna palabra no entra en el ancho del
+// círculo, el nombre queda oculto hasta pasar por encima. En los proyectos, debajo del punto.
+const medidor = document.createElement("canvas").getContext("2d");
+const anchoTexto = (s) => { medidor.font = "700 11px Montserrat, system-ui, sans-serif"; return medidor.measureText(s).width; };
+const LINEA = 13; // alto de línea en px de pantalla
+function partirEnLineas(nombre, ancho) {
+  const lineas = [];
+  for (const palabra of nombre.split(/\s+/)) {
+    if (anchoTexto(palabra) > ancho) return null;
+    const ultima = lineas.at(-1);
+    if (ultima && anchoTexto(ultima + " " + palabra) <= ancho) lineas[lineas.length - 1] = ultima + " " + palabra;
+    else lineas.push(palabra);
+  }
+  return lineas;
+}
+const escalarRotulos = () => {
+  selNodos?.filter((d) => d.grupo).each(function (d) {
+    const diametro = d.r * escala * 2, nombre = nombreValor(estado.criterio, d.valor);
+    const lineas = partirEnLineas(nombre, diametro);
+    const entra = !!lineas && lineas.length * LINEA <= diametro * 0.85;
+    const conCuenta = entra && (lineas.length + 1) * LINEA <= diametro * 0.7;
+    const filas = entra ? lineas : [nombre];
+    const total = filas.length + (conCuenta ? 1 : 0);
+    const arriba = -((total - 1) * LINEA) / 2;
+    const g = d3.select(this).classed("no-entra", !entra).classed("con-cuenta", conCuenta);
+    g.select("text.nombre").attr("transform", `scale(${1 / escala})`)
+      .selectAll("tspan").data(filas).join("tspan")
+      .attr("x", 0).attr("y", (_, i) => arriba + i * LINEA).attr("dy", "0.35em").text((s) => s);
+    g.select("text.cuenta").attr("transform", `scale(${1 / escala})`)
+      .attr("y", arriba + filas.length * LINEA).attr("dy", "0.35em");
+  });
+  selNodos?.filter((d) => !d.grupo).select("text.nombre").attr("dy", "1em")
+    .attr("transform", (d) => `translate(0,${d.r + 4 / escala}) scale(${1 / escala})`);
+};
+// Si dos rótulos de grupo se pisan en pantalla queda el del grupo más grande; el otro
+// aparece al pasar por encima (como la grilla de rótulos de Sigma.js o Gephi).
+function despejarRotulos() {
+  if (!selNodos) return;
+  const grupos = selNodos.filter((d) => d.grupo).classed("pisado", false);
+  // También cuentan como ocupados los círculos de los grupos: un rótulo no va debajo de otro círculo.
+  const circulos = grupos.nodes().map((n) => [n, n.querySelector("circle").getBoundingClientRect()]);
+  const puestos = [];
+  grupos.filter(function () { return !this.classList.contains("no-entra"); }).nodes()
+    .sort((a, b) => d3.select(b).datum().n - d3.select(a).datum().n)
+    .forEach((nodo) => {
+      const r = nodo.querySelector("text.nombre").getBoundingClientRect();
+      if (!r.width) return;
+      const pisa = (p) => r.left < p.right + 4 && r.right > p.left - 4 && r.top < p.bottom + 2 && r.bottom > p.top - 2;
+      const choca = puestos.some(pisa) || circulos.some(([otro, c]) => otro !== nodo && pisa(c));
+      if (choca) nodo.classList.add("pisado"); else puestos.push(r);
+    });
+  // Los grupos con rótulo visible van al frente, así ningún círculo los tapa.
+  grupos.filter(function () { return !this.classList.contains("pisado"); }).raise();
+}
+// Al terminar cada acercamiento o desplazamiento se vuelve a ver qué rótulos entran.
+zoom.on("end.rotulos", () => despejarRotulos());
 svg.call(zoom);
 
 // Ajusta el zoom para que entre todo. Solo al armar, no después de arrastrar.
 let encuadrarAlTerminar = false;
 function encuadrar() {
   encuadrarAlTerminar = false;
+  $("ver-todo").hidden = true;
   const b = lienzo.node().getBBox(), { width, height } = svg.node().getBoundingClientRect();
   if (!b.width || !b.height) return;
   const k = Math.min(1.5, 0.92 * Math.min(width / b.width, height / b.height));
@@ -52,14 +108,18 @@ function encuadrar() {
     .call(zoom.transform, d3.zoomIdentity.scale(k).translate(-(b.x + b.width / 2), -(b.y + b.height / 2)));
 }
 
+// Los proyectos de un solo valor quedan cerca de su grupo; los de varios, entre sus
+// grupos con enlaces más largos y flojos, así cruzan menos por encima de los racimos.
+const enGrupos = (l) => grupoDe(l.source.item ?? l.target.item, estado.criterio).length;
 const sim = d3.forceSimulation()
-  .force("link", d3.forceLink().id((d) => d.id).distance(80).strength(0.5))
-  .force("charge", d3.forceManyBody().strength((d) => (d.grupo ? -260 : -140)))
+  .force("link", d3.forceLink().id((d) => d.id).distance((l) => (enGrupos(l) > 1 ? 90 : 45)).strength((l) => (enGrupos(l) > 1 ? 0.25 : 0.8)))
+  .force("charge", d3.forceManyBody().strength((d) => (d.grupo ? -200 : -80)))
   .force("collide", d3.forceCollide((d) => d.r + 6))
-  .force("x", d3.forceX(0).strength(0.05))
-  .force("y", d3.forceY(0).strength(0.05))
+  // Centrado firme: acerca los racimos sueltos para que el encuadre no achique la red.
+  .force("x", d3.forceX(0).strength(0.14))
+  .force("y", d3.forceY(0).strength(0.14))
   .on("tick", dibujar)
-  .on("end", () => encuadrarAlTerminar && encuadrar());
+  .on("end", () => { if (encuadrarAlTerminar) encuadrar(); else despejarRotulos(); });
 
 let nodos = [], links = [], selNodos, selLinks;
 
@@ -104,18 +164,18 @@ function armar() {
   const conteo = new Map();
   for (const item of items) for (const v of grupoDe(item, criterio)) conteo.set(v, (conteo.get(v) ?? 0) + 1);
 
-  const proyectos = items.map((item) => Object.assign(antes.get("p:" + item.id) ?? {}, { id: "p:" + item.id, item, r: 9 }));
+  const proyectos = items.map((item) => Object.assign(antes.get("p:" + item.id) ?? {}, { id: "p:" + item.id, item, r: 6 }));
   const grupos = [...conteo].map(([v, n]) => {
     const previo = antes.get(`g:${criterio}:${v}`);
     return Object.assign(previo ?? { x: (Math.random() - 0.5) * 300, y: (Math.random() - 0.5) * 300 },
-      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 14 + Math.sqrt(n) * 6 });
+      { id: `g:${criterio}:${v}`, grupo: true, valor: v, n, r: 14 + Math.sqrt(n) * 4.5 });
   });
   nodos = [...proyectos, ...grupos];
   links = items.flatMap((item) => grupoDe(item, criterio).map((v) => ({ source: "p:" + item.id, target: `g:${criterio}:${v}` })));
 
-  selLinks = capaLinks.selectAll("line").data(links, (d) => `${d.source.id ?? d.source}>${d.target.id ?? d.target}`)
+  selLinks = capaLinks.selectAll("path").data(links, (d) => `${d.source.id ?? d.source}>${d.target.id ?? d.target}`)
     .join(
-      (enter) => enter.append("line").attr("stroke-opacity", 0).call((s) => s.transition().duration(600).attr("stroke-opacity", 1)),
+      (enter) => enter.append("path").attr("stroke-opacity", 0).call((s) => s.transition().duration(600).attr("stroke-opacity", 1)),
       (update) => update,
       (exit) => exit.transition().duration(300).attr("stroke-opacity", 0).remove(),
     );
@@ -126,24 +186,29 @@ function armar() {
         const g = enter.append("g").attr("class", (d) => "nodo" + (d.grupo ? " nodo--grupo" : "")).attr("tabindex", 0).attr("role", "button");
         g.append("circle").attr("r", 0).attr("fill", (d) => (d.grupo ? null : colorDe(d.item)))
           .transition().duration(600).attr("r", (d) => d.r);
-        g.append("text").attr("dy", (d) => (d.grupo ? "0.35em" : d.r + 14)).attr("text-anchor", "middle");
-        g.append("title");
+        // Grupo: el nombre adentro del círculo y, si hay lugar, la cantidad debajo de él. Proyecto: su nombre debajo.
+        g.append("text").attr("class", "nombre").attr("text-anchor", "middle");
+        g.filter((d) => d.grupo).append("text").attr("class", "cuenta").attr("text-anchor", "middle");
         return g;
       },
       (update) => update,
       (exit) => exit.call((s) => s.select("circle").transition().duration(300).attr("r", 0)).transition().duration(300).remove(),
     );
   selNodos.attr("aria-label", (d) => (d.grupo ? `${nombreValor(criterio, d.valor)} (${d.n})` : d.item.nombre));
-  selNodos.select("text").text((d) => (d.grupo ? nombreValor(criterio, d.valor) : d.item.nombre));
-  selNodos.select("title").text((d) => (d.grupo ? t(d.n === 1 ? "red.grupo_titulo_uno" : "red.grupo_titulo", { n: d.n }) : `${d.item.nombre} · ${d.item.organizacion}`));
+  // Los nombres de grupo se escriben en escalarRotulos, partidos en líneas.
+  selNodos.filter((d) => !d.grupo).select("text.nombre").text((d) => d.item.nombre);
+  selNodos.select("text.cuenta").text((d) => d.n);
   selNodos.on("click", (ev, d) => detalle(d)).on("keydown", (ev, d) => ev.key === "Enter" && detalle(d))
-    .on("mouseenter focus", (ev, d) => resaltar(d)).on("mouseleave blur", () => resaltar(null))
+    .on("mouseenter focus", (ev, d) => { d3.select(ev.currentTarget).raise(); resaltar(d); mostrarTooltip(ev, d); })
+    .on("mouseleave blur", () => { resaltar(null); ocultarTooltip(); })
     .call(d3.drag()
       .on("start", (ev, d) => { if (!ev.active) sim.alphaTarget(0.2).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (ev, d) => { d.fx = ev.x; d.fy = ev.y; })
       .on("end", (ev, d) => { if (!ev.active) sim.alphaTarget(0); d.fx = d.fy = null; }));
 
   escalarRotulos();
+  // Mientras la red se acomoda se ven todos los rótulos; al terminar se despejan.
+  selNodos.classed("pisado", false);
   svg.classed("denso", items.length > 20);
   // Primero los nodos: los links se resuelven por id contra los nodos actuales.
   sim.nodes(nodos);
@@ -161,7 +226,7 @@ function recolorear() {
 }
 
 function dibujar() {
-  selLinks?.attr("x1", (d) => d.source.x).attr("y1", (d) => d.source.y).attr("x2", (d) => d.target.x).attr("y2", (d) => d.target.y);
+  selLinks?.attr("d", (d) => `M${d.source.x},${d.source.y}L${d.target.x},${d.target.y}`);
   selNodos?.attr("transform", (d) => `translate(${d.x},${d.y})`);
 }
 
@@ -177,7 +242,7 @@ function vecinos(d) {
 
 function resaltar(d) {
   const ids = d && vecinos(d);
-  selNodos.classed("tenue", (n) => ids && !ids.has(n.id)).classed("foco", (n) => ids && ids.has(n.id));
+  selNodos.classed("tenue", (n) => ids && !ids.has(n.id)).classed("foco", (n) => ids && ids.has(n.id)).classed("hover", (n) => n === d);
   selLinks.classed("activo", (l) => ids && (l.source.id === d.id || l.target.id === d.id)).classed("tenue", false);
 }
 
@@ -185,6 +250,53 @@ function buscar() {
   const terminos = normalizar($("q").value).split(/\s+/).filter(Boolean);
   selNodos.classed("descartado", (d) => !d.grupo && terminos.length > 0 &&
     !terminos.every((q) => normalizar([d.item.nombre, d.item.organizacion, d.item.descripcion, ...valores(d.item, estado.criterio)].join(" ")).includes(q)));
+}
+
+// Al pasar por un grupo: su nombre, la cantidad y cómo se reparte una variable que no está
+// en el gráfico (ni agrupa ni colorea), con sus tres valores más frecuentes; los proyectos sin
+// ese dato cuentan como un valor más ("Sin dato"). Al pasar por un proyecto: su nombre y organización.
+const PREFERIDAS = ["tecnologias", "tipo_organizacion", "tipo_desarrollo", "etiquetas", "fuentes"];
+const conDato = (item, c) => valores(item, c).filter((v) => !(c === "fuentes" && v.startsWith("No especificado")));
+function mostrarTooltip(ev, d) {
+  const tip = $("tooltip");
+  if (!d.grupo) {
+    tip.innerHTML = `<strong>${esc(d.item.nombre)}</strong><small>${esc(d.item.organizacion)}</small>`;
+    ubicarTooltip(ev);
+    return;
+  }
+  const deGrupo = items.filter((item) => grupoDe(item, estado.criterio).includes(d.valor));
+  const otra = PREFERIDAS.find((c) => c !== estado.criterio && c !== estado.color);
+  const conteo = d3.rollups(deGrupo.flatMap((item) => { const v = [...new Set(conDato(item, otra))]; return v.length ? v : ["__sin"]; }),
+    (v) => v.length, (v) => v).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  const pct = (n) => Math.round((n / deGrupo.length) * 100);
+  const variable = t("red.criterio." + otra);
+  tip.innerHTML = `<strong>${esc(nombreValor(estado.criterio, d.valor))}</strong>
+    <small>${esc(t(d.n === 1 ? "red.grupo_titulo_uno" : "red.grupo_titulo", { n: d.n }))}</small>
+    <p>${esc(variable)}</p>
+    <ul>${conteo.map(([v, n]) => `<li><span>${esc(nombreValor(otra, v))}</span><i><b style="width:${pct(n)}%"></b></i><span>${pct(n)} %</span></li>`).join("")}</ul>`;
+  ubicarTooltip(ev);
+}
+function ubicarTooltip(ev) {
+  const tip = $("tooltip");
+  tip.hidden = false;
+  // Junto al grupo, del lado donde haya lugar dentro de la escena.
+  const escena = tip.parentElement.getBoundingClientRect(), nodo = ev.currentTarget.getBoundingClientRect();
+  const x = nodo.right - escena.left + 8, y = nodo.top - escena.top;
+  tip.style.left = `${Math.max(8, Math.min(x, escena.width - tip.offsetWidth - 8))}px`;
+  tip.style.top = `${Math.max(8, Math.min(y, escena.height - tip.offsetHeight - 8))}px`;
+}
+const ocultarTooltip = () => { $("tooltip").hidden = true; };
+
+// Acerca la vista a un grupo y sus proyectos; "Ver todo" vuelve al encuadre completo.
+function enfocar(d) {
+  const ids = vecinos(d), dentro = nodos.filter((n) => ids.has(n.id));
+  const x0 = d3.min(dentro, (n) => n.x - n.r), x1 = d3.max(dentro, (n) => n.x + n.r);
+  const y0 = d3.min(dentro, (n) => n.y - n.r), y1 = d3.max(dentro, (n) => n.y + n.r);
+  const { width, height } = svg.node().getBoundingClientRect();
+  const k = Math.min(3, 0.8 * Math.min(width / (x1 - x0 || 1), height / (y1 - y0 || 1)));
+  svg.transition().duration(sinMovimiento ? 0 : 600)
+    .call(zoom.transform, d3.zoomIdentity.scale(k).translate(-(x0 + x1) / 2, -(y0 + y1) / 2));
+  $("ver-todo").hidden = false;
 }
 
 // --- tarjeta de detalle ------------------------------------------------------
@@ -205,6 +317,7 @@ function cerrarDetalle() {
 function detalle(d) {
   const bloque = (clave, cuerpo) => (cuerpo ? `<div class="detalle-red__bloque"><h3>${esc(t(clave))}</h3>${cuerpo}</div>` : "");
   if (d.grupo) {
+    enfocar(d);
     const deGrupo = items.filter((item) => grupoDe(item, estado.criterio).includes(d.valor))
       .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
     abrirDetalle(`<p class="rotulo">${esc(t("red.criterio." + estado.criterio))}</p>
@@ -248,8 +361,23 @@ async function iniciar() {
   ajustar();
   addEventListener("resize", ajustar);
 
+  // Agrupar y colorear nunca usan la misma variable: cada select deshabilita la del otro.
+  const sincronizarOpciones = () => {
+    for (const op of $("variable-color").options) op.disabled = op.value === estado.criterio;
+    for (const op of $("criterio").options) op.disabled = !!estado.color && op.value === estado.color;
+  };
+  if (estado.color === estado.criterio) estado.color = CRITERIOS.find((c) => c !== estado.criterio);
+  $("variable-color").value = estado.color ?? CRITERIOS.find((c) => c !== estado.criterio);
+  sincronizarOpciones();
+
   $("criterio").addEventListener("change", (ev) => {
     estado.criterio = ev.target.value;
+    // Si se elige para agrupar la variable con la que se colorea, el color pasa a otra.
+    if ($("variable-color").value === estado.criterio) {
+      $("variable-color").value = CRITERIOS.find((c) => c !== estado.criterio);
+      if (estado.color) { estado.color = $("variable-color").value; recolorear(); }
+    }
+    sincronizarOpciones();
     cerrarDetalle();
     escribirURL();
     armar();
@@ -257,6 +385,7 @@ async function iniciar() {
   const cambiarColor = () => {
     estado.color = $("colorear").checked ? $("variable-color").value : null;
     $("variable-color").disabled = !estado.color;
+    sincronizarOpciones();
     escribirURL();
     recolorear();
   };
@@ -267,6 +396,14 @@ async function iniciar() {
   $("leyenda").addEventListener("mouseleave", () => resaltarColor(null));
   $("leyenda").addEventListener("focusout", () => resaltarColor(null));
   $("q").addEventListener("input", buscar);
+  $("ver-todo").addEventListener("click", encuadrar);
+  $("alternar-filtros").addEventListener("click", (ev) => {
+    const ocultos = $("disposicion").classList.toggle("disposicion--sin-filtros");
+    ev.currentTarget.setAttribute("aria-pressed", ocultos);
+    ev.currentTarget.textContent = t(ocultos ? "red.mostrar_filtros" : "red.ocultar_filtros");
+    ajustar();
+    encuadrar();
+  });
   // La tarjeta se cierra con la X, con Escape o tocando el fondo de la red.
   $("cerrar-detalle").addEventListener("click", cerrarDetalle);
   addEventListener("keydown", (ev) => ev.key === "Escape" && !$("detalle").hidden && cerrarDetalle());

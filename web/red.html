@@ -19,7 +19,7 @@
   </div>
 </header>
 
-<main class="contenedor disposicion">
+<main id="disposicion" class="contenedor disposicion">
   <aside data-t-aria="catalogo.filtrar">
     <p class="rotulo" data-t="catalogo.filtrar"></p>
     <div id="filtros"></div>
@@ -32,16 +32,18 @@
       <select id="variable-color" data-t-aria="red.colorear_por"></select>
     </div>
     <label class="campo"><span data-t="catalogo.buscar"></span><input id="q" type="search" data-t-placeholder="catalogo.buscar_placeholder"></label>
+    <button type="button" id="alternar-filtros" class="visor-red__alternar" aria-controls="filtros" aria-pressed="false" data-t="red.ocultar_filtros"></button>
   </div>
   <div id="leyenda" class="visor-red__leyenda" role="group" data-t-aria="red.leyenda"></div>
   <div class="visor-red__escena">
     <svg id="red" role="img" data-t-aria="red.titulo"></svg>
+    <div id="tooltip" class="visor-red__tooltip" role="status" hidden></div>
+    <button type="button" id="ver-todo" class="visor-red__ver-todo" data-t="red.ver_todo" hidden></button>
     <aside id="detalle" class="detalle-red" hidden>
       <button type="button" id="cerrar-detalle" class="detalle-red__cerrar" data-t-aria="red.cerrar"><span aria-hidden="true">×</span></button>
       <div id="detalle-contenido" class="detalle-red__contenido"></div>
     </aside>
   </div>
-  <p class="visor-red__ayuda" data-t="red.ayuda"></p>
   </section>
 </main>
 
